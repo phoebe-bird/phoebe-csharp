@@ -1,0 +1,198 @@
+using System.Collections.Frozen;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Phoebe.Core;
+using Phoebe.Exceptions;
+using System = System;
+
+namespace Phoebe.Models.Ref.Region.Info;
+
+/// <summary>
+/// Get information on the name and geographical area covered by a region. #### Notes
+///
+/// <para>Taking Madison County, New York, USA (location code US-NY-053) as an example
+/// the various values for the regionNameFormat query parameter work as follows:</para>
+///
+/// <para>| Value | Description | Result | | ------| ----------- | ------ | | detailed
+/// | return a detailed description | Madison County, New York, US | | detailednoqual
+/// | return the name to the subnational1 level | Madison, New York | | full | return
+/// the full description | Madison, New York, United States | | namequal | return
+/// the qualified name | Madison County | | nameonly | return only the name of the
+/// region | Madison | | revdetailed | return the detailed description in reverse
+/// | US, New York, Madison County |</para>
+/// </summary>
+public sealed record class InfoRetrieveParams : ParamsBase
+{
+    public string? RegionCode { get; init; }
+
+    /// <summary>
+    /// The characters used to separate elements in the name.
+    /// </summary>
+    public string? Delim
+    {
+        get
+        {
+            if (!this._rawQueryData.TryGetValue("delim", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData["delim"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    /// <summary>
+    /// Control how the name is displayed.
+    /// </summary>
+    public ApiEnum<string, RegionNameFormat>? RegionNameFormat
+    {
+        get
+        {
+            if (!this._rawQueryData.TryGetValue("regionNameFormat", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<ApiEnum<string, RegionNameFormat>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData["regionNameFormat"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public InfoRetrieveParams() { }
+
+    public InfoRetrieveParams(
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData
+    )
+    {
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    InfoRetrieveParams(
+        FrozenDictionary<string, JsonElement> rawHeaderData,
+        FrozenDictionary<string, JsonElement> rawQueryData
+    )
+    {
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+    }
+#pragma warning restore CS8618
+
+    public static InfoRetrieveParams FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData
+    )
+    {
+        return new(
+            FrozenDictionary.ToFrozenDictionary(rawHeaderData),
+            FrozenDictionary.ToFrozenDictionary(rawQueryData)
+        );
+    }
+
+    public override System::Uri Url(ClientOptions options)
+    {
+        return new System::UriBuilder(
+            options.BaseUrl.ToString().TrimEnd('/')
+                + string.Format("/ref/region/info/{0}", this.RegionCode)
+        )
+        {
+            Query = this.QueryString(options),
+        }.Uri;
+    }
+
+    internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
+    {
+        ParamsBase.AddDefaultHeaders(request, options);
+        foreach (var item in this.RawHeaderData)
+        {
+            ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
+        }
+    }
+}
+
+/// <summary>
+/// Control how the name is displayed.
+/// </summary>
+[JsonConverter(typeof(RegionNameFormatConverter))]
+public enum RegionNameFormat
+{
+    Detailed,
+    Detailednoqual,
+    Full,
+    Namequal,
+    Nameonly,
+    Revdetailed,
+}
+
+sealed class RegionNameFormatConverter : JsonConverter<RegionNameFormat>
+{
+    public override RegionNameFormat Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "detailed" => RegionNameFormat.Detailed,
+            "detailednoqual" => RegionNameFormat.Detailednoqual,
+            "full" => RegionNameFormat.Full,
+            "namequal" => RegionNameFormat.Namequal,
+            "nameonly" => RegionNameFormat.Nameonly,
+            "revdetailed" => RegionNameFormat.Revdetailed,
+            _ => (RegionNameFormat)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        RegionNameFormat value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                RegionNameFormat.Detailed => "detailed",
+                RegionNameFormat.Detailednoqual => "detailednoqual",
+                RegionNameFormat.Full => "full",
+                RegionNameFormat.Namequal => "namequal",
+                RegionNameFormat.Nameonly => "nameonly",
+                RegionNameFormat.Revdetailed => "revdetailed",
+                _ => throw new PhoebeInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
