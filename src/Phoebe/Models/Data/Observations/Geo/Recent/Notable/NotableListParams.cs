@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -6,7 +7,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Phoebe.Core;
 using Phoebe.Exceptions;
-using System = System;
 
 namespace Phoebe.Models.Data.Observations.Geo.Recent.Notable;
 
@@ -25,7 +25,7 @@ public sealed record class NotableListParams : ParamsBase
             if (!this._rawQueryData.TryGetValue("lat", out JsonElement element))
                 throw new PhoebeInvalidDataException(
                     "'lat' cannot be null",
-                    new System::ArgumentOutOfRangeException("lat", "Missing required argument")
+                    new ArgumentOutOfRangeException("lat", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<float>(element, ModelBase.SerializerOptions);
@@ -46,7 +46,7 @@ public sealed record class NotableListParams : ParamsBase
             if (!this._rawQueryData.TryGetValue("lng", out JsonElement element))
                 throw new PhoebeInvalidDataException(
                     "'lng' cannot be null",
-                    new System::ArgumentOutOfRangeException("lng", "Missing required argument")
+                    new ArgumentOutOfRangeException("lng", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<float>(element, ModelBase.SerializerOptions);
@@ -253,9 +253,9 @@ public sealed record class NotableListParams : ParamsBase
         );
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override Uri Url(ClientOptions options)
     {
-        return new System::UriBuilder(
+        return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/') + "/data/obs/geo/recent/notable"
         )
         {
@@ -287,7 +287,7 @@ sealed class DetailConverter : JsonConverter<Detail>
 {
     public override Detail Read(
         ref Utf8JsonReader reader,
-        System::Type typeToConvert,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {
