@@ -130,7 +130,7 @@ public sealed record class NotableListParams : ParamsBase
     /// <summary>
     /// Fetch observations from up to 10 locations
     /// </summary>
-    public List<string>? R
+    public IReadOnlyList<string>? R
     {
         get
         {
