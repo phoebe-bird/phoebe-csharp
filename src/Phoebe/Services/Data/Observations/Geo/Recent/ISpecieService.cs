@@ -15,6 +15,11 @@ namespace Phoebe.Services.Data.Observations.Geo.Recent;
 /// </summary>
 public interface ISpecieService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ISpecieService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -34,18 +39,7 @@ public interface ISpecieService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get all observations of a species, seen up to 30 days ago, at any location
-    /// within a radius of up to 50 kilometers, from a given set of coordinates. Results
-    /// include only the most recent observation from each location in the region specified.
-    ///
-    /// <para>#### URL parameters</para>
-    ///
-    /// <para>| Name | Description | | ---------- | ----------- | | speciesCode |
-    /// The eBird species code. | #### Notes The species code is typically a 6-letter
-    /// code, e.g. horlar for Horned Lark. You can get complete set of species code
-    /// from the GET eBird Taxonomy end-point.</para>
-    /// </summary>
+    /// <inheritdoc cref="List(SpecieListParams, CancellationToken)"/>
     Task<List<Observation>> List(
         string speciesCode,
         SpecieListParams parameters,

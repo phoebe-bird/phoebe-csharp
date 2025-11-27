@@ -13,6 +13,11 @@ namespace Phoebe.Services.Ref.Hotspot;
 /// </summary>
 public interface IInfoService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IInfoService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -25,11 +30,7 @@ public interface IInfoService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get information on the location of a hotspot. #### Notes This API call only
-    /// works for hotspots. If you pass the location code for a private location or
-    /// an invalid location code then an HTTP 410 (Gone) error is returned.
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(InfoRetrieveParams, CancellationToken)"/>
     Task<InfoRetrieveResponse> Retrieve(
         string locID,
         InfoRetrieveParams? parameters = null,

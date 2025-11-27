@@ -4,8 +4,10 @@ using Phoebe.Services.Ref;
 
 namespace Phoebe.Services;
 
+/// <inheritdoc />
 public sealed class RefService : IRefService
 {
+    /// <inheritdoc/>
     public IRefService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new RefService(this._client.WithOptions(modifier));

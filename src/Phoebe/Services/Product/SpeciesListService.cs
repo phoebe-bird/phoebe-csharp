@@ -9,8 +9,10 @@ using Phoebe.Models.Product.SpeciesList;
 
 namespace Phoebe.Services.Product;
 
+/// <inheritdoc />
 public sealed class SpeciesListService : ISpeciesListService
 {
+    /// <inheritdoc/>
     public ISpeciesListService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new SpeciesListService(this._client.WithOptions(modifier));
@@ -23,6 +25,7 @@ public sealed class SpeciesListService : ISpeciesListService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<string>> List(
         SpeciesListListParams parameters,
         CancellationToken cancellationToken = default
@@ -44,6 +47,7 @@ public sealed class SpeciesListService : ISpeciesListService
         return await response.Deserialize<List<string>>(cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<List<string>> List(
         string regionCode,
         SpeciesListListParams? parameters = null,

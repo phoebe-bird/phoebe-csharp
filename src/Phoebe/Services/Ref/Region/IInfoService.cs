@@ -13,6 +13,11 @@ namespace Phoebe.Services.Ref.Region;
 /// </summary>
 public interface IInfoService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IInfoService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -34,20 +39,7 @@ public interface IInfoService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get information on the name and geographical area covered by a region. #### Notes
-    ///
-    /// <para>Taking Madison County, New York, USA (location code US-NY-053) as an
-    /// example the various values for the regionNameFormat query parameter work as follows:</para>
-    ///
-    /// <para>| Value | Description | Result | | ------| ----------- | ------ | |
-    /// detailed | return a detailed description | Madison County, New York, US |
-    /// | detailednoqual | return the name to the subnational1 level | Madison, New
-    /// York | | full | return the full description | Madison, New York, United States
-    /// | | namequal | return the qualified name | Madison County | | nameonly |
-    /// return only the name of the region | Madison | | revdetailed | return the
-    /// detailed description in reverse | US, New York, Madison County |</para>
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(InfoRetrieveParams, CancellationToken)"/>
     Task<InfoRetrieveResponse> Retrieve(
         string regionCode,
         InfoRetrieveParams? parameters = null,

@@ -9,8 +9,10 @@ using Phoebe.Models.Ref.Region.List;
 
 namespace Phoebe.Services.Ref.Region;
 
+/// <inheritdoc />
 public sealed class ListService : IListService
 {
+    /// <inheritdoc/>
     public IListService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new ListService(this._client.WithOptions(modifier));
@@ -23,6 +25,7 @@ public sealed class ListService : IListService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<ListListResponse>> List(
         ListListParams parameters,
         CancellationToken cancellationToken = default
@@ -54,6 +57,7 @@ public sealed class ListService : IListService
         return lists;
     }
 
+    /// <inheritdoc/>
     public async Task<List<ListListResponse>> List(
         string parentRegionCode,
         ListListParams parameters,

@@ -8,8 +8,10 @@ using Phoebe.Models.Product.Stats;
 
 namespace Phoebe.Services.Product;
 
+/// <inheritdoc />
 public sealed class StatService : IStatService
 {
+    /// <inheritdoc/>
     public IStatService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new StatService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class StatService : IStatService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<StatRetrieveResponse> Retrieve(
         StatRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -50,6 +53,7 @@ public sealed class StatService : IStatService
         return stat;
     }
 
+    /// <inheritdoc/>
     public async Task<StatRetrieveResponse> Retrieve(
         long d,
         StatRetrieveParams parameters,

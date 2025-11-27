@@ -8,8 +8,10 @@ using Phoebe.Models.Ref.Taxonomy.Locales;
 
 namespace Phoebe.Services.Ref.Taxonomy;
 
+/// <inheritdoc />
 public sealed class LocaleService : ILocaleService
 {
+    /// <inheritdoc/>
     public ILocaleService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new LocaleService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class LocaleService : ILocaleService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<LocaleListResponse>> List(
         LocaleListParams? parameters = null,
         CancellationToken cancellationToken = default

@@ -11,8 +11,10 @@ using Phoebe.Services.Data.Observations.Recent;
 
 namespace Phoebe.Services.Data.Observations;
 
+/// <inheritdoc />
 public sealed class RecentService : IRecentService
 {
+    /// <inheritdoc/>
     public IRecentService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new RecentService(this._client.WithOptions(modifier));
@@ -46,6 +48,7 @@ public sealed class RecentService : IRecentService
         get { return _historic.Value; }
     }
 
+    /// <inheritdoc/>
     public async Task<List<Observation>> List(
         RecentListParams parameters,
         CancellationToken cancellationToken = default
@@ -77,6 +80,7 @@ public sealed class RecentService : IRecentService
         return observations;
     }
 
+    /// <inheritdoc/>
     public async Task<List<Observation>> List(
         string regionCode,
         RecentListParams? parameters = null,

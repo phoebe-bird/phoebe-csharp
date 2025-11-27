@@ -10,8 +10,10 @@ using Phoebe.Models.Data.Observations.Recent.Species;
 
 namespace Phoebe.Services.Data.Observations.Recent;
 
+/// <inheritdoc />
 public sealed class SpecieService : ISpecieService
 {
+    /// <inheritdoc/>
     public ISpecieService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new SpecieService(this._client.WithOptions(modifier));
@@ -24,6 +26,7 @@ public sealed class SpecieService : ISpecieService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<Observation>> Retrieve(
         SpecieRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -55,6 +58,7 @@ public sealed class SpecieService : ISpecieService
         return observations;
     }
 
+    /// <inheritdoc/>
     public async Task<List<Observation>> Retrieve(
         string speciesCode,
         SpecieRetrieveParams parameters,

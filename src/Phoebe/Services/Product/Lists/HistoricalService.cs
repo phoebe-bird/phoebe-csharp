@@ -9,8 +9,10 @@ using Phoebe.Models.Product.Lists.Historical;
 
 namespace Phoebe.Services.Product.Lists;
 
+/// <inheritdoc />
 public sealed class HistoricalService : IHistoricalService
 {
+    /// <inheritdoc/>
     public IHistoricalService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new HistoricalService(this._client.WithOptions(modifier));
@@ -23,6 +25,7 @@ public sealed class HistoricalService : IHistoricalService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<HistoricalRetrieveResponse>> Retrieve(
         HistoricalRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -54,6 +57,7 @@ public sealed class HistoricalService : IHistoricalService
         return historicals;
     }
 
+    /// <inheritdoc/>
     public async Task<List<HistoricalRetrieveResponse>> Retrieve(
         long d,
         HistoricalRetrieveParams parameters,

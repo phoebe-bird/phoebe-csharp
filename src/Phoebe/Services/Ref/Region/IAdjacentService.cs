@@ -14,6 +14,11 @@ namespace Phoebe.Services.Ref.Region;
 /// </summary>
 public interface IAdjacentService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IAdjacentService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -26,11 +31,7 @@ public interface IAdjacentService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get the list of countries or regions that share a border with this one. ####
-    /// Notes Only subnational2 codes in the United States, New Zealand, or Mexico
-    /// are currently supported
-    /// </summary>
+    /// <inheritdoc cref="List(AdjacentListParams, CancellationToken)"/>
     Task<List<AdjacentListResponse>> List(
         string regionCode,
         AdjacentListParams? parameters = null,

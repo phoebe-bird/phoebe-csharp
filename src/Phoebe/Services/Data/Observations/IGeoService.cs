@@ -11,6 +11,11 @@ namespace Phoebe.Services.Data.Observations;
 /// </summary>
 public interface IGeoService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IGeoService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     Geo::IRecentService Recent { get; }

@@ -11,6 +11,11 @@ namespace Phoebe.Services.Ref;
 /// </summary>
 public interface ITaxonomyService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ITaxonomyService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     IEbirdService Ebird { get; }

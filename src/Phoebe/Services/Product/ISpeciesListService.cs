@@ -14,6 +14,11 @@ namespace Phoebe.Services.Product;
 /// </summary>
 public interface ISpeciesListService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ISpeciesListService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -26,11 +31,7 @@ public interface ISpeciesListService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get a list of species codes ever seen in a region, in taxonomic order (species
-    /// taxa only) #### Notes The results are usually updated every 10 seconds for
-    /// locations, every day for larger regions.
-    /// </summary>
+    /// <inheritdoc cref="List(SpeciesListListParams, CancellationToken)"/>
     Task<List<string>> List(
         string regionCode,
         SpeciesListListParams? parameters = null,

@@ -9,8 +9,10 @@ using Phoebe.Models.Ref.Taxonomy.Forms;
 
 namespace Phoebe.Services.Ref.Taxonomy;
 
+/// <inheritdoc />
 public sealed class FormService : IFormService
 {
+    /// <inheritdoc/>
     public IFormService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new FormService(this._client.WithOptions(modifier));
@@ -23,6 +25,7 @@ public sealed class FormService : IFormService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<string>> List(
         FormListParams parameters,
         CancellationToken cancellationToken = default
@@ -44,6 +47,7 @@ public sealed class FormService : IFormService
         return await response.Deserialize<List<string>>(cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<List<string>> List(
         string speciesCode,
         FormListParams? parameters = null,

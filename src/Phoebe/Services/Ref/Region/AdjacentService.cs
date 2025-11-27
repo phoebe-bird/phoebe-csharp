@@ -9,8 +9,10 @@ using Phoebe.Models.Ref.Region.Adjacent;
 
 namespace Phoebe.Services.Ref.Region;
 
+/// <inheritdoc />
 public sealed class AdjacentService : IAdjacentService
 {
+    /// <inheritdoc/>
     public IAdjacentService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new AdjacentService(this._client.WithOptions(modifier));
@@ -23,6 +25,7 @@ public sealed class AdjacentService : IAdjacentService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<AdjacentListResponse>> List(
         AdjacentListParams parameters,
         CancellationToken cancellationToken = default
@@ -54,6 +57,7 @@ public sealed class AdjacentService : IAdjacentService
         return adjacents;
     }
 
+    /// <inheritdoc/>
     public async Task<List<AdjacentListResponse>> List(
         string regionCode,
         AdjacentListParams? parameters = null,

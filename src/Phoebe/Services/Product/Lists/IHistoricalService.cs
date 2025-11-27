@@ -14,6 +14,11 @@ namespace Phoebe.Services.Product.Lists;
 /// </summary>
 public interface IHistoricalService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IHistoricalService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -25,10 +30,7 @@ public interface IHistoricalService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get information on the checklists submitted on a given date for a country
-    /// or region.
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(HistoricalRetrieveParams, CancellationToken)"/>
     Task<List<HistoricalRetrieveResponse>> Retrieve(
         long d,
         HistoricalRetrieveParams parameters,

@@ -13,6 +13,11 @@ namespace Phoebe.Services.Product;
 /// </summary>
 public interface IStatService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IStatService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -25,11 +30,7 @@ public interface IStatService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get a summary of the number of checklist submitted, species seen and contributors
-    /// on a given date for a country or region. #### Notes The results are updated
-    /// every 15 minutes.
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(StatRetrieveParams, CancellationToken)"/>
     Task<StatRetrieveResponse> Retrieve(
         long d,
         StatRetrieveParams parameters,

@@ -4,8 +4,10 @@ using Phoebe.Services.Product;
 
 namespace Phoebe.Services;
 
+/// <inheritdoc />
 public sealed class ProductService : IProductService
 {
+    /// <inheritdoc/>
     public IProductService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new ProductService(this._client.WithOptions(modifier));

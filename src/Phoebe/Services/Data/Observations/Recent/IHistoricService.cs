@@ -15,6 +15,11 @@ namespace Phoebe.Services.Data.Observations.Recent;
 /// </summary>
 public interface IHistoricService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IHistoricService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -28,12 +33,7 @@ public interface IHistoricService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get a list of all taxa seen in a country, region or location on a specific
-    /// date, with the specific observations determined by the "rank" parameter (defaults
-    /// to latest observation on the date). #### Notes Responses may be cached for
-    /// 30 minutes
-    /// </summary>
+    /// <inheritdoc cref="List(HistoricListParams, CancellationToken)"/>
     Task<List<Observation>> List(
         long d,
         HistoricListParams parameters,

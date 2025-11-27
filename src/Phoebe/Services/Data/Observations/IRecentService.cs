@@ -16,6 +16,11 @@ namespace Phoebe.Services.Data.Observations;
 /// </summary>
 public interface IRecentService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IRecentService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     INotableService Notable { get; }
@@ -34,11 +39,7 @@ public interface IRecentService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get the list of recent observations (up to 30 days ago) of birds seen in a
-    /// country, state, county, or location. Results include only the most recent
-    /// observation for each species in the region specified.
-    /// </summary>
+    /// <inheritdoc cref="List(RecentListParams, CancellationToken)"/>
     Task<List<Observation>> List(
         string regionCode,
         RecentListParams? parameters = null,

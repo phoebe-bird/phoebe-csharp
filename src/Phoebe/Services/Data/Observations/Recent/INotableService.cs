@@ -15,6 +15,11 @@ namespace Phoebe.Services.Data.Observations.Recent;
 /// </summary>
 public interface INotableService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     INotableService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -28,12 +33,7 @@ public interface INotableService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get the list of recent, notable observations (up to 30 days ago) of birds
-    /// seen in a country, region or location. Notable observations can be for locally
-    /// or nationally rare species or are otherwise unusual, e.g. over-wintering birds
-    /// in a species which is normally only a summer visitor.
-    /// </summary>
+    /// <inheritdoc cref="List(NotableListParams, CancellationToken)"/>
     Task<List<Observation>> List(
         string regionCode,
         NotableListParams? parameters = null,

@@ -8,8 +8,10 @@ using Phoebe.Models.Ref.Hotspot.Info;
 
 namespace Phoebe.Services.Ref.Hotspot;
 
+/// <inheritdoc />
 public sealed class InfoService : IInfoService
 {
+    /// <inheritdoc/>
     public IInfoService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new InfoService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class InfoService : IInfoService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<InfoRetrieveResponse> Retrieve(
         InfoRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -50,6 +53,7 @@ public sealed class InfoService : IInfoService
         return info;
     }
 
+    /// <inheritdoc/>
     public async Task<InfoRetrieveResponse> Retrieve(
         string locID,
         InfoRetrieveParams? parameters = null,
