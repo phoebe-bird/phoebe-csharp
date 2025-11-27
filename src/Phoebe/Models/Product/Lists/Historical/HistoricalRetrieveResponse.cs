@@ -245,7 +245,7 @@ public sealed record class HistoricalRetrieveResponse : ModelBase
         }
     }
 
-    public List<global::Phoebe.Models.Product.Lists.Historical.Ob>? Obs
+    public IReadOnlyList<global::Phoebe.Models.Product.Lists.Historical.Ob>? Obs
     {
         get
         {
@@ -897,7 +897,7 @@ class LocFromRaw : IFromRaw<global::Phoebe.Models.Product.Lists.Historical.Loc>
 )]
 public sealed record class Ob : ModelBase
 {
-    public List<global::Phoebe.Models.Product.Lists.Historical.ObsAux>? ObsAux
+    public IReadOnlyList<global::Phoebe.Models.Product.Lists.Historical.ObsAux>? ObsAux
     {
         get
         {

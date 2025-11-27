@@ -10,7 +10,7 @@ namespace Phoebe.Models.Ref.Taxonomy.Ebird;
 [JsonConverter(typeof(ModelConverter<EbirdRetrieveResponse, EbirdRetrieveResponseFromRaw>))]
 public sealed record class EbirdRetrieveResponse : ModelBase
 {
-    public List<string>? BandingCodes
+    public IReadOnlyList<string>? BandingCodes
     {
         get
         {
@@ -79,7 +79,7 @@ public sealed record class EbirdRetrieveResponse : ModelBase
         }
     }
 
-    public List<string>? ComNameCodes
+    public IReadOnlyList<string>? ComNameCodes
     {
         get
         {
@@ -217,7 +217,7 @@ public sealed record class EbirdRetrieveResponse : ModelBase
         }
     }
 
-    public List<string>? SciNameCodes
+    public IReadOnlyList<string>? SciNameCodes
     {
         get
         {

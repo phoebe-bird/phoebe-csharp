@@ -56,7 +56,7 @@ public sealed record class SpeciesGroupListResponse : ModelBase
         }
     }
 
-    public List<List<float>>? TaxonOrderBounds
+    public IReadOnlyList<List<float>>? TaxonOrderBounds
     {
         get
         {

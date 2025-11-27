@@ -164,7 +164,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// <summary>
     /// Fetch observations from up to 50 locations
     /// </summary>
-    public List<string>? R
+    public IReadOnlyList<string>? R
     {
         get
         {

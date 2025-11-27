@@ -240,7 +240,7 @@ public sealed record class ChecklistViewResponse : ModelBase
         }
     }
 
-    public List<Ob>? Obs
+    public IReadOnlyList<Ob>? Obs
     {
         get
         {
@@ -876,7 +876,7 @@ class LocFromRaw : IFromRaw<Loc>
 [JsonConverter(typeof(ModelConverter<Ob, ObFromRaw>))]
 public sealed record class Ob : ModelBase
 {
-    public List<ObsAux>? ObsAux
+    public IReadOnlyList<ObsAux>? ObsAux
     {
         get
         {
