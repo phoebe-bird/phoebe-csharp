@@ -14,6 +14,11 @@ namespace Phoebe.Services.Ref.Taxonomy;
 /// </summary>
 public interface IFormService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IFormService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -25,10 +30,7 @@ public interface IFormService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// For a species, get the list of subspecies recognised in the taxonomy. The
-    /// results include the species that was passed in.
-    /// </summary>
+    /// <inheritdoc cref="List(FormListParams, CancellationToken)"/>
     Task<List<string>> List(
         string speciesCode,
         FormListParams? parameters = null,

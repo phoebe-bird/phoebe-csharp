@@ -14,6 +14,11 @@ namespace Phoebe.Services.Ref.Taxonomy;
 /// </summary>
 public interface ISpeciesGroupService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ISpeciesGroupService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -26,11 +31,7 @@ public interface ISpeciesGroupService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get the list of species groups, e.g. terns, finches, etc. #### Notes Merlin
-    /// puts like birds together, with Falcons next to Hawks, whereas eBird follows
-    /// taxonomic order.
-    /// </summary>
+    /// <inheritdoc cref="List(SpeciesGroupListParams, CancellationToken)"/>
     Task<List<SpeciesGroupListResponse>> List(
         ApiEnum<string, SpeciesGrouping> speciesGrouping,
         SpeciesGroupListParams? parameters = null,

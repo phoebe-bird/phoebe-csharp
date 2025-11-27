@@ -8,8 +8,10 @@ using Phoebe.Models.Ref.Hotspot.Geo;
 
 namespace Phoebe.Services.Ref.Hotspot;
 
+/// <inheritdoc />
 public sealed class GeoService : IGeoService
 {
+    /// <inheritdoc/>
     public IGeoService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new GeoService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class GeoService : IGeoService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<GeoRetrieveResponse>> Retrieve(
         GeoRetrieveParams parameters,
         CancellationToken cancellationToken = default

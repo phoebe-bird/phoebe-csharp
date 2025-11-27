@@ -8,8 +8,10 @@ using Phoebe.Models.Product.Checklist;
 
 namespace Phoebe.Services.Product;
 
+/// <inheritdoc />
 public sealed class ChecklistService : IChecklistService
 {
+    /// <inheritdoc/>
     public IChecklistService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new ChecklistService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class ChecklistService : IChecklistService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<ChecklistViewResponse> View(
         ChecklistViewParams parameters,
         CancellationToken cancellationToken = default
@@ -50,6 +53,7 @@ public sealed class ChecklistService : IChecklistService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<ChecklistViewResponse> View(
         string subID,
         ChecklistViewParams? parameters = null,

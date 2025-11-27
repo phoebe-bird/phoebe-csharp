@@ -8,8 +8,10 @@ using Phoebe.Models.Ref.Taxonomy.Ebird;
 
 namespace Phoebe.Services.Ref.Taxonomy;
 
+/// <inheritdoc />
 public sealed class EbirdService : IEbirdService
 {
+    /// <inheritdoc/>
     public IEbirdService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new EbirdService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class EbirdService : IEbirdService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<EbirdRetrieveResponse>> Retrieve(
         EbirdRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default

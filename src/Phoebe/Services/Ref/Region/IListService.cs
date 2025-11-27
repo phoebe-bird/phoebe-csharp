@@ -14,6 +14,11 @@ namespace Phoebe.Services.Ref.Region;
 /// </summary>
 public interface IListService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IListService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -27,12 +32,7 @@ public interface IListService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get the list of sub-regions for a given country or region. #### Notes Not
-    /// all combinations of region type and region code are valid. You can fetch all
-    /// the subnational1 or subnational2 regions for a country however you can only
-    /// specify a region type of 'country' when using 'world' as a region code.
-    /// </summary>
+    /// <inheritdoc cref="List(ListListParams, CancellationToken)"/>
     Task<List<ListListResponse>> List(
         string parentRegionCode,
         ListListParams parameters,

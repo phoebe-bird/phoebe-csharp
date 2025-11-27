@@ -15,6 +15,11 @@ namespace Phoebe.Services.Data.Observations.Nearest;
 /// </summary>
 public interface IGeoSpecieService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IGeoSpecieService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -27,11 +32,7 @@ public interface IGeoSpecieService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Find the nearest locations where a species has been seen recently. #### Notes
-    /// The species code is typically a 6-letter code, e.g. barswa for Barn Swallow.
-    /// You can get complete set of species code from the GET eBird Taxonomy end-point.
-    /// </summary>
+    /// <inheritdoc cref="List(GeoSpecieListParams, CancellationToken)"/>
     Task<List<Observation>> List(
         string speciesCode,
         GeoSpecieListParams parameters,

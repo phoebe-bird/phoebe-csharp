@@ -4,8 +4,10 @@ using Phoebe.Services.Ref.Region;
 
 namespace Phoebe.Services.Ref;
 
+/// <inheritdoc />
 public sealed class RegionService : IRegionService
 {
+    /// <inheritdoc/>
     public IRegionService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new RegionService(this._client.WithOptions(modifier));

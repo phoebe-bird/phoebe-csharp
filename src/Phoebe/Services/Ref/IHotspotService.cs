@@ -15,6 +15,11 @@ namespace Phoebe.Services.Ref;
 /// </summary>
 public interface IHotspotService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IHotspotService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     IGeoService Geo { get; }
@@ -29,9 +34,7 @@ public interface IHotspotService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Hotspots in a region
-    /// </summary>
+    /// <inheritdoc cref="List(HotspotListParams, CancellationToken)"/>
     Task<List<HotspotListResponse>> List(
         string regionCode,
         HotspotListParams? parameters = null,

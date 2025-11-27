@@ -4,8 +4,10 @@ using Phoebe.Services.Data.Observations;
 
 namespace Phoebe.Services.Data;
 
+/// <inheritdoc />
 public sealed class ObservationService : IObservationService
 {
+    /// <inheritdoc/>
     public IObservationService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new ObservationService(this._client.WithOptions(modifier));

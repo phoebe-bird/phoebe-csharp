@@ -9,8 +9,10 @@ using Phoebe.Models.Product.Top100;
 
 namespace Phoebe.Services.Product;
 
+/// <inheritdoc />
 public sealed class Top100Service : ITop100Service
 {
+    /// <inheritdoc/>
     public ITop100Service WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new Top100Service(this._client.WithOptions(modifier));
@@ -23,6 +25,7 @@ public sealed class Top100Service : ITop100Service
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<Top100RetrieveResponse>> Retrieve(
         Top100RetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -54,6 +57,7 @@ public sealed class Top100Service : ITop100Service
         return top100s;
     }
 
+    /// <inheritdoc/>
     public async Task<List<Top100RetrieveResponse>> Retrieve(
         long d,
         Top100RetrieveParams parameters,

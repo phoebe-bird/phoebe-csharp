@@ -15,6 +15,11 @@ namespace Phoebe.Services.Data.Observations.Recent;
 /// </summary>
 public interface ISpecieService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ISpecieService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -33,17 +38,7 @@ public interface ISpecieService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get the recent observations, up to 30 days ago, of a particular species in
-    /// a country, region or location. Results include only the most recent observation
-    /// from each location in the region specified. #### Notes
-    ///
-    /// <para>The species code is typically a 6-letter code, e.g. cangoo for Canada
-    /// Goose. You can get complete set of species code from the GET eBird Taxonomy end-point.</para>
-    ///
-    /// <para>When using the *r* query parameter set the *regionCode* URL parameter
-    /// to an empty string.</para>
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(SpecieRetrieveParams, CancellationToken)"/>
     Task<List<Observation>> Retrieve(
         string speciesCode,
         SpecieRetrieveParams parameters,

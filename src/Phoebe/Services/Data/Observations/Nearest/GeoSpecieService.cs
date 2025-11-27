@@ -10,8 +10,10 @@ using Phoebe.Models.Data.Observations.Nearest.GeoSpecies;
 
 namespace Phoebe.Services.Data.Observations.Nearest;
 
+/// <inheritdoc />
 public sealed class GeoSpecieService : IGeoSpecieService
 {
+    /// <inheritdoc/>
     public IGeoSpecieService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new GeoSpecieService(this._client.WithOptions(modifier));
@@ -24,6 +26,7 @@ public sealed class GeoSpecieService : IGeoSpecieService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<Observation>> List(
         GeoSpecieListParams parameters,
         CancellationToken cancellationToken = default
@@ -55,6 +58,7 @@ public sealed class GeoSpecieService : IGeoSpecieService
         return observations;
     }
 
+    /// <inheritdoc/>
     public async Task<List<Observation>> List(
         string speciesCode,
         GeoSpecieListParams parameters,

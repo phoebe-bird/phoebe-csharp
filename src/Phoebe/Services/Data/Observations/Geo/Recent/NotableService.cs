@@ -9,8 +9,10 @@ using Phoebe.Models.Data.Observations.Geo.Recent.Notable;
 
 namespace Phoebe.Services.Data.Observations.Geo.Recent;
 
+/// <inheritdoc />
 public sealed class NotableService : INotableService
 {
+    /// <inheritdoc/>
     public INotableService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new NotableService(this._client.WithOptions(modifier));
@@ -23,6 +25,7 @@ public sealed class NotableService : INotableService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<Observation>> List(
         NotableListParams parameters,
         CancellationToken cancellationToken = default

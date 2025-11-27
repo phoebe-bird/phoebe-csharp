@@ -13,6 +13,11 @@ namespace Phoebe.Services.Product;
 /// </summary>
 public interface IChecklistService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IChecklistService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -27,13 +32,7 @@ public interface IChecklistService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get the details and observations of a checklist. #### Notes Do NOT use this
-    /// to download large amounts of data. You will be banned if you do. In the fields
-    /// for each observation, the following fields are duplicates or obsolete and
-    /// will be removed at a future date: *howManyAtleast*, *howManyAtmost*, *hideFlags*,
-    /// *projId*, *subId*, *subnational1Code* and *present*.
-    /// </summary>
+    /// <inheritdoc cref="View(ChecklistViewParams, CancellationToken)"/>
     Task<ChecklistViewResponse> View(
         string subID,
         ChecklistViewParams? parameters = null,

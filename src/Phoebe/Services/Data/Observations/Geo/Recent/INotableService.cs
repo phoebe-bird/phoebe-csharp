@@ -15,6 +15,11 @@ namespace Phoebe.Services.Data.Observations.Geo.Recent;
 /// </summary>
 public interface INotableService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     INotableService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>

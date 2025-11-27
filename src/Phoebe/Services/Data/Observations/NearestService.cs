@@ -4,8 +4,10 @@ using Phoebe.Services.Data.Observations.Nearest;
 
 namespace Phoebe.Services.Data.Observations;
 
+/// <inheritdoc />
 public sealed class NearestService : INearestService
 {
+    /// <inheritdoc/>
     public INearestService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new NearestService(this._client.WithOptions(modifier));

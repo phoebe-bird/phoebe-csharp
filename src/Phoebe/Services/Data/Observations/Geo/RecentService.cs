@@ -10,8 +10,10 @@ using Phoebe.Services.Data.Observations.Geo.Recent;
 
 namespace Phoebe.Services.Data.Observations.Geo;
 
+/// <inheritdoc />
 public sealed class RecentService : global::Phoebe.Services.Data.Observations.Geo.IRecentService
 {
+    /// <inheritdoc/>
     public global::Phoebe.Services.Data.Observations.Geo.IRecentService WithOptions(
         Func<ClientOptions, ClientOptions> modifier
     )
@@ -42,6 +44,7 @@ public sealed class RecentService : global::Phoebe.Services.Data.Observations.Ge
         get { return _notable.Value; }
     }
 
+    /// <inheritdoc/>
     public async Task<List<Observation>> List(
         RecentListParams parameters,
         CancellationToken cancellationToken = default

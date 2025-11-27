@@ -10,8 +10,10 @@ using Phoebe.Services.Ref.Hotspot;
 
 namespace Phoebe.Services.Ref;
 
+/// <inheritdoc />
 public sealed class HotspotService : IHotspotService
 {
+    /// <inheritdoc/>
     public IHotspotService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new HotspotService(this._client.WithOptions(modifier));
@@ -38,6 +40,7 @@ public sealed class HotspotService : IHotspotService
         get { return _info.Value; }
     }
 
+    /// <inheritdoc/>
     public async Task<List<HotspotListResponse>> List(
         HotspotListParams parameters,
         CancellationToken cancellationToken = default
@@ -69,6 +72,7 @@ public sealed class HotspotService : IHotspotService
         return hotspots;
     }
 
+    /// <inheritdoc/>
     public async Task<List<HotspotListResponse>> List(
         string regionCode,
         HotspotListParams? parameters = null,

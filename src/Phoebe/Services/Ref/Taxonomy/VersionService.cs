@@ -8,8 +8,10 @@ using Phoebe.Models.Ref.Taxonomy.Versions;
 
 namespace Phoebe.Services.Ref.Taxonomy;
 
+/// <inheritdoc />
 public sealed class VersionService : IVersionService
 {
+    /// <inheritdoc/>
     public IVersionService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new VersionService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class VersionService : IVersionService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<VersionListResponse>> List(
         VersionListParams? parameters = null,
         CancellationToken cancellationToken = default

@@ -9,8 +9,10 @@ using Phoebe.Models.Ref.Taxonomy.SpeciesGroups;
 
 namespace Phoebe.Services.Ref.Taxonomy;
 
+/// <inheritdoc />
 public sealed class SpeciesGroupService : ISpeciesGroupService
 {
+    /// <inheritdoc/>
     public ISpeciesGroupService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new SpeciesGroupService(this._client.WithOptions(modifier));
@@ -23,6 +25,7 @@ public sealed class SpeciesGroupService : ISpeciesGroupService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<SpeciesGroupListResponse>> List(
         SpeciesGroupListParams parameters,
         CancellationToken cancellationToken = default
@@ -54,6 +57,7 @@ public sealed class SpeciesGroupService : ISpeciesGroupService
         return speciesGroups;
     }
 
+    /// <inheritdoc/>
     public async Task<List<SpeciesGroupListResponse>> List(
         ApiEnum<string, SpeciesGrouping> speciesGrouping,
         SpeciesGroupListParams? parameters = null,

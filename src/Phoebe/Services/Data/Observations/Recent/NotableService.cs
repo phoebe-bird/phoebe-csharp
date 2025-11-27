@@ -10,8 +10,10 @@ using Phoebe.Models.Data.Observations.Recent.Notable;
 
 namespace Phoebe.Services.Data.Observations.Recent;
 
+/// <inheritdoc />
 public sealed class NotableService : INotableService
 {
+    /// <inheritdoc/>
     public INotableService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new NotableService(this._client.WithOptions(modifier));
@@ -24,6 +26,7 @@ public sealed class NotableService : INotableService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<List<Observation>> List(
         NotableListParams parameters,
         CancellationToken cancellationToken = default
@@ -55,6 +58,7 @@ public sealed class NotableService : INotableService
         return observations;
     }
 
+    /// <inheritdoc/>
     public async Task<List<Observation>> List(
         string regionCode,
         NotableListParams? parameters = null,

@@ -4,8 +4,10 @@ using Geo = Phoebe.Services.Data.Observations.Geo;
 
 namespace Phoebe.Services.Data.Observations;
 
+/// <inheritdoc />
 public sealed class GeoService : IGeoService
 {
+    /// <inheritdoc/>
     public IGeoService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new GeoService(this._client.WithOptions(modifier));

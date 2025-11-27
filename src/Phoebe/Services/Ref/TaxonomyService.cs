@@ -4,8 +4,10 @@ using Phoebe.Services.Ref.Taxonomy;
 
 namespace Phoebe.Services.Ref;
 
+/// <inheritdoc />
 public sealed class TaxonomyService : ITaxonomyService
 {
+    /// <inheritdoc/>
     public ITaxonomyService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new TaxonomyService(this._client.WithOptions(modifier));

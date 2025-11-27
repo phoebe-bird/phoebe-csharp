@@ -14,6 +14,11 @@ namespace Phoebe.Services.Product;
 /// </summary>
 public interface ITop100Service
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ITop100Service WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -40,25 +45,7 @@ public interface ITop100Service
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get the top 100 contributors on a given date for a country or region.
-    ///
-    /// <para>#### Notes</para>
-    ///
-    /// <para>The results are updated every 15 minutes.</para>
-    ///
-    /// <para>When ordering by the number of completed checklists, the number of species
-    /// seen will always be zero. Similarly when ordering by the number of species
-    /// seen the number of completed checklists will always be zero. <b>Selected
-    /// Response Field Notes</b></para>
-    ///
-    /// <para>profileHandle - if a user has enabled their profile, this is the handle
-    /// to reach it via ebird.org/ebird/profile/{profileHandle}</para>
-    ///
-    /// <para>numSpecies - always zero when checklistSort parameter is true. Invalid
-    /// observations ARE included in this total numCompleteChecklists - always zero
-    /// when checklistSort parameter is false</para>
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(Top100RetrieveParams, CancellationToken)"/>
     Task<List<Top100RetrieveResponse>> Retrieve(
         long d,
         Top100RetrieveParams parameters,

@@ -11,6 +11,11 @@ namespace Phoebe.Services.Ref;
 /// </summary>
 public interface IRegionService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IRegionService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     IAdjacentService Adjacent { get; }
