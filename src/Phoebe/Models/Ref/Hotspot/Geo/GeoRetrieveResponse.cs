@@ -12,13 +12,7 @@ public sealed record class GeoRetrieveResponse : ModelBase
 {
     public string? CountryCode
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("countryCode", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "countryCode"); }
         init
         {
             if (value == null)
@@ -26,22 +20,13 @@ public sealed record class GeoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["countryCode"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "countryCode", value);
         }
     }
 
     public double? Lat
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("lat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<double>(this.RawData, "lat"); }
         init
         {
             if (value == null)
@@ -49,22 +34,13 @@ public sealed record class GeoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["lat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "lat", value);
         }
     }
 
     public string? LatestObsDt
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("latestObsDt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "latestObsDt"); }
         init
         {
             if (value == null)
@@ -72,22 +48,13 @@ public sealed record class GeoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["latestObsDt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "latestObsDt", value);
         }
     }
 
     public double? Lng
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("lng", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<double>(this.RawData, "lng"); }
         init
         {
             if (value == null)
@@ -95,22 +62,13 @@ public sealed record class GeoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["lng"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "lng", value);
         }
     }
 
     public string? LocID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("locId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "locId"); }
         init
         {
             if (value == null)
@@ -118,22 +76,13 @@ public sealed record class GeoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["locId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "locId", value);
         }
     }
 
     public string? LocName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("locName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "locName"); }
         init
         {
             if (value == null)
@@ -141,22 +90,13 @@ public sealed record class GeoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["locName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "locName", value);
         }
     }
 
     public int? NumSpeciesAllTime
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("numSpeciesAllTime", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<int>(this.RawData, "numSpeciesAllTime"); }
         init
         {
             if (value == null)
@@ -164,22 +104,13 @@ public sealed record class GeoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numSpeciesAllTime"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "numSpeciesAllTime", value);
         }
     }
 
     public string? Subnational1Code
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("subnational1Code", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "subnational1Code"); }
         init
         {
             if (value == null)
@@ -187,22 +118,13 @@ public sealed record class GeoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["subnational1Code"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "subnational1Code", value);
         }
     }
 
     public string? Subnational2Code
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("subnational2Code", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "subnational2Code"); }
         init
         {
             if (value == null)
@@ -210,10 +132,7 @@ public sealed record class GeoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["subnational2Code"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "subnational2Code", value);
         }
     }
 

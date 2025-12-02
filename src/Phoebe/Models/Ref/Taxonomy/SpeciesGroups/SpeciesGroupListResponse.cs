@@ -12,13 +12,7 @@ public sealed record class SpeciesGroupListResponse : ModelBase
 {
     public string? GroupName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("groupName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "groupName"); }
         init
         {
             if (value == null)
@@ -26,22 +20,13 @@ public sealed record class SpeciesGroupListResponse : ModelBase
                 return;
             }
 
-            this._rawData["groupName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "groupName", value);
         }
     }
 
     public long? GroupOrder
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("groupOrder", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawData, "groupOrder"); }
         init
         {
             if (value == null)
@@ -49,10 +34,7 @@ public sealed record class SpeciesGroupListResponse : ModelBase
                 return;
             }
 
-            this._rawData["groupOrder"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "groupOrder", value);
         }
     }
 
@@ -60,13 +42,7 @@ public sealed record class SpeciesGroupListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("taxonOrderBounds", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<List<float>>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<List<List<float>>>(this.RawData, "taxonOrderBounds");
         }
         init
         {
@@ -75,10 +51,7 @@ public sealed record class SpeciesGroupListResponse : ModelBase
                 return;
             }
 
-            this._rawData["taxonOrderBounds"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "taxonOrderBounds", value);
         }
     }
 

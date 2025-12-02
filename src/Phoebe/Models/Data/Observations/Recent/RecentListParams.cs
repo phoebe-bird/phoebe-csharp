@@ -24,13 +24,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public long? Back
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("back", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "back"); }
         init
         {
             if (value == null)
@@ -38,10 +32,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["back"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "back", value);
         }
     }
 
@@ -50,16 +41,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Cat>? Cat
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("cat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Cat>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<ApiEnum<string, Cat>>(this.RawQueryData, "cat"); }
         init
         {
             if (value == null)
@@ -67,10 +49,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["cat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "cat", value);
         }
     }
 
@@ -79,13 +58,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public bool? Hotspot
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("hotspot", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "hotspot"); }
         init
         {
             if (value == null)
@@ -93,10 +66,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["hotspot"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "hotspot", value);
         }
     }
 
@@ -105,13 +75,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public bool? IncludeProvisional
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("includeProvisional", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "includeProvisional"); }
         init
         {
             if (value == null)
@@ -119,10 +83,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["includeProvisional"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "includeProvisional", value);
         }
     }
 
@@ -131,13 +92,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("maxResults", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
         init
         {
             if (value == null)
@@ -145,10 +100,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["maxResults"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "maxResults", value);
         }
     }
 
@@ -157,13 +109,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string>? R
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("r", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawQueryData, "r"); }
         init
         {
             if (value == null)
@@ -171,10 +117,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["r"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "r", value);
         }
     }
 
@@ -183,13 +126,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public string? SppLocale
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("sppLocale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "sppLocale"); }
         init
         {
             if (value == null)
@@ -197,10 +134,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["sppLocale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "sppLocale", value);
         }
     }
 

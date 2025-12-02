@@ -12,13 +12,7 @@ public sealed record class ListRetrieveResponse : ModelBase
 {
     public bool? AllObsReported
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("allObsReported", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "allObsReported"); }
         init
         {
             if (value == null)
@@ -26,22 +20,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["allObsReported"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "allObsReported", value);
         }
     }
 
     public string? ChecklistID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("checklistId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "checklistId"); }
         init
         {
             if (value == null)
@@ -49,22 +34,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["checklistId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "checklistId", value);
         }
     }
 
     public string? CreationDt
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("creationDt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "creationDt"); }
         init
         {
             if (value == null)
@@ -72,22 +48,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["creationDt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "creationDt", value);
         }
     }
 
     public double? DurationHrs
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("durationHrs", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<double>(this.RawData, "durationHrs"); }
         init
         {
             if (value == null)
@@ -95,22 +62,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["durationHrs"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "durationHrs", value);
         }
     }
 
     public string? ISOObsDate
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("isoObsDate", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "isoObsDate"); }
         init
         {
             if (value == null)
@@ -118,22 +76,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["isoObsDate"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "isoObsDate", value);
         }
     }
 
     public string? LastEditedDt
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("lastEditedDt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "lastEditedDt"); }
         init
         {
             if (value == null)
@@ -141,22 +90,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["lastEditedDt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "lastEditedDt", value);
         }
     }
 
     public Loc? Loc
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("loc", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Loc?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<Loc>(this.RawData, "loc"); }
         init
         {
             if (value == null)
@@ -164,22 +104,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["loc"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "loc", value);
         }
     }
 
     public string? LocID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("locId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "locId"); }
         init
         {
             if (value == null)
@@ -187,22 +118,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["locId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "locId", value);
         }
     }
 
     public long? NumObservers
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("numObservers", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawData, "numObservers"); }
         init
         {
             if (value == null)
@@ -210,22 +132,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numObservers"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "numObservers", value);
         }
     }
 
     public int? NumSpecies
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("numSpecies", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<int>(this.RawData, "numSpecies"); }
         init
         {
             if (value == null)
@@ -233,22 +146,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numSpecies"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "numSpecies", value);
         }
     }
 
     public IReadOnlyList<Ob>? Obs
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("obs", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<Ob>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<Ob>>(this.RawData, "obs"); }
         init
         {
             if (value == null)
@@ -256,22 +160,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["obs"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "obs", value);
         }
     }
 
     public string? ObsDt
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("obsDt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "obsDt"); }
         init
         {
             if (value == null)
@@ -279,22 +174,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["obsDt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "obsDt", value);
         }
     }
 
     public string? ObsTime
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("obsTime", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "obsTime"); }
         init
         {
             if (value == null)
@@ -302,22 +188,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["obsTime"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "obsTime", value);
         }
     }
 
     public bool? ObsTimeValid
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("obsTimeValid", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "obsTimeValid"); }
         init
         {
             if (value == null)
@@ -325,22 +202,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["obsTimeValid"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "obsTimeValid", value);
         }
     }
 
     public string? ProjID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("projId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "projId"); }
         init
         {
             if (value == null)
@@ -348,22 +216,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["projId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "projId", value);
         }
     }
 
     public string? ProtocolID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("protocolId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "protocolId"); }
         init
         {
             if (value == null)
@@ -371,22 +230,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["protocolId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "protocolId", value);
         }
     }
 
     public string? SubID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("subId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "subId"); }
         init
         {
             if (value == null)
@@ -394,22 +244,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["subId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "subId", value);
         }
     }
 
     public string? SubmissionMethodCode
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("submissionMethodCode", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "submissionMethodCode"); }
         init
         {
             if (value == null)
@@ -417,22 +258,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["submissionMethodCode"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "submissionMethodCode", value);
         }
     }
 
     public string? Subnational1Code
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("subnational1Code", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "subnational1Code"); }
         init
         {
             if (value == null)
@@ -440,22 +272,13 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["subnational1Code"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "subnational1Code", value);
         }
     }
 
     public string? UserDisplayName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("userDisplayName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "userDisplayName"); }
         init
         {
             if (value == null)
@@ -463,10 +286,7 @@ public sealed record class ListRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["userDisplayName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "userDisplayName", value);
         }
     }
 
@@ -532,13 +352,7 @@ public sealed record class Loc : ModelBase
 {
     public string? CountryCode
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("countryCode", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "countryCode"); }
         init
         {
             if (value == null)
@@ -546,22 +360,13 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["countryCode"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "countryCode", value);
         }
     }
 
     public string? CountryName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("countryName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "countryName"); }
         init
         {
             if (value == null)
@@ -569,22 +374,13 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["countryName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "countryName", value);
         }
     }
 
     public string? HierarchicalName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("hierarchicalName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "hierarchicalName"); }
         init
         {
             if (value == null)
@@ -592,22 +388,13 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["hierarchicalName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "hierarchicalName", value);
         }
     }
 
     public bool? IsHotspot
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("isHotspot", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "isHotspot"); }
         init
         {
             if (value == null)
@@ -615,22 +402,13 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["isHotspot"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "isHotspot", value);
         }
     }
 
     public double? Lat
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("lat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<double>(this.RawData, "lat"); }
         init
         {
             if (value == null)
@@ -638,22 +416,13 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["lat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "lat", value);
         }
     }
 
     public double? Latitude
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("latitude", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<double>(this.RawData, "latitude"); }
         init
         {
             if (value == null)
@@ -661,22 +430,13 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["latitude"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "latitude", value);
         }
     }
 
     public double? Lng
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("lng", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<double>(this.RawData, "lng"); }
         init
         {
             if (value == null)
@@ -684,22 +444,13 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["lng"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "lng", value);
         }
     }
 
     public string? LocID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("locId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "locId"); }
         init
         {
             if (value == null)
@@ -707,22 +458,13 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["locId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "locId", value);
         }
     }
 
     public string? LocName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("locName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "locName"); }
         init
         {
             if (value == null)
@@ -730,22 +472,13 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["locName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "locName", value);
         }
     }
 
     public double? Longitude
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("longitude", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<double>(this.RawData, "longitude"); }
         init
         {
             if (value == null)
@@ -753,22 +486,13 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["longitude"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "longitude", value);
         }
     }
 
     public string? Name
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("name", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "name"); }
         init
         {
             if (value == null)
@@ -776,22 +500,13 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "name", value);
         }
     }
 
     public string? Subnational1Code
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("subnational1Code", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "subnational1Code"); }
         init
         {
             if (value == null)
@@ -799,22 +514,13 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["subnational1Code"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "subnational1Code", value);
         }
     }
 
     public string? Subnational1Name
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("subnational1Name", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "subnational1Name"); }
         init
         {
             if (value == null)
@@ -822,10 +528,7 @@ public sealed record class Loc : ModelBase
                 return;
             }
 
-            this._rawData["subnational1Name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "subnational1Name", value);
         }
     }
 
@@ -878,13 +581,7 @@ public sealed record class Ob : ModelBase
 {
     public IReadOnlyList<ObsAux>? ObsAux
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("obsAux", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ObsAux>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<ObsAux>>(this.RawData, "obsAux"); }
         init
         {
             if (value == null)
@@ -892,22 +589,13 @@ public sealed record class Ob : ModelBase
                 return;
             }
 
-            this._rawData["obsAux"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "obsAux", value);
         }
     }
 
     public string? ObsDt
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("obsDt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "obsDt"); }
         init
         {
             if (value == null)
@@ -915,22 +603,13 @@ public sealed record class Ob : ModelBase
                 return;
             }
 
-            this._rawData["obsDt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "obsDt", value);
         }
     }
 
     public string? ObsID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("obsId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "obsId"); }
         init
         {
             if (value == null)
@@ -938,22 +617,13 @@ public sealed record class Ob : ModelBase
                 return;
             }
 
-            this._rawData["obsId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "obsId", value);
         }
     }
 
     public string? SpeciesCode
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("speciesCode", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "speciesCode"); }
         init
         {
             if (value == null)
@@ -961,10 +631,7 @@ public sealed record class Ob : ModelBase
                 return;
             }
 
-            this._rawData["speciesCode"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "speciesCode", value);
         }
     }
 
@@ -1011,13 +678,7 @@ public sealed record class ObsAux : ModelBase
 {
     public string? AuxCode
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("auxCode", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "auxCode"); }
         init
         {
             if (value == null)
@@ -1025,22 +686,13 @@ public sealed record class ObsAux : ModelBase
                 return;
             }
 
-            this._rawData["auxCode"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "auxCode", value);
         }
     }
 
     public string? EntryMethodCode
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("entryMethodCode", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "entryMethodCode"); }
         init
         {
             if (value == null)
@@ -1048,22 +700,13 @@ public sealed record class ObsAux : ModelBase
                 return;
             }
 
-            this._rawData["entryMethodCode"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "entryMethodCode", value);
         }
     }
 
     public string? FieldName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("fieldName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "fieldName"); }
         init
         {
             if (value == null)
@@ -1071,22 +714,13 @@ public sealed record class ObsAux : ModelBase
                 return;
             }
 
-            this._rawData["fieldName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "fieldName", value);
         }
     }
 
     public string? ObsID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("obsId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "obsId"); }
         init
         {
             if (value == null)
@@ -1094,22 +728,13 @@ public sealed record class ObsAux : ModelBase
                 return;
             }
 
-            this._rawData["obsId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "obsId", value);
         }
     }
 
     public string? SpeciesCode
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("speciesCode", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "speciesCode"); }
         init
         {
             if (value == null)
@@ -1117,22 +742,13 @@ public sealed record class ObsAux : ModelBase
                 return;
             }
 
-            this._rawData["speciesCode"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "speciesCode", value);
         }
     }
 
     public string? SubID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("subId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "subId"); }
         init
         {
             if (value == null)
@@ -1140,22 +756,13 @@ public sealed record class ObsAux : ModelBase
                 return;
             }
 
-            this._rawData["subId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "subId", value);
         }
     }
 
     public string? Value
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("value", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "value"); }
         init
         {
             if (value == null)
@@ -1163,10 +770,7 @@ public sealed record class ObsAux : ModelBase
                 return;
             }
 
-            this._rawData["value"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "value", value);
         }
     }
 

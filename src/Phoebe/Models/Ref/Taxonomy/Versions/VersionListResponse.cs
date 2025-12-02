@@ -12,13 +12,7 @@ public sealed record class VersionListResponse : ModelBase
 {
     public double? AuthorityVer
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("authorityVer", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<double>(this.RawData, "authorityVer"); }
         init
         {
             if (value == null)
@@ -26,22 +20,13 @@ public sealed record class VersionListResponse : ModelBase
                 return;
             }
 
-            this._rawData["authorityVer"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "authorityVer", value);
         }
     }
 
     public bool? Latest
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("latest", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "latest"); }
         init
         {
             if (value == null)
@@ -49,10 +34,7 @@ public sealed record class VersionListResponse : ModelBase
                 return;
             }
 
-            this._rawData["latest"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "latest", value);
         }
     }
 

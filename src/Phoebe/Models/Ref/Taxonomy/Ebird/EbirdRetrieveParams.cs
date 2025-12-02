@@ -23,13 +23,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Cat
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("cat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "cat"); }
         init
         {
             if (value == null)
@@ -37,10 +31,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["cat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "cat", value);
         }
     }
 
@@ -49,16 +40,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Fmt>? Fmt
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("fmt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Fmt>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<ApiEnum<string, Fmt>>(this.RawQueryData, "fmt"); }
         init
         {
             if (value == null)
@@ -66,10 +48,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["fmt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "fmt", value);
         }
     }
 
@@ -78,13 +57,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Locale
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("locale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "locale"); }
         init
         {
             if (value == null)
@@ -92,10 +65,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["locale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "locale", value);
         }
     }
 
@@ -104,13 +74,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Species
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("species", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "species"); }
         init
         {
             if (value == null)
@@ -118,10 +82,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["species"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "species", value);
         }
     }
 
@@ -130,13 +91,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Version
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("version", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "version"); }
         init
         {
             if (value == null)
@@ -144,10 +99,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["version"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "version", value);
         }
     }
 

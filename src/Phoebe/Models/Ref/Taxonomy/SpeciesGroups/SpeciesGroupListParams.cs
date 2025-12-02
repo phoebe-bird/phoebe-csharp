@@ -24,13 +24,7 @@ public sealed record class SpeciesGroupListParams : ParamsBase
     /// </summary>
     public string? GroupNameLocale
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("groupNameLocale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "groupNameLocale"); }
         init
         {
             if (value == null)
@@ -38,10 +32,7 @@ public sealed record class SpeciesGroupListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["groupNameLocale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "groupNameLocale", value);
         }
     }
 

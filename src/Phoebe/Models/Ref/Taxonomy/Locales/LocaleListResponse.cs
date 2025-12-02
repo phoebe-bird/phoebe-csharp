@@ -12,13 +12,7 @@ public sealed record class LocaleListResponse : ModelBase
 {
     public string? Code
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("code", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "code"); }
         init
         {
             if (value == null)
@@ -26,22 +20,13 @@ public sealed record class LocaleListResponse : ModelBase
                 return;
             }
 
-            this._rawData["code"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "code", value);
         }
     }
 
     public string? LastUpdated
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("lastUpdated", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "lastUpdated"); }
         init
         {
             if (value == null)
@@ -49,22 +34,13 @@ public sealed record class LocaleListResponse : ModelBase
                 return;
             }
 
-            this._rawData["lastUpdated"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "lastUpdated", value);
         }
     }
 
     public string? Name
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("name", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "name"); }
         init
         {
             if (value == null)
@@ -72,10 +48,7 @@ public sealed record class LocaleListResponse : ModelBase
                 return;
             }
 
-            this._rawData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "name", value);
         }
     }
 

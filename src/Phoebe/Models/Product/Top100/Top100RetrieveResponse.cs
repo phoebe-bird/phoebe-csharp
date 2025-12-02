@@ -12,13 +12,7 @@ public sealed record class Top100RetrieveResponse : ModelBase
 {
     public int? NumCompleteChecklists
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("numCompleteChecklists", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<int>(this.RawData, "numCompleteChecklists"); }
         init
         {
             if (value == null)
@@ -26,22 +20,13 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numCompleteChecklists"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "numCompleteChecklists", value);
         }
     }
 
     public int? NumSpecies
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("numSpecies", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<int>(this.RawData, "numSpecies"); }
         init
         {
             if (value == null)
@@ -49,22 +34,13 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numSpecies"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "numSpecies", value);
         }
     }
 
     public string? ProfileHandle
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("profileHandle", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "profileHandle"); }
         init
         {
             if (value == null)
@@ -72,22 +48,13 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["profileHandle"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "profileHandle", value);
         }
     }
 
     public int? RowNum
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("rowNum", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<int>(this.RawData, "rowNum"); }
         init
         {
             if (value == null)
@@ -95,22 +62,13 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["rowNum"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "rowNum", value);
         }
     }
 
     public string? UserDisplayName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("userDisplayName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "userDisplayName"); }
         init
         {
             if (value == null)
@@ -118,22 +76,13 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["userDisplayName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "userDisplayName", value);
         }
     }
 
     public string? UserID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("userId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "userId"); }
         init
         {
             if (value == null)
@@ -141,10 +90,7 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["userId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "userId", value);
         }
     }
 
