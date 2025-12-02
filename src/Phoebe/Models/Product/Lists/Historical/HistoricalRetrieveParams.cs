@@ -28,13 +28,7 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("maxResults", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
         init
         {
             if (value == null)
@@ -42,10 +36,7 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["maxResults"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "maxResults", value);
         }
     }
 
@@ -56,12 +47,9 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("sortKey", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, SortKey>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<ApiEnum<string, SortKey>>(
+                this.RawQueryData,
+                "sortKey"
             );
         }
         init
@@ -71,10 +59,7 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["sortKey"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "sortKey", value);
         }
     }
 

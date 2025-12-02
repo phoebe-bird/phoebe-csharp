@@ -33,13 +33,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
     /// </summary>
     public string? Delim
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("delim", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "delim"); }
         init
         {
             if (value == null)
@@ -47,10 +41,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["delim"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "delim", value);
         }
     }
 
@@ -61,12 +52,9 @@ public sealed record class InfoRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("regionNameFormat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, RegionNameFormat>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<ApiEnum<string, RegionNameFormat>>(
+                this.RawQueryData,
+                "regionNameFormat"
             );
         }
         init
@@ -76,10 +64,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["regionNameFormat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "regionNameFormat", value);
         }
     }
 

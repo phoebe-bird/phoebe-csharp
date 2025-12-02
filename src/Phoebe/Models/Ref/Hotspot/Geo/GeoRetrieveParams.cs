@@ -18,44 +18,14 @@ public sealed record class GeoRetrieveParams : ParamsBase
 {
     public required float Lat
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("lat", out JsonElement element))
-                throw new PhoebeInvalidDataException(
-                    "'lat' cannot be null",
-                    new ArgumentOutOfRangeException("lat", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<float>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawQueryData["lat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<float>(this.RawQueryData, "lat"); }
+        init { ModelBase.Set(this._rawQueryData, "lat", value); }
     }
 
     public required float Lng
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("lng", out JsonElement element))
-                throw new PhoebeInvalidDataException(
-                    "'lng' cannot be null",
-                    new ArgumentOutOfRangeException("lng", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<float>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawQueryData["lng"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<float>(this.RawQueryData, "lng"); }
+        init { ModelBase.Set(this._rawQueryData, "lng", value); }
     }
 
     /// <summary>
@@ -63,13 +33,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
     /// </summary>
     public long? Back
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("back", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "back"); }
         init
         {
             if (value == null)
@@ -77,10 +41,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["back"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "back", value);
         }
     }
 
@@ -89,13 +50,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
     /// </summary>
     public long? Dist
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("dist", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "dist"); }
         init
         {
             if (value == null)
@@ -103,10 +58,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["dist"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "dist", value);
         }
     }
 
@@ -117,13 +69,9 @@ public sealed record class GeoRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("fmt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                global::Phoebe.Models.Ref.Hotspot.Geo.Fmt
-            >?>(element, ModelBase.SerializerOptions);
+            return ModelBase.GetNullableClass<
+                ApiEnum<string, global::Phoebe.Models.Ref.Hotspot.Geo.Fmt>
+            >(this.RawQueryData, "fmt");
         }
         init
         {
@@ -132,10 +80,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["fmt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "fmt", value);
         }
     }
 

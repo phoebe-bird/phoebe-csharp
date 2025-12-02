@@ -20,13 +20,7 @@ public sealed record class ListRetrieveParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("maxResults", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
         init
         {
             if (value == null)
@@ -34,10 +28,7 @@ public sealed record class ListRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["maxResults"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "maxResults", value);
         }
     }
 

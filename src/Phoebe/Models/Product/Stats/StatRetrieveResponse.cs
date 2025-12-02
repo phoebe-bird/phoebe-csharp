@@ -12,13 +12,7 @@ public sealed record class StatRetrieveResponse : ModelBase
 {
     public int? NumChecklists
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("numChecklists", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<int>(this.RawData, "numChecklists"); }
         init
         {
             if (value == null)
@@ -26,22 +20,13 @@ public sealed record class StatRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numChecklists"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "numChecklists", value);
         }
     }
 
     public int? NumContributors
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("numContributors", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<int>(this.RawData, "numContributors"); }
         init
         {
             if (value == null)
@@ -49,22 +34,13 @@ public sealed record class StatRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numContributors"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "numContributors", value);
         }
     }
 
     public int? NumSpecies
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("numSpecies", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<int>(this.RawData, "numSpecies"); }
         init
         {
             if (value == null)
@@ -72,10 +48,7 @@ public sealed record class StatRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numSpecies"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "numSpecies", value);
         }
     }
 

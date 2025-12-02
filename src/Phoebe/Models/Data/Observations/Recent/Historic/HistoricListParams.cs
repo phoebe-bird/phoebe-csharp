@@ -32,13 +32,9 @@ public sealed record class HistoricListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("cat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat
-            >?>(element, ModelBase.SerializerOptions);
+            return ModelBase.GetNullableClass<
+                ApiEnum<string, global::Phoebe.Models.Data.Observations.Recent.Historic.Cat>
+            >(this.RawQueryData, "cat");
         }
         init
         {
@@ -47,10 +43,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["cat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "cat", value);
         }
     }
 
@@ -61,13 +54,7 @@ public sealed record class HistoricListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("detail", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Detail>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<ApiEnum<string, Detail>>(this.RawQueryData, "detail");
         }
         init
         {
@@ -76,10 +63,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["detail"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "detail", value);
         }
     }
 
@@ -88,13 +72,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// </summary>
     public bool? Hotspot
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("hotspot", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "hotspot"); }
         init
         {
             if (value == null)
@@ -102,10 +80,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["hotspot"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "hotspot", value);
         }
     }
 
@@ -114,13 +89,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// </summary>
     public bool? IncludeProvisional
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("includeProvisional", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "includeProvisional"); }
         init
         {
             if (value == null)
@@ -128,10 +97,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["includeProvisional"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "includeProvisional", value);
         }
     }
 
@@ -140,13 +106,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("maxResults", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
         init
         {
             if (value == null)
@@ -154,10 +114,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["maxResults"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "maxResults", value);
         }
     }
 
@@ -166,13 +123,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string>? R
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("r", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawQueryData, "r"); }
         init
         {
             if (value == null)
@@ -180,10 +131,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["r"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "r", value);
         }
     }
 
@@ -192,16 +140,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Rank>? Rank
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("rank", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Rank>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<ApiEnum<string, Rank>>(this.RawQueryData, "rank"); }
         init
         {
             if (value == null)
@@ -209,10 +148,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["rank"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "rank", value);
         }
     }
 
@@ -221,13 +157,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// </summary>
     public string? SppLocale
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("sppLocale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "sppLocale"); }
         init
         {
             if (value == null)
@@ -235,10 +165,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["sppLocale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "sppLocale", value);
         }
     }
 

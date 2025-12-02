@@ -20,13 +20,7 @@ public sealed record class LocaleListParams : ParamsBase
 {
     public string? AcceptLanguage
     {
-        get
-        {
-            if (!this._rawHeaderData.TryGetValue("Accept-Language", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawHeaderData, "Accept-Language"); }
         init
         {
             if (value == null)
@@ -34,10 +28,7 @@ public sealed record class LocaleListParams : ParamsBase
                 return;
             }
 
-            this._rawHeaderData["Accept-Language"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawHeaderData, "Accept-Language", value);
         }
     }
 

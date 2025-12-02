@@ -12,13 +12,7 @@ public sealed record class EbirdRetrieveResponse : ModelBase
 {
     public IReadOnlyList<string>? BandingCodes
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("bandingCodes", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "bandingCodes"); }
         init
         {
             if (value == null)
@@ -26,22 +20,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["bandingCodes"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "bandingCodes", value);
         }
     }
 
     public string? Category
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("category", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "category"); }
         init
         {
             if (value == null)
@@ -49,22 +34,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["category"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "category", value);
         }
     }
 
     public string? ComName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("comName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "comName"); }
         init
         {
             if (value == null)
@@ -72,22 +48,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["comName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "comName", value);
         }
     }
 
     public IReadOnlyList<string>? ComNameCodes
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("comNameCodes", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "comNameCodes"); }
         init
         {
             if (value == null)
@@ -95,22 +62,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["comNameCodes"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "comNameCodes", value);
         }
     }
 
     public string? FamilyCode
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("familyCode", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "familyCode"); }
         init
         {
             if (value == null)
@@ -118,22 +76,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["familyCode"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "familyCode", value);
         }
     }
 
     public string? FamilyComName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("familyComName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "familyComName"); }
         init
         {
             if (value == null)
@@ -141,22 +90,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["familyComName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "familyComName", value);
         }
     }
 
     public string? FamilySciName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("familySciName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "familySciName"); }
         init
         {
             if (value == null)
@@ -164,22 +104,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["familySciName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "familySciName", value);
         }
     }
 
     public string? Order
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("order", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "order"); }
         init
         {
             if (value == null)
@@ -187,22 +118,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["order"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "order", value);
         }
     }
 
     public string? SciName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("sciName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "sciName"); }
         init
         {
             if (value == null)
@@ -210,22 +132,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["sciName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "sciName", value);
         }
     }
 
     public IReadOnlyList<string>? SciNameCodes
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("sciNameCodes", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "sciNameCodes"); }
         init
         {
             if (value == null)
@@ -233,22 +146,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["sciNameCodes"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "sciNameCodes", value);
         }
     }
 
     public string? SpeciesCode
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("speciesCode", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "speciesCode"); }
         init
         {
             if (value == null)
@@ -256,22 +160,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["speciesCode"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "speciesCode", value);
         }
     }
 
     public int? TaxonOrder
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("taxonOrder", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<int>(this.RawData, "taxonOrder"); }
         init
         {
             if (value == null)
@@ -279,10 +174,7 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["taxonOrder"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "taxonOrder", value);
         }
     }
 

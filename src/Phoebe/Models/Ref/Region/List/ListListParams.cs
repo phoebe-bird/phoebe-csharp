@@ -27,16 +27,7 @@ public sealed record class ListListParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Fmt>? Fmt
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("fmt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Fmt>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<ApiEnum<string, Fmt>>(this.RawQueryData, "fmt"); }
         init
         {
             if (value == null)
@@ -44,10 +35,7 @@ public sealed record class ListListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["fmt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "fmt", value);
         }
     }
 

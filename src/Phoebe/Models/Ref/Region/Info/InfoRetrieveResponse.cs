@@ -12,13 +12,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
 {
     public Bounds? Bounds
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("bounds", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Bounds?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<Bounds>(this.RawData, "bounds"); }
         init
         {
             if (value == null)
@@ -26,22 +20,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["bounds"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "bounds", value);
         }
     }
 
     public string? Result
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("result", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "result"); }
         init
         {
             if (value == null)
@@ -49,10 +34,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["result"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "result", value);
         }
     }
 
@@ -97,13 +79,7 @@ public sealed record class Bounds : ModelBase
 {
     public float? MaxX
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("maxX", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<float?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<float>(this.RawData, "maxX"); }
         init
         {
             if (value == null)
@@ -111,22 +87,13 @@ public sealed record class Bounds : ModelBase
                 return;
             }
 
-            this._rawData["maxX"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "maxX", value);
         }
     }
 
     public float? MaxY
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("maxY", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<float?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<float>(this.RawData, "maxY"); }
         init
         {
             if (value == null)
@@ -134,22 +101,13 @@ public sealed record class Bounds : ModelBase
                 return;
             }
 
-            this._rawData["maxY"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "maxY", value);
         }
     }
 
     public float? MinX
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("minX", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<float?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<float>(this.RawData, "minX"); }
         init
         {
             if (value == null)
@@ -157,22 +115,13 @@ public sealed record class Bounds : ModelBase
                 return;
             }
 
-            this._rawData["minX"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "minX", value);
         }
     }
 
     public float? MinY
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("minY", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<float?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<float>(this.RawData, "minY"); }
         init
         {
             if (value == null)
@@ -180,10 +129,7 @@ public sealed record class Bounds : ModelBase
                 return;
             }
 
-            this._rawData["minY"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "minY", value);
         }
     }
 

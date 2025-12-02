@@ -43,13 +43,7 @@ public sealed record class Top100RetrieveParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("maxResults", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
         init
         {
             if (value == null)
@@ -57,10 +51,7 @@ public sealed record class Top100RetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["maxResults"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "maxResults", value);
         }
     }
 
@@ -71,12 +62,9 @@ public sealed record class Top100RetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("rankedBy", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, RankedBy>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<ApiEnum<string, RankedBy>>(
+                this.RawQueryData,
+                "rankedBy"
             );
         }
         init
@@ -86,10 +74,7 @@ public sealed record class Top100RetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["rankedBy"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "rankedBy", value);
         }
     }
 
