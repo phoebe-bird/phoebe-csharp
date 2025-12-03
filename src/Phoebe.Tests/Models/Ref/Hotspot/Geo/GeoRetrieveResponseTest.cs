@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Phoebe.Models.Ref.Hotspot.Geo;
 
 namespace Phoebe.Tests.Models.Ref.Hotspot.Geo;
@@ -39,5 +40,177 @@ public class GeoRetrieveResponseTest : TestBase
         Assert.Equal(expectedNumSpeciesAllTime, model.NumSpeciesAllTime);
         Assert.Equal(expectedSubnational1Code, model.Subnational1Code);
         Assert.Equal(expectedSubnational2Code, model.Subnational2Code);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new GeoRetrieveResponse
+        {
+            CountryCode = "countryCode",
+            Lat = 0,
+            LatestObsDt = "latestObsDt",
+            Lng = 0,
+            LocID = "locId",
+            LocName = "locName",
+            NumSpeciesAllTime = 0,
+            Subnational1Code = "subnational1Code",
+            Subnational2Code = "subnational2Code",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<GeoRetrieveResponse>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new GeoRetrieveResponse
+        {
+            CountryCode = "countryCode",
+            Lat = 0,
+            LatestObsDt = "latestObsDt",
+            Lng = 0,
+            LocID = "locId",
+            LocName = "locName",
+            NumSpeciesAllTime = 0,
+            Subnational1Code = "subnational1Code",
+            Subnational2Code = "subnational2Code",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<GeoRetrieveResponse>(json);
+        Assert.NotNull(deserialized);
+
+        string expectedCountryCode = "countryCode";
+        double expectedLat = 0;
+        string expectedLatestObsDt = "latestObsDt";
+        double expectedLng = 0;
+        string expectedLocID = "locId";
+        string expectedLocName = "locName";
+        int expectedNumSpeciesAllTime = 0;
+        string expectedSubnational1Code = "subnational1Code";
+        string expectedSubnational2Code = "subnational2Code";
+
+        Assert.Equal(expectedCountryCode, deserialized.CountryCode);
+        Assert.Equal(expectedLat, deserialized.Lat);
+        Assert.Equal(expectedLatestObsDt, deserialized.LatestObsDt);
+        Assert.Equal(expectedLng, deserialized.Lng);
+        Assert.Equal(expectedLocID, deserialized.LocID);
+        Assert.Equal(expectedLocName, deserialized.LocName);
+        Assert.Equal(expectedNumSpeciesAllTime, deserialized.NumSpeciesAllTime);
+        Assert.Equal(expectedSubnational1Code, deserialized.Subnational1Code);
+        Assert.Equal(expectedSubnational2Code, deserialized.Subnational2Code);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new GeoRetrieveResponse
+        {
+            CountryCode = "countryCode",
+            Lat = 0,
+            LatestObsDt = "latestObsDt",
+            Lng = 0,
+            LocID = "locId",
+            LocName = "locName",
+            NumSpeciesAllTime = 0,
+            Subnational1Code = "subnational1Code",
+            Subnational2Code = "subnational2Code",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new GeoRetrieveResponse { };
+
+        Assert.Null(model.CountryCode);
+        Assert.False(model.RawData.ContainsKey("countryCode"));
+        Assert.Null(model.Lat);
+        Assert.False(model.RawData.ContainsKey("lat"));
+        Assert.Null(model.LatestObsDt);
+        Assert.False(model.RawData.ContainsKey("latestObsDt"));
+        Assert.Null(model.Lng);
+        Assert.False(model.RawData.ContainsKey("lng"));
+        Assert.Null(model.LocID);
+        Assert.False(model.RawData.ContainsKey("locId"));
+        Assert.Null(model.LocName);
+        Assert.False(model.RawData.ContainsKey("locName"));
+        Assert.Null(model.NumSpeciesAllTime);
+        Assert.False(model.RawData.ContainsKey("numSpeciesAllTime"));
+        Assert.Null(model.Subnational1Code);
+        Assert.False(model.RawData.ContainsKey("subnational1Code"));
+        Assert.Null(model.Subnational2Code);
+        Assert.False(model.RawData.ContainsKey("subnational2Code"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new GeoRetrieveResponse { };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new GeoRetrieveResponse
+        {
+            // Null should be interpreted as omitted for these properties
+            CountryCode = null,
+            Lat = null,
+            LatestObsDt = null,
+            Lng = null,
+            LocID = null,
+            LocName = null,
+            NumSpeciesAllTime = null,
+            Subnational1Code = null,
+            Subnational2Code = null,
+        };
+
+        Assert.Null(model.CountryCode);
+        Assert.False(model.RawData.ContainsKey("countryCode"));
+        Assert.Null(model.Lat);
+        Assert.False(model.RawData.ContainsKey("lat"));
+        Assert.Null(model.LatestObsDt);
+        Assert.False(model.RawData.ContainsKey("latestObsDt"));
+        Assert.Null(model.Lng);
+        Assert.False(model.RawData.ContainsKey("lng"));
+        Assert.Null(model.LocID);
+        Assert.False(model.RawData.ContainsKey("locId"));
+        Assert.Null(model.LocName);
+        Assert.False(model.RawData.ContainsKey("locName"));
+        Assert.Null(model.NumSpeciesAllTime);
+        Assert.False(model.RawData.ContainsKey("numSpeciesAllTime"));
+        Assert.Null(model.Subnational1Code);
+        Assert.False(model.RawData.ContainsKey("subnational1Code"));
+        Assert.Null(model.Subnational2Code);
+        Assert.False(model.RawData.ContainsKey("subnational2Code"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new GeoRetrieveResponse
+        {
+            // Null should be interpreted as omitted for these properties
+            CountryCode = null,
+            Lat = null,
+            LatestObsDt = null,
+            Lng = null,
+            LocID = null,
+            LocName = null,
+            NumSpeciesAllTime = null,
+            Subnational1Code = null,
+            Subnational2Code = null,
+        };
+
+        model.Validate();
     }
 }
