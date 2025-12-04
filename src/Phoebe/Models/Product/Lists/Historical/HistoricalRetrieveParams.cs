@@ -65,6 +65,9 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
 
     public HistoricalRetrieveParams() { }
 
+    public HistoricalRetrieveParams(HistoricalRetrieveParams historicalRetrieveParams)
+        : base(historicalRetrieveParams) { }
+
     public HistoricalRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

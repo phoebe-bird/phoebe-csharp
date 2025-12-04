@@ -65,6 +65,9 @@ public sealed record class SpeciesGroupListResponse : ModelBase
 
     public SpeciesGroupListResponse() { }
 
+    public SpeciesGroupListResponse(SpeciesGroupListResponse speciesGroupListResponse)
+        : base(speciesGroupListResponse) { }
+
     public SpeciesGroupListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

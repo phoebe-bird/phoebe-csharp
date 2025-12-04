@@ -105,6 +105,9 @@ public sealed record class EbirdRetrieveParams : ParamsBase
 
     public EbirdRetrieveParams() { }
 
+    public EbirdRetrieveParams(EbirdRetrieveParams ebirdRetrieveParams)
+        : base(ebirdRetrieveParams) { }
+
     public EbirdRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

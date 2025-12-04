@@ -197,6 +197,9 @@ public sealed record class EbirdRetrieveResponse : ModelBase
 
     public EbirdRetrieveResponse() { }
 
+    public EbirdRetrieveResponse(EbirdRetrieveResponse ebirdRetrieveResponse)
+        : base(ebirdRetrieveResponse) { }
+
     public EbirdRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

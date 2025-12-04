@@ -140,6 +140,9 @@ public sealed record class SpecieListParams : ParamsBase
 
     public SpecieListParams() { }
 
+    public SpecieListParams(SpecieListParams specieListParams)
+        : base(specieListParams) { }
+
     public SpecieListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

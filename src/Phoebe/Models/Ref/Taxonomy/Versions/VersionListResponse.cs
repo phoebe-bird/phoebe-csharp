@@ -47,6 +47,9 @@ public sealed record class VersionListResponse : ModelBase
 
     public VersionListResponse() { }
 
+    public VersionListResponse(VersionListResponse versionListResponse)
+        : base(versionListResponse) { }
+
     public VersionListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -25,6 +25,9 @@ public sealed record class StatRetrieveParams : ParamsBase
 
     public StatRetrieveParams() { }
 
+    public StatRetrieveParams(StatRetrieveParams statRetrieveParams)
+        : base(statRetrieveParams) { }
+
     public StatRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

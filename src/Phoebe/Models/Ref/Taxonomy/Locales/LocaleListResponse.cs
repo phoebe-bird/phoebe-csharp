@@ -62,6 +62,9 @@ public sealed record class LocaleListResponse : ModelBase
 
     public LocaleListResponse() { }
 
+    public LocaleListResponse(LocaleListResponse localeListResponse)
+        : base(localeListResponse) { }
+
     public LocaleListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

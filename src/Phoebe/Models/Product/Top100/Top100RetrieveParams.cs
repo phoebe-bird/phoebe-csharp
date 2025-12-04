@@ -80,6 +80,9 @@ public sealed record class Top100RetrieveParams : ParamsBase
 
     public Top100RetrieveParams() { }
 
+    public Top100RetrieveParams(Top100RetrieveParams top100RetrieveParams)
+        : base(top100RetrieveParams) { }
+
     public Top100RetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

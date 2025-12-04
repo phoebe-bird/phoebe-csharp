@@ -129,6 +129,9 @@ public sealed record class SpecieRetrieveParams : ParamsBase
 
     public SpecieRetrieveParams() { }
 
+    public SpecieRetrieveParams(SpecieRetrieveParams specieRetrieveParams)
+        : base(specieRetrieveParams) { }
+
     public SpecieRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
