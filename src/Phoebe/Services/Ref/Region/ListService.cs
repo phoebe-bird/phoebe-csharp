@@ -9,7 +9,7 @@ using Phoebe.Models.Ref.Region.List;
 
 namespace Phoebe.Services.Ref.Region;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class ListService : IListService
 {
     /// <inheritdoc/>

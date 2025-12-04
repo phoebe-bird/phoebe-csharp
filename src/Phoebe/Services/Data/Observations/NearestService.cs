@@ -4,7 +4,7 @@ using Phoebe.Services.Data.Observations.Nearest;
 
 namespace Phoebe.Services.Data.Observations;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class NearestService : INearestService
 {
     /// <inheritdoc/>

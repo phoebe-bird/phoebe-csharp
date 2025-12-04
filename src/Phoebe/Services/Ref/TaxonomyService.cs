@@ -4,7 +4,7 @@ using Phoebe.Services.Ref.Taxonomy;
 
 namespace Phoebe.Services.Ref;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class TaxonomyService : ITaxonomyService
 {
     /// <inheritdoc/>

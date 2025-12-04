@@ -192,6 +192,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.CountryCode;
@@ -224,6 +225,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="InfoRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static InfoRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -234,6 +236,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
 
 class InfoRetrieveResponseFromRaw : IFromRaw<InfoRetrieveResponse>
 {
+    /// <inheritdoc/>
     public InfoRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => InfoRetrieveResponse.FromRawUnchecked(rawData);

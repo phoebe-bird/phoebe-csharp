@@ -290,6 +290,7 @@ public sealed record class ChecklistViewResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.AllObsReported;
@@ -332,6 +333,7 @@ public sealed record class ChecklistViewResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ChecklistViewResponseFromRaw.FromRawUnchecked"/>
     public static ChecklistViewResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -342,6 +344,7 @@ public sealed record class ChecklistViewResponse : ModelBase
 
 class ChecklistViewResponseFromRaw : IFromRaw<ChecklistViewResponse>
 {
+    /// <inheritdoc/>
     public ChecklistViewResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ChecklistViewResponse.FromRawUnchecked(rawData);
@@ -532,6 +535,7 @@ public sealed record class Loc : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.CountryCode;
@@ -564,6 +568,7 @@ public sealed record class Loc : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="LocFromRaw.FromRawUnchecked"/>
     public static Loc FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -572,6 +577,7 @@ public sealed record class Loc : ModelBase
 
 class LocFromRaw : IFromRaw<Loc>
 {
+    /// <inheritdoc/>
     public Loc FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Loc.FromRawUnchecked(rawData);
 }
@@ -635,6 +641,7 @@ public sealed record class Ob : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.ObsAux ?? [])
@@ -661,6 +668,7 @@ public sealed record class Ob : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ObFromRaw.FromRawUnchecked"/>
     public static Ob FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -669,6 +677,7 @@ public sealed record class Ob : ModelBase
 
 class ObFromRaw : IFromRaw<Ob>
 {
+    /// <inheritdoc/>
     public Ob FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Ob.FromRawUnchecked(rawData);
 }
@@ -774,6 +783,7 @@ public sealed record class ObsAux : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.AuxCode;
@@ -800,6 +810,7 @@ public sealed record class ObsAux : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ObsAuxFromRaw.FromRawUnchecked"/>
     public static ObsAux FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -808,6 +819,7 @@ public sealed record class ObsAux : ModelBase
 
 class ObsAuxFromRaw : IFromRaw<ObsAux>
 {
+    /// <inheritdoc/>
     public ObsAux FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ObsAux.FromRawUnchecked(rawData);
 }

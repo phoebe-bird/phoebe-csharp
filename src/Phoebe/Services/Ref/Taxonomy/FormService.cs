@@ -9,7 +9,7 @@ using Phoebe.Models.Ref.Taxonomy.Forms;
 
 namespace Phoebe.Services.Ref.Taxonomy;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class FormService : IFormService
 {
     /// <inheritdoc/>

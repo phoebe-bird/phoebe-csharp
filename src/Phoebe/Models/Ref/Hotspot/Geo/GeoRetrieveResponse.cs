@@ -136,6 +136,7 @@ public sealed record class GeoRetrieveResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.CountryCode;
@@ -164,6 +165,7 @@ public sealed record class GeoRetrieveResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="GeoRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static GeoRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -174,6 +176,7 @@ public sealed record class GeoRetrieveResponse : ModelBase
 
 class GeoRetrieveResponseFromRaw : IFromRaw<GeoRetrieveResponse>
 {
+    /// <inheritdoc/>
     public GeoRetrieveResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         GeoRetrieveResponse.FromRawUnchecked(rawData);
 }

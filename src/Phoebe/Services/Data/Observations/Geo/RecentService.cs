@@ -10,7 +10,7 @@ using Phoebe.Services.Data.Observations.Geo.Recent;
 
 namespace Phoebe.Services.Data.Observations.Geo;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class RecentService : global::Phoebe.Services.Data.Observations.Geo.IRecentService
 {
     /// <inheritdoc/>

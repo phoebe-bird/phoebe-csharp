@@ -8,7 +8,7 @@ using Phoebe.Models.Ref.Region.Info;
 
 namespace Phoebe.Services.Ref.Region;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class InfoService : IInfoService
 {
     /// <inheritdoc/>

@@ -178,6 +178,7 @@ public sealed record class EbirdRetrieveResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.BandingCodes;
@@ -209,6 +210,7 @@ public sealed record class EbirdRetrieveResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="EbirdRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static EbirdRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -219,6 +221,7 @@ public sealed record class EbirdRetrieveResponse : ModelBase
 
 class EbirdRetrieveResponseFromRaw : IFromRaw<EbirdRetrieveResponse>
 {
+    /// <inheritdoc/>
     public EbirdRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => EbirdRetrieveResponse.FromRawUnchecked(rawData);

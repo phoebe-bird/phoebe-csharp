@@ -234,6 +234,7 @@ public sealed record class Observation : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -269,6 +270,7 @@ public sealed record class Observation : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ObservationFromRaw.FromRawUnchecked"/>
     public static Observation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -277,6 +279,7 @@ public sealed record class Observation : ModelBase
 
 class ObservationFromRaw : IFromRaw<Observation>
 {
+    /// <inheritdoc/>
     public Observation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Observation.FromRawUnchecked(rawData);
 }

@@ -136,6 +136,7 @@ public sealed record class HotspotListResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.CountryCode;
@@ -164,6 +165,7 @@ public sealed record class HotspotListResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="HotspotListResponseFromRaw.FromRawUnchecked"/>
     public static HotspotListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -174,6 +176,7 @@ public sealed record class HotspotListResponse : ModelBase
 
 class HotspotListResponseFromRaw : IFromRaw<HotspotListResponse>
 {
+    /// <inheritdoc/>
     public HotspotListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         HotspotListResponse.FromRawUnchecked(rawData);
 }

@@ -8,7 +8,7 @@ using Phoebe.Models.Ref.Hotspot.Info;
 
 namespace Phoebe.Services.Ref.Hotspot;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class InfoService : IInfoService
 {
     /// <inheritdoc/>

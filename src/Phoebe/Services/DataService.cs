@@ -4,7 +4,7 @@ using Phoebe.Services.Data;
 
 namespace Phoebe.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class DataService : IDataService
 {
     /// <inheritdoc/>

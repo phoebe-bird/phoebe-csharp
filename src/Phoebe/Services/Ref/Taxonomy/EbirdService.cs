@@ -8,7 +8,7 @@ using Phoebe.Models.Ref.Taxonomy.Ebird;
 
 namespace Phoebe.Services.Ref.Taxonomy;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class EbirdService : IEbirdService
 {
     /// <inheritdoc/>

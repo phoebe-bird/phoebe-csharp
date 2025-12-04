@@ -38,6 +38,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Bounds?.Validate();
@@ -59,6 +60,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="InfoRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static InfoRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -69,6 +71,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
 
 class InfoRetrieveResponseFromRaw : IFromRaw<InfoRetrieveResponse>
 {
+    /// <inheritdoc/>
     public InfoRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => InfoRetrieveResponse.FromRawUnchecked(rawData);
@@ -133,6 +136,7 @@ public sealed record class Bounds : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.MaxX;
@@ -156,6 +160,7 @@ public sealed record class Bounds : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="BoundsFromRaw.FromRawUnchecked"/>
     public static Bounds FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -164,6 +169,7 @@ public sealed record class Bounds : ModelBase
 
 class BoundsFromRaw : IFromRaw<Bounds>
 {
+    /// <inheritdoc/>
     public Bounds FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Bounds.FromRawUnchecked(rawData);
 }

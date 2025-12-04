@@ -9,7 +9,7 @@ using Phoebe.Models.Product.Lists.Historical;
 
 namespace Phoebe.Services.Product.Lists;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class HistoricalService : IHistoricalService
 {
     /// <inheritdoc/>

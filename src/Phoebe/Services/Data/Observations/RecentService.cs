@@ -11,7 +11,7 @@ using Phoebe.Services.Data.Observations.Recent;
 
 namespace Phoebe.Services.Data.Observations;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class RecentService : IRecentService
 {
     /// <inheritdoc/>
