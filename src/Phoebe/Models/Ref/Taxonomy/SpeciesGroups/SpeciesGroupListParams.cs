@@ -38,6 +38,9 @@ public sealed record class SpeciesGroupListParams : ParamsBase
 
     public SpeciesGroupListParams() { }
 
+    public SpeciesGroupListParams(SpeciesGroupListParams speciesGroupListParams)
+        : base(speciesGroupListParams) { }
+
     public SpeciesGroupListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

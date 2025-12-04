@@ -53,6 +53,9 @@ public sealed record class HotspotListParams : ParamsBase
 
     public HotspotListParams() { }
 
+    public HotspotListParams(HotspotListParams hotspotListParams)
+        : base(hotspotListParams) { }
+
     public HotspotListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

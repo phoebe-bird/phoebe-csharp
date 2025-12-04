@@ -212,6 +212,9 @@ public sealed record class InfoRetrieveResponse : ModelBase
 
     public InfoRetrieveResponse() { }
 
+    public InfoRetrieveResponse(InfoRetrieveResponse infoRetrieveResponse)
+        : base(infoRetrieveResponse) { }
+
     public InfoRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

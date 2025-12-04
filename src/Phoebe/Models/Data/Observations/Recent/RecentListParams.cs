@@ -140,6 +140,9 @@ public sealed record class RecentListParams : ParamsBase
 
     public RecentListParams() { }
 
+    public RecentListParams(RecentListParams recentListParams)
+        : base(recentListParams) { }
+
     public RecentListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

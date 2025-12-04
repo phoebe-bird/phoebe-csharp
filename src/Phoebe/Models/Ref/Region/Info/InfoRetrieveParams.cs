@@ -70,6 +70,9 @@ public sealed record class InfoRetrieveParams : ParamsBase
 
     public InfoRetrieveParams() { }
 
+    public InfoRetrieveParams(InfoRetrieveParams infoRetrieveParams)
+        : base(infoRetrieveParams) { }
+
     public InfoRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

@@ -257,6 +257,9 @@ public sealed record class Observation : ModelBase
 
     public Observation() { }
 
+    public Observation(Observation observation)
+        : base(observation) { }
+
     public Observation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

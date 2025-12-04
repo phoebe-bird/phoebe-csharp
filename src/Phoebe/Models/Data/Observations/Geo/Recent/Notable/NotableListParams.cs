@@ -137,6 +137,9 @@ public sealed record class NotableListParams : ParamsBase
 
     public NotableListParams() { }
 
+    public NotableListParams(NotableListParams notableListParams)
+        : base(notableListParams) { }
+
     public NotableListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

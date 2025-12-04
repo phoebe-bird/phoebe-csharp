@@ -152,6 +152,9 @@ public sealed record class HotspotListResponse : ModelBase
 
     public HotspotListResponse() { }
 
+    public HotspotListResponse(HotspotListResponse hotspotListResponse)
+        : base(hotspotListResponse) { }
+
     public HotspotListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

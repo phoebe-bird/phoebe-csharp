@@ -62,6 +62,9 @@ public sealed record class StatRetrieveResponse : ModelBase
 
     public StatRetrieveResponse() { }
 
+    public StatRetrieveResponse(StatRetrieveResponse statRetrieveResponse)
+        : base(statRetrieveResponse) { }
+
     public StatRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -34,6 +34,9 @@ public sealed record class LocaleListParams : ParamsBase
 
     public LocaleListParams() { }
 
+    public LocaleListParams(LocaleListParams localeListParams)
+        : base(localeListParams) { }
+
     public LocaleListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

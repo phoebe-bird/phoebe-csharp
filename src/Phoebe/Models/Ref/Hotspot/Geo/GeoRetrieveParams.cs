@@ -86,6 +86,9 @@ public sealed record class GeoRetrieveParams : ParamsBase
 
     public GeoRetrieveParams() { }
 
+    public GeoRetrieveParams(GeoRetrieveParams geoRetrieveParams)
+        : base(geoRetrieveParams) { }
+
     public GeoRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

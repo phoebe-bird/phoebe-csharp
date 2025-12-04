@@ -47,6 +47,9 @@ public sealed record class AdjacentListResponse : ModelBase
 
     public AdjacentListResponse() { }
 
+    public AdjacentListResponse(AdjacentListResponse adjacentListResponse)
+        : base(adjacentListResponse) { }
+
     public AdjacentListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

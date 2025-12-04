@@ -133,6 +133,9 @@ public sealed record class GeoSpecieListParams : ParamsBase
 
     public GeoSpecieListParams() { }
 
+    public GeoSpecieListParams(GeoSpecieListParams geoSpecieListParams)
+        : base(geoSpecieListParams) { }
+
     public GeoSpecieListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

@@ -333,6 +333,9 @@ public sealed record class HistoricalRetrieveResponse : ModelBase
 
     public HistoricalRetrieveResponse() { }
 
+    public HistoricalRetrieveResponse(HistoricalRetrieveResponse historicalRetrieveResponse)
+        : base(historicalRetrieveResponse) { }
+
     public HistoricalRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -573,6 +576,9 @@ public sealed record class Loc : ModelBase
 
     public Loc() { }
 
+    public Loc(global::Phoebe.Models.Product.Lists.Historical.Loc loc)
+        : base(loc) { }
+
     public Loc(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -685,6 +691,9 @@ public sealed record class Ob : ModelBase
     }
 
     public Ob() { }
+
+    public Ob(global::Phoebe.Models.Product.Lists.Historical.Ob ob)
+        : base(ob) { }
 
     public Ob(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -835,6 +844,9 @@ public sealed record class ObsAux : ModelBase
     }
 
     public ObsAux() { }
+
+    public ObsAux(global::Phoebe.Models.Product.Lists.Historical.ObsAux obsAux)
+        : base(obsAux) { }
 
     public ObsAux(IReadOnlyDictionary<string, JsonElement> rawData)
     {

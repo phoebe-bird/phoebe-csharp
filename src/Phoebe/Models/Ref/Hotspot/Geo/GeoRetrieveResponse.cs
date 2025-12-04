@@ -152,6 +152,9 @@ public sealed record class GeoRetrieveResponse : ModelBase
 
     public GeoRetrieveResponse() { }
 
+    public GeoRetrieveResponse(GeoRetrieveResponse geoRetrieveResponse)
+        : base(geoRetrieveResponse) { }
+
     public GeoRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

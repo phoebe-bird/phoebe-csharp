@@ -18,6 +18,9 @@ public sealed record class AdjacentListParams : ParamsBase
 
     public AdjacentListParams() { }
 
+    public AdjacentListParams(AdjacentListParams adjacentListParams)
+        : base(adjacentListParams) { }
+
     public AdjacentListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

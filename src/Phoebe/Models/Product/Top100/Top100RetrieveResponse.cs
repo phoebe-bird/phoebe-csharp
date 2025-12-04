@@ -107,6 +107,9 @@ public sealed record class Top100RetrieveResponse : ModelBase
 
     public Top100RetrieveResponse() { }
 
+    public Top100RetrieveResponse(Top100RetrieveResponse top100RetrieveResponse)
+        : base(top100RetrieveResponse) { }
+
     public Top100RetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

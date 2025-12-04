@@ -320,6 +320,9 @@ public sealed record class ChecklistViewResponse : ModelBase
 
     public ChecklistViewResponse() { }
 
+    public ChecklistViewResponse(ChecklistViewResponse checklistViewResponse)
+        : base(checklistViewResponse) { }
+
     public ChecklistViewResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -555,6 +558,9 @@ public sealed record class Loc : ModelBase
 
     public Loc() { }
 
+    public Loc(Loc loc)
+        : base(loc) { }
+
     public Loc(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -654,6 +660,9 @@ public sealed record class Ob : ModelBase
     }
 
     public Ob() { }
+
+    public Ob(Ob ob)
+        : base(ob) { }
 
     public Ob(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -796,6 +805,9 @@ public sealed record class ObsAux : ModelBase
     }
 
     public ObsAux() { }
+
+    public ObsAux(ObsAux obsAux)
+        : base(obsAux) { }
 
     public ObsAux(IReadOnlyDictionary<string, JsonElement> rawData)
     {

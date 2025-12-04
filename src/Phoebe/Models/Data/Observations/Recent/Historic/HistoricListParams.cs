@@ -171,6 +171,9 @@ public sealed record class HistoricListParams : ParamsBase
 
     public HistoricListParams() { }
 
+    public HistoricListParams(HistoricListParams historicListParams)
+        : base(historicListParams) { }
+
     public HistoricListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
