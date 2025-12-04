@@ -94,6 +94,7 @@ public sealed record class Top100RetrieveResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.NumCompleteChecklists;
@@ -119,6 +120,7 @@ public sealed record class Top100RetrieveResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="Top100RetrieveResponseFromRaw.FromRawUnchecked"/>
     public static Top100RetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -129,6 +131,7 @@ public sealed record class Top100RetrieveResponse : ModelBase
 
 class Top100RetrieveResponseFromRaw : IFromRaw<Top100RetrieveResponse>
 {
+    /// <inheritdoc/>
     public Top100RetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => Top100RetrieveResponse.FromRawUnchecked(rawData);

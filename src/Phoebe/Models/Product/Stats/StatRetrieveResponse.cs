@@ -52,6 +52,7 @@ public sealed record class StatRetrieveResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.NumChecklists;
@@ -74,6 +75,7 @@ public sealed record class StatRetrieveResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="StatRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static StatRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -84,6 +86,7 @@ public sealed record class StatRetrieveResponse : ModelBase
 
 class StatRetrieveResponseFromRaw : IFromRaw<StatRetrieveResponse>
 {
+    /// <inheritdoc/>
     public StatRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => StatRetrieveResponse.FromRawUnchecked(rawData);

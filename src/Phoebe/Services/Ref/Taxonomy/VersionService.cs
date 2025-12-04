@@ -8,7 +8,7 @@ using Phoebe.Models.Ref.Taxonomy.Versions;
 
 namespace Phoebe.Services.Ref.Taxonomy;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class VersionService : IVersionService
 {
     /// <inheritdoc/>

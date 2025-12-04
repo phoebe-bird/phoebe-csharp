@@ -8,7 +8,7 @@ using Phoebe.Models.Ref.Hotspot.Geo;
 
 namespace Phoebe.Services.Ref.Hotspot;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class GeoService : IGeoService
 {
     /// <inheritdoc/>

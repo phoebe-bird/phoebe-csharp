@@ -4,7 +4,7 @@ using Phoebe.Services.Ref;
 
 namespace Phoebe.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class RefService : IRefService
 {
     /// <inheritdoc/>

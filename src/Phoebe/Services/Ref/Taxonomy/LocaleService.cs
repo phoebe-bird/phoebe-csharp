@@ -8,7 +8,7 @@ using Phoebe.Models.Ref.Taxonomy.Locales;
 
 namespace Phoebe.Services.Ref.Taxonomy;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class LocaleService : ILocaleService
 {
     /// <inheritdoc/>

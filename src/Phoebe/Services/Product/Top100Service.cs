@@ -9,7 +9,7 @@ using Phoebe.Models.Product.Top100;
 
 namespace Phoebe.Services.Product;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class Top100Service : ITop100Service
 {
     /// <inheritdoc/>

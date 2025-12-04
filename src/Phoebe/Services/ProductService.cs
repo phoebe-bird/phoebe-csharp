@@ -4,7 +4,7 @@ using Phoebe.Services.Product;
 
 namespace Phoebe.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class ProductService : IProductService
 {
     /// <inheritdoc/>

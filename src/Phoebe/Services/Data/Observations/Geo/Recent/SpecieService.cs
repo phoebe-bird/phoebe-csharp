@@ -10,7 +10,7 @@ using Phoebe.Models.Data.Observations.Geo.Recent.Species;
 
 namespace Phoebe.Services.Data.Observations.Geo.Recent;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class SpecieService : ISpecieService
 {
     /// <inheritdoc/>

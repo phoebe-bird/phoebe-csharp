@@ -9,7 +9,7 @@ using Phoebe.Models.Ref.Taxonomy.SpeciesGroups;
 
 namespace Phoebe.Services.Ref.Taxonomy;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class SpeciesGroupService : ISpeciesGroupService
 {
     /// <inheritdoc/>

@@ -10,7 +10,7 @@ using Phoebe.Models.Data.Observations.Recent.Notable;
 
 namespace Phoebe.Services.Data.Observations.Recent;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class NotableService : INotableService
 {
     /// <inheritdoc/>

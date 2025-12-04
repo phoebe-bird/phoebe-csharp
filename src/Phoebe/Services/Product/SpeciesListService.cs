@@ -9,7 +9,7 @@ using Phoebe.Models.Product.SpeciesList;
 
 namespace Phoebe.Services.Product;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class SpeciesListService : ISpeciesListService
 {
     /// <inheritdoc/>

@@ -10,7 +10,7 @@ using Phoebe.Services.Product.Lists;
 
 namespace Phoebe.Services.Product;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class ListService : IListService
 {
     /// <inheritdoc/>

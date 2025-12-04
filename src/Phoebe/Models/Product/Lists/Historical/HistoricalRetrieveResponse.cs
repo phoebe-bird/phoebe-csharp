@@ -303,6 +303,7 @@ public sealed record class HistoricalRetrieveResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.AllObsReported;
@@ -345,6 +346,7 @@ public sealed record class HistoricalRetrieveResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="HistoricalRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static HistoricalRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -355,6 +357,7 @@ public sealed record class HistoricalRetrieveResponse : ModelBase
 
 class HistoricalRetrieveResponseFromRaw : IFromRaw<HistoricalRetrieveResponse>
 {
+    /// <inheritdoc/>
     public HistoricalRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => HistoricalRetrieveResponse.FromRawUnchecked(rawData);
@@ -550,6 +553,7 @@ public sealed record class Loc : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.CountryCode;
@@ -582,6 +586,7 @@ public sealed record class Loc : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="global::Phoebe.Models.Product.Lists.Historical.LocFromRaw.FromRawUnchecked"/>
     public static global::Phoebe.Models.Product.Lists.Historical.Loc FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -592,6 +597,7 @@ public sealed record class Loc : ModelBase
 
 class LocFromRaw : IFromRaw<global::Phoebe.Models.Product.Lists.Historical.Loc>
 {
+    /// <inheritdoc/>
     public global::Phoebe.Models.Product.Lists.Historical.Loc FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => global::Phoebe.Models.Product.Lists.Historical.Loc.FromRawUnchecked(rawData);
@@ -666,6 +672,7 @@ public sealed record class Ob : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.ObsAux ?? [])
@@ -692,6 +699,7 @@ public sealed record class Ob : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="global::Phoebe.Models.Product.Lists.Historical.ObFromRaw.FromRawUnchecked"/>
     public static global::Phoebe.Models.Product.Lists.Historical.Ob FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -702,6 +710,7 @@ public sealed record class Ob : ModelBase
 
 class ObFromRaw : IFromRaw<global::Phoebe.Models.Product.Lists.Historical.Ob>
 {
+    /// <inheritdoc/>
     public global::Phoebe.Models.Product.Lists.Historical.Ob FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => global::Phoebe.Models.Product.Lists.Historical.Ob.FromRawUnchecked(rawData);
@@ -813,6 +822,7 @@ public sealed record class ObsAux : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.AuxCode;
@@ -839,6 +849,7 @@ public sealed record class ObsAux : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="global::Phoebe.Models.Product.Lists.Historical.ObsAuxFromRaw.FromRawUnchecked"/>
     public static global::Phoebe.Models.Product.Lists.Historical.ObsAux FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -849,6 +860,7 @@ public sealed record class ObsAux : ModelBase
 
 class ObsAuxFromRaw : IFromRaw<global::Phoebe.Models.Product.Lists.Historical.ObsAux>
 {
+    /// <inheritdoc/>
     public global::Phoebe.Models.Product.Lists.Historical.ObsAux FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => global::Phoebe.Models.Product.Lists.Historical.ObsAux.FromRawUnchecked(rawData);

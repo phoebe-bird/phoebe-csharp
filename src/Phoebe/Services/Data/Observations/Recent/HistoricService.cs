@@ -10,7 +10,7 @@ using Phoebe.Models.Data.Observations.Recent.Historic;
 
 namespace Phoebe.Services.Data.Observations.Recent;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class HistoricService : IHistoricService
 {
     /// <inheritdoc/>

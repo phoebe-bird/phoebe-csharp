@@ -38,6 +38,7 @@ public sealed record class AdjacentListResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Code;
@@ -59,6 +60,7 @@ public sealed record class AdjacentListResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AdjacentListResponseFromRaw.FromRawUnchecked"/>
     public static AdjacentListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -69,6 +71,7 @@ public sealed record class AdjacentListResponse : ModelBase
 
 class AdjacentListResponseFromRaw : IFromRaw<AdjacentListResponse>
 {
+    /// <inheritdoc/>
     public AdjacentListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AdjacentListResponse.FromRawUnchecked(rawData);

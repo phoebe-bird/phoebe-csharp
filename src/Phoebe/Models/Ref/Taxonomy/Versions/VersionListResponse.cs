@@ -38,6 +38,7 @@ public sealed record class VersionListResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.AuthorityVer;
@@ -59,6 +60,7 @@ public sealed record class VersionListResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="VersionListResponseFromRaw.FromRawUnchecked"/>
     public static VersionListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -69,6 +71,7 @@ public sealed record class VersionListResponse : ModelBase
 
 class VersionListResponseFromRaw : IFromRaw<VersionListResponse>
 {
+    /// <inheritdoc/>
     public VersionListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         VersionListResponse.FromRawUnchecked(rawData);
 }

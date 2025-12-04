@@ -10,7 +10,7 @@ using Phoebe.Services.Ref.Hotspot;
 
 namespace Phoebe.Services.Ref;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class HotspotService : IHotspotService
 {
     /// <inheritdoc/>

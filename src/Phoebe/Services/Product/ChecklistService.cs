@@ -8,7 +8,7 @@ using Phoebe.Models.Product.Checklist;
 
 namespace Phoebe.Services.Product;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class ChecklistService : IChecklistService
 {
     /// <inheritdoc/>

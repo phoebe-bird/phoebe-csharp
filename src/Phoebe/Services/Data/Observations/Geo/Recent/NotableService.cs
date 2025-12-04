@@ -9,7 +9,7 @@ using Phoebe.Models.Data.Observations.Geo.Recent.Notable;
 
 namespace Phoebe.Services.Data.Observations.Geo.Recent;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class NotableService : INotableService
 {
     /// <inheritdoc/>

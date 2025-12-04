@@ -52,6 +52,7 @@ public sealed record class LocaleListResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Code;
@@ -74,6 +75,7 @@ public sealed record class LocaleListResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="LocaleListResponseFromRaw.FromRawUnchecked"/>
     public static LocaleListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -84,6 +86,7 @@ public sealed record class LocaleListResponse : ModelBase
 
 class LocaleListResponseFromRaw : IFromRaw<LocaleListResponse>
 {
+    /// <inheritdoc/>
     public LocaleListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         LocaleListResponse.FromRawUnchecked(rawData);
 }

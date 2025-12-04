@@ -9,7 +9,7 @@ using Phoebe.Models.Ref.Region.Adjacent;
 
 namespace Phoebe.Services.Ref.Region;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class AdjacentService : IAdjacentService
 {
     /// <inheritdoc/>

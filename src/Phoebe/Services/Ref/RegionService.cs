@@ -4,7 +4,7 @@ using Phoebe.Services.Ref.Region;
 
 namespace Phoebe.Services.Ref;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class RegionService : IRegionService
 {
     /// <inheritdoc/>

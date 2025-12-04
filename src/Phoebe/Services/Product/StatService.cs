@@ -8,7 +8,7 @@ using Phoebe.Models.Product.Stats;
 
 namespace Phoebe.Services.Product;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class StatService : IStatService
 {
     /// <inheritdoc/>

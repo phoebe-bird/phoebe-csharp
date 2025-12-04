@@ -55,6 +55,7 @@ public sealed record class SpeciesGroupListResponse : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.GroupName;
@@ -77,6 +78,7 @@ public sealed record class SpeciesGroupListResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="SpeciesGroupListResponseFromRaw.FromRawUnchecked"/>
     public static SpeciesGroupListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -87,6 +89,7 @@ public sealed record class SpeciesGroupListResponse : ModelBase
 
 class SpeciesGroupListResponseFromRaw : IFromRaw<SpeciesGroupListResponse>
 {
+    /// <inheritdoc/>
     public SpeciesGroupListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => SpeciesGroupListResponse.FromRawUnchecked(rawData);
