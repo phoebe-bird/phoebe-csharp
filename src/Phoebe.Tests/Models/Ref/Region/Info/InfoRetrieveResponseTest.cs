@@ -12,20 +12,20 @@ public class InfoRetrieveResponseTest : TestBase
         {
             Bounds = new()
             {
-                MaxX = -75.764,
-                MaxY = 42.896,
-                MinX = -75.764,
-                MinY = 42.896,
+                MaxX = -75.764f,
+                MaxY = 42.896f,
+                MinX = -75.764f,
+                MinY = 42.896f,
             },
             Result = "Madison, New York, United States",
         };
 
         Bounds expectedBounds = new()
         {
-            MaxX = -75.764,
-            MaxY = 42.896,
-            MinX = -75.764,
-            MinY = 42.896,
+            MaxX = -75.764f,
+            MaxY = 42.896f,
+            MinX = -75.764f,
+            MinY = 42.896f,
         };
         string expectedResult = "Madison, New York, United States";
 
@@ -40,10 +40,10 @@ public class InfoRetrieveResponseTest : TestBase
         {
             Bounds = new()
             {
-                MaxX = -75.764,
-                MaxY = 42.896,
-                MinX = -75.764,
-                MinY = 42.896,
+                MaxX = -75.764f,
+                MaxY = 42.896f,
+                MinX = -75.764f,
+                MinY = 42.896f,
             },
             Result = "Madison, New York, United States",
         };
@@ -61,10 +61,10 @@ public class InfoRetrieveResponseTest : TestBase
         {
             Bounds = new()
             {
-                MaxX = -75.764,
-                MaxY = 42.896,
-                MinX = -75.764,
-                MinY = 42.896,
+                MaxX = -75.764f,
+                MaxY = 42.896f,
+                MinX = -75.764f,
+                MinY = 42.896f,
             },
             Result = "Madison, New York, United States",
         };
@@ -75,10 +75,10 @@ public class InfoRetrieveResponseTest : TestBase
 
         Bounds expectedBounds = new()
         {
-            MaxX = -75.764,
-            MaxY = 42.896,
-            MinX = -75.764,
-            MinY = 42.896,
+            MaxX = -75.764f,
+            MaxY = 42.896f,
+            MinX = -75.764f,
+            MinY = 42.896f,
         };
         string expectedResult = "Madison, New York, United States";
 
@@ -93,10 +93,10 @@ public class InfoRetrieveResponseTest : TestBase
         {
             Bounds = new()
             {
-                MaxX = -75.764,
-                MaxY = 42.896,
-                MinX = -75.764,
-                MinY = 42.896,
+                MaxX = -75.764f,
+                MaxY = 42.896f,
+                MinX = -75.764f,
+                MinY = 42.896f,
             },
             Result = "Madison, New York, United States",
         };
@@ -160,16 +160,16 @@ public class BoundsTest : TestBase
     {
         var model = new Bounds
         {
-            MaxX = -75.764,
-            MaxY = 42.896,
-            MinX = -75.764,
-            MinY = 42.896,
+            MaxX = -75.764f,
+            MaxY = 42.896f,
+            MinX = -75.764f,
+            MinY = 42.896f,
         };
 
-        float expectedMaxX = -75.764;
-        float expectedMaxY = 42.896;
-        float expectedMinX = -75.764;
-        float expectedMinY = 42.896;
+        float expectedMaxX = -75.764f;
+        float expectedMaxY = 42.896f;
+        float expectedMinX = -75.764f;
+        float expectedMinY = 42.896f;
 
         Assert.Equal(expectedMaxX, model.MaxX);
         Assert.Equal(expectedMaxY, model.MaxY);
@@ -182,10 +182,10 @@ public class BoundsTest : TestBase
     {
         var model = new Bounds
         {
-            MaxX = -75.764,
-            MaxY = 42.896,
-            MinX = -75.764,
-            MinY = 42.896,
+            MaxX = -75.764f,
+            MaxY = 42.896f,
+            MinX = -75.764f,
+            MinY = 42.896f,
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -199,20 +199,20 @@ public class BoundsTest : TestBase
     {
         var model = new Bounds
         {
-            MaxX = -75.764,
-            MaxY = 42.896,
-            MinX = -75.764,
-            MinY = 42.896,
+            MaxX = -75.764f,
+            MaxY = 42.896f,
+            MinX = -75.764f,
+            MinY = 42.896f,
         };
 
         string json = JsonSerializer.Serialize(model);
         var deserialized = JsonSerializer.Deserialize<Bounds>(json);
         Assert.NotNull(deserialized);
 
-        float expectedMaxX = -75.764;
-        float expectedMaxY = 42.896;
-        float expectedMinX = -75.764;
-        float expectedMinY = 42.896;
+        float expectedMaxX = -75.764f;
+        float expectedMaxY = 42.896f;
+        float expectedMinX = -75.764f;
+        float expectedMinY = 42.896f;
 
         Assert.Equal(expectedMaxX, deserialized.MaxX);
         Assert.Equal(expectedMaxY, deserialized.MaxY);
@@ -225,10 +225,10 @@ public class BoundsTest : TestBase
     {
         var model = new Bounds
         {
-            MaxX = -75.764,
-            MaxY = 42.896,
-            MinX = -75.764,
-            MinY = 42.896,
+            MaxX = -75.764f,
+            MaxY = 42.896f,
+            MinX = -75.764f,
+            MinY = 42.896f,
         };
 
         model.Validate();
