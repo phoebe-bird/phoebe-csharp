@@ -32,6 +32,7 @@ public class SpeciesGroupListResponseTest : TestBase
 
         Assert.Equal(expectedGroupName, model.GroupName);
         Assert.Equal(expectedGroupOrder, model.GroupOrder);
+        Assert.NotNull(model.TaxonOrderBounds);
         Assert.Equal(expectedTaxonOrderBounds.Count, model.TaxonOrderBounds.Count);
         for (int i = 0; i < expectedTaxonOrderBounds.Count; i++)
         {
@@ -94,6 +95,7 @@ public class SpeciesGroupListResponseTest : TestBase
 
         Assert.Equal(expectedGroupName, deserialized.GroupName);
         Assert.Equal(expectedGroupOrder, deserialized.GroupOrder);
+        Assert.NotNull(deserialized.TaxonOrderBounds);
         Assert.Equal(expectedTaxonOrderBounds.Count, deserialized.TaxonOrderBounds.Count);
         for (int i = 0; i < expectedTaxonOrderBounds.Count; i++)
         {
