@@ -8,7 +8,8 @@ public class NotableServiceTest : TestBase
     public async Task List_Works()
     {
         var observations = await this.client.Data.Observations.Geo.Recent.Notable.List(
-            new() { Lat = -90, Lng = -180 }
+            new() { Lat = -90, Lng = -180 },
+            TestContext.Current.CancellationToken
         );
         foreach (var item in observations)
         {

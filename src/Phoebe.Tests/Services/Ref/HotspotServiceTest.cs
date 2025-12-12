@@ -7,7 +7,11 @@ public class HotspotServiceTest : TestBase
     [Fact]
     public async Task List_Works()
     {
-        var hotspots = await this.client.Ref.Hotspot.List("regionCode");
+        var hotspots = await this.client.Ref.Hotspot.List(
+            "regionCode",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         foreach (var item in hotspots)
         {
             item.Validate();
