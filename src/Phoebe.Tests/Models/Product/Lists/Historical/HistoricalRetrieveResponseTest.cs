@@ -136,6 +136,7 @@ public class HistoricalRetrieveResponseTest : TestBase
         Assert.Equal(expectedLocID, model.LocID);
         Assert.Equal(expectedNumObservers, model.NumObservers);
         Assert.Equal(expectedNumSpecies, model.NumSpecies);
+        Assert.NotNull(model.Obs);
         Assert.Equal(expectedObs.Count, model.Obs.Count);
         for (int i = 0; i < expectedObs.Count; i++)
         {
@@ -355,6 +356,7 @@ public class HistoricalRetrieveResponseTest : TestBase
         Assert.Equal(expectedLocID, deserialized.LocID);
         Assert.Equal(expectedNumObservers, deserialized.NumObservers);
         Assert.Equal(expectedNumSpecies, deserialized.NumSpecies);
+        Assert.NotNull(deserialized.Obs);
         Assert.Equal(expectedObs.Count, deserialized.Obs.Count);
         for (int i = 0; i < expectedObs.Count; i++)
         {
@@ -904,6 +906,7 @@ public class ObTest : TestBase
         string expectedObsID = "obsId";
         string expectedSpeciesCode = "speciesCode";
 
+        Assert.NotNull(model.ObsAux);
         Assert.Equal(expectedObsAux.Count, model.ObsAux.Count);
         for (int i = 0; i < expectedObsAux.Count; i++)
         {
@@ -987,6 +990,7 @@ public class ObTest : TestBase
         string expectedObsID = "obsId";
         string expectedSpeciesCode = "speciesCode";
 
+        Assert.NotNull(deserialized.ObsAux);
         Assert.Equal(expectedObsAux.Count, deserialized.ObsAux.Count);
         for (int i = 0; i < expectedObsAux.Count; i++)
         {

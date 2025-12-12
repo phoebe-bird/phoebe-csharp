@@ -38,6 +38,7 @@ public class EbirdRetrieveResponseTest : TestBase
         string expectedSpeciesCode = "speciesCode";
         int expectedTaxonOrder = 0;
 
+        Assert.NotNull(model.BandingCodes);
         Assert.Equal(expectedBandingCodes.Count, model.BandingCodes.Count);
         for (int i = 0; i < expectedBandingCodes.Count; i++)
         {
@@ -45,6 +46,7 @@ public class EbirdRetrieveResponseTest : TestBase
         }
         Assert.Equal(expectedCategory, model.Category);
         Assert.Equal(expectedComName, model.ComName);
+        Assert.NotNull(model.ComNameCodes);
         Assert.Equal(expectedComNameCodes.Count, model.ComNameCodes.Count);
         for (int i = 0; i < expectedComNameCodes.Count; i++)
         {
@@ -55,6 +57,7 @@ public class EbirdRetrieveResponseTest : TestBase
         Assert.Equal(expectedFamilySciName, model.FamilySciName);
         Assert.Equal(expectedOrder, model.Order);
         Assert.Equal(expectedSciName, model.SciName);
+        Assert.NotNull(model.SciNameCodes);
         Assert.Equal(expectedSciNameCodes.Count, model.SciNameCodes.Count);
         for (int i = 0; i < expectedSciNameCodes.Count; i++)
         {
@@ -125,6 +128,7 @@ public class EbirdRetrieveResponseTest : TestBase
         string expectedSpeciesCode = "speciesCode";
         int expectedTaxonOrder = 0;
 
+        Assert.NotNull(deserialized.BandingCodes);
         Assert.Equal(expectedBandingCodes.Count, deserialized.BandingCodes.Count);
         for (int i = 0; i < expectedBandingCodes.Count; i++)
         {
@@ -132,6 +136,7 @@ public class EbirdRetrieveResponseTest : TestBase
         }
         Assert.Equal(expectedCategory, deserialized.Category);
         Assert.Equal(expectedComName, deserialized.ComName);
+        Assert.NotNull(deserialized.ComNameCodes);
         Assert.Equal(expectedComNameCodes.Count, deserialized.ComNameCodes.Count);
         for (int i = 0; i < expectedComNameCodes.Count; i++)
         {
@@ -142,6 +147,7 @@ public class EbirdRetrieveResponseTest : TestBase
         Assert.Equal(expectedFamilySciName, deserialized.FamilySciName);
         Assert.Equal(expectedOrder, deserialized.Order);
         Assert.Equal(expectedSciName, deserialized.SciName);
+        Assert.NotNull(deserialized.SciNameCodes);
         Assert.Equal(expectedSciNameCodes.Count, deserialized.SciNameCodes.Count);
         for (int i = 0; i < expectedSciNameCodes.Count; i++)
         {
