@@ -9,7 +9,8 @@ public class SpecieServiceTest : TestBase
     {
         var observations = await this.client.Data.Observations.Geo.Recent.Species.List(
             "speciesCode",
-            new() { Lat = -90, Lng = -180 }
+            new() { Lat = -90, Lng = -180 },
+            TestContext.Current.CancellationToken
         );
         foreach (var item in observations)
         {
