@@ -80,8 +80,8 @@ public class SpeciesGroupListResponseTest : TestBase
             ],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SpeciesGroupListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SpeciesGroupListResponse>(element);
         Assert.NotNull(deserialized);
 
         string expectedGroupName = "Waterfowl";

@@ -32,7 +32,7 @@ public sealed record class HistoricListParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<
+            return JsonModel.GetNullableClass<
                 ApiEnum<string, global::Phoebe.Models.Data.Observations.Recent.Historic.Cat>
             >(this.RawQueryData, "cat");
         }
@@ -43,7 +43,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "cat", value);
+            JsonModel.Set(this._rawQueryData, "cat", value);
         }
     }
 
@@ -54,7 +54,7 @@ public sealed record class HistoricListParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, Detail>>(this.RawQueryData, "detail");
+            return JsonModel.GetNullableClass<ApiEnum<string, Detail>>(this.RawQueryData, "detail");
         }
         init
         {
@@ -63,7 +63,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "detail", value);
+            JsonModel.Set(this._rawQueryData, "detail", value);
         }
     }
 
@@ -72,7 +72,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// </summary>
     public bool? Hotspot
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "hotspot"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "hotspot"); }
         init
         {
             if (value == null)
@@ -80,7 +80,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "hotspot", value);
+            JsonModel.Set(this._rawQueryData, "hotspot", value);
         }
     }
 
@@ -89,7 +89,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// </summary>
     public bool? IncludeProvisional
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "includeProvisional"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "includeProvisional"); }
         init
         {
             if (value == null)
@@ -97,7 +97,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "includeProvisional", value);
+            JsonModel.Set(this._rawQueryData, "includeProvisional", value);
         }
     }
 
@@ -106,7 +106,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
         init
         {
             if (value == null)
@@ -114,7 +114,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "maxResults", value);
+            JsonModel.Set(this._rawQueryData, "maxResults", value);
         }
     }
 
@@ -123,7 +123,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string>? R
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawQueryData, "r"); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawQueryData, "r"); }
         init
         {
             if (value == null)
@@ -131,7 +131,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "r", value);
+            JsonModel.Set(this._rawQueryData, "r", value);
         }
     }
 
@@ -140,7 +140,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Rank>? Rank
     {
-        get { return ModelBase.GetNullableClass<ApiEnum<string, Rank>>(this.RawQueryData, "rank"); }
+        get { return JsonModel.GetNullableClass<ApiEnum<string, Rank>>(this.RawQueryData, "rank"); }
         init
         {
             if (value == null)
@@ -148,7 +148,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "rank", value);
+            JsonModel.Set(this._rawQueryData, "rank", value);
         }
     }
 
@@ -157,7 +157,7 @@ public sealed record class HistoricListParams : ParamsBase
     /// </summary>
     public string? SppLocale
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "sppLocale"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "sppLocale"); }
         init
         {
             if (value == null)
@@ -165,7 +165,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "sppLocale", value);
+            JsonModel.Set(this._rawQueryData, "sppLocale", value);
         }
     }
 
@@ -195,7 +195,7 @@ public sealed record class HistoricListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static HistoricListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

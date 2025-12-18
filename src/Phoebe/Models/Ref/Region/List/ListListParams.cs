@@ -27,7 +27,7 @@ public sealed record class ListListParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Fmt>? Fmt
     {
-        get { return ModelBase.GetNullableClass<ApiEnum<string, Fmt>>(this.RawQueryData, "fmt"); }
+        get { return JsonModel.GetNullableClass<ApiEnum<string, Fmt>>(this.RawQueryData, "fmt"); }
         init
         {
             if (value == null)
@@ -35,7 +35,7 @@ public sealed record class ListListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "fmt", value);
+            JsonModel.Set(this._rawQueryData, "fmt", value);
         }
     }
 
@@ -65,7 +65,7 @@ public sealed record class ListListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static ListListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

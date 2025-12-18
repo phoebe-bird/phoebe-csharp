@@ -7,12 +7,12 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Hotspot.Info;
 
-[JsonConverter(typeof(ModelConverter<InfoRetrieveResponse, InfoRetrieveResponseFromRaw>))]
-public sealed record class InfoRetrieveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<InfoRetrieveResponse, InfoRetrieveResponseFromRaw>))]
+public sealed record class InfoRetrieveResponse : JsonModel
 {
     public string? CountryCode
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "countryCode"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "countryCode"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "countryCode", value);
+            JsonModel.Set(this._rawData, "countryCode", value);
         }
     }
 
     public string? CountryName
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "countryName"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "countryName"); }
         init
         {
             if (value == null)
@@ -34,13 +34,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "countryName", value);
+            JsonModel.Set(this._rawData, "countryName", value);
         }
     }
 
     public string? HierarchicalName
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "hierarchicalName"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "hierarchicalName"); }
         init
         {
             if (value == null)
@@ -48,13 +48,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "hierarchicalName", value);
+            JsonModel.Set(this._rawData, "hierarchicalName", value);
         }
     }
 
     public bool? IsHotspot
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "isHotspot"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "isHotspot"); }
         init
         {
             if (value == null)
@@ -62,13 +62,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "isHotspot", value);
+            JsonModel.Set(this._rawData, "isHotspot", value);
         }
     }
 
     public double? Lat
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "lat"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "lat"); }
         init
         {
             if (value == null)
@@ -76,13 +76,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "lat", value);
+            JsonModel.Set(this._rawData, "lat", value);
         }
     }
 
     public double? Latitude
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "latitude"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "latitude"); }
         init
         {
             if (value == null)
@@ -90,13 +90,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "latitude", value);
+            JsonModel.Set(this._rawData, "latitude", value);
         }
     }
 
     public double? Lng
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "lng"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "lng"); }
         init
         {
             if (value == null)
@@ -104,13 +104,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "lng", value);
+            JsonModel.Set(this._rawData, "lng", value);
         }
     }
 
     public string? LocID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "locId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "locId"); }
         init
         {
             if (value == null)
@@ -118,13 +118,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "locId", value);
+            JsonModel.Set(this._rawData, "locId", value);
         }
     }
 
     public string? LocName
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "locName"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "locName"); }
         init
         {
             if (value == null)
@@ -132,13 +132,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "locName", value);
+            JsonModel.Set(this._rawData, "locName", value);
         }
     }
 
     public double? Longitude
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "longitude"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "longitude"); }
         init
         {
             if (value == null)
@@ -146,13 +146,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "longitude", value);
+            JsonModel.Set(this._rawData, "longitude", value);
         }
     }
 
     public string? Name
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "name"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "name"); }
         init
         {
             if (value == null)
@@ -160,13 +160,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "name", value);
+            JsonModel.Set(this._rawData, "name", value);
         }
     }
 
     public string? Subnational1Code
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "subnational1Code"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "subnational1Code"); }
         init
         {
             if (value == null)
@@ -174,13 +174,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "subnational1Code", value);
+            JsonModel.Set(this._rawData, "subnational1Code", value);
         }
     }
 
     public string? Subnational1Name
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "subnational1Name"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "subnational1Name"); }
         init
         {
             if (value == null)
@@ -188,7 +188,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "subnational1Name", value);
+            JsonModel.Set(this._rawData, "subnational1Name", value);
         }
     }
 
@@ -237,7 +237,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
     }
 }
 
-class InfoRetrieveResponseFromRaw : IFromRaw<InfoRetrieveResponse>
+class InfoRetrieveResponseFromRaw : IFromRawJson<InfoRetrieveResponse>
 {
     /// <inheritdoc/>
     public InfoRetrieveResponse FromRawUnchecked(

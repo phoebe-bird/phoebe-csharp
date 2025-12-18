@@ -24,7 +24,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public long? Back
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "back"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "back"); }
         init
         {
             if (value == null)
@@ -32,7 +32,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "back", value);
+            JsonModel.Set(this._rawQueryData, "back", value);
         }
     }
 
@@ -41,7 +41,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Cat>? Cat
     {
-        get { return ModelBase.GetNullableClass<ApiEnum<string, Cat>>(this.RawQueryData, "cat"); }
+        get { return JsonModel.GetNullableClass<ApiEnum<string, Cat>>(this.RawQueryData, "cat"); }
         init
         {
             if (value == null)
@@ -49,7 +49,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "cat", value);
+            JsonModel.Set(this._rawQueryData, "cat", value);
         }
     }
 
@@ -58,7 +58,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public bool? Hotspot
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "hotspot"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "hotspot"); }
         init
         {
             if (value == null)
@@ -66,7 +66,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "hotspot", value);
+            JsonModel.Set(this._rawQueryData, "hotspot", value);
         }
     }
 
@@ -75,7 +75,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public bool? IncludeProvisional
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "includeProvisional"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "includeProvisional"); }
         init
         {
             if (value == null)
@@ -83,7 +83,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "includeProvisional", value);
+            JsonModel.Set(this._rawQueryData, "includeProvisional", value);
         }
     }
 
@@ -92,7 +92,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
         init
         {
             if (value == null)
@@ -100,7 +100,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "maxResults", value);
+            JsonModel.Set(this._rawQueryData, "maxResults", value);
         }
     }
 
@@ -109,7 +109,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string>? R
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawQueryData, "r"); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawQueryData, "r"); }
         init
         {
             if (value == null)
@@ -117,7 +117,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "r", value);
+            JsonModel.Set(this._rawQueryData, "r", value);
         }
     }
 
@@ -126,7 +126,7 @@ public sealed record class RecentListParams : ParamsBase
     /// </summary>
     public string? SppLocale
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "sppLocale"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "sppLocale"); }
         init
         {
             if (value == null)
@@ -134,7 +134,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "sppLocale", value);
+            JsonModel.Set(this._rawQueryData, "sppLocale", value);
         }
     }
 
@@ -164,7 +164,7 @@ public sealed record class RecentListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static RecentListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

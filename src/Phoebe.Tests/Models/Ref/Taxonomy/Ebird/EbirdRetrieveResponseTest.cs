@@ -111,8 +111,8 @@ public class EbirdRetrieveResponseTest : TestBase
             TaxonOrder = 0,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<EbirdRetrieveResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<EbirdRetrieveResponse>(element);
         Assert.NotNull(deserialized);
 
         List<string> expectedBandingCodes = ["string"];

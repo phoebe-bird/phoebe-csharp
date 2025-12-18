@@ -285,8 +285,8 @@ public class ChecklistViewResponseTest : TestBase
             UserDisplayName = "userDisplayName",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ChecklistViewResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ChecklistViewResponse>(element);
         Assert.NotNull(deserialized);
 
         bool expectedAllObsReported = true;
@@ -693,8 +693,8 @@ public class LocTest : TestBase
             Subnational1Name = "subnational1Name",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Loc>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Loc>(element);
         Assert.NotNull(deserialized);
 
         string expectedCountryCode = "countryCode";
@@ -969,8 +969,8 @@ public class ObTest : TestBase
             SpeciesCode = "speciesCode",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Ob>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Ob>(element);
         Assert.NotNull(deserialized);
 
         List<ObsAux> expectedObsAux =
@@ -1155,8 +1155,8 @@ public class ObsAuxTest : TestBase
             Value = "value",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ObsAux>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ObsAux>(element);
         Assert.NotNull(deserialized);
 
         string expectedAuxCode = "auxCode";

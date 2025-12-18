@@ -26,14 +26,14 @@ public sealed record class SpecieListParams : ParamsBase
 
     public required float Lat
     {
-        get { return ModelBase.GetNotNullStruct<float>(this.RawQueryData, "lat"); }
-        init { ModelBase.Set(this._rawQueryData, "lat", value); }
+        get { return JsonModel.GetNotNullStruct<float>(this.RawQueryData, "lat"); }
+        init { JsonModel.Set(this._rawQueryData, "lat", value); }
     }
 
     public required float Lng
     {
-        get { return ModelBase.GetNotNullStruct<float>(this.RawQueryData, "lng"); }
-        init { ModelBase.Set(this._rawQueryData, "lng", value); }
+        get { return JsonModel.GetNotNullStruct<float>(this.RawQueryData, "lng"); }
+        init { JsonModel.Set(this._rawQueryData, "lng", value); }
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public sealed record class SpecieListParams : ParamsBase
     /// </summary>
     public long? Back
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "back"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "back"); }
         init
         {
             if (value == null)
@@ -49,7 +49,7 @@ public sealed record class SpecieListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "back", value);
+            JsonModel.Set(this._rawQueryData, "back", value);
         }
     }
 
@@ -58,7 +58,7 @@ public sealed record class SpecieListParams : ParamsBase
     /// </summary>
     public long? Dist
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "dist"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "dist"); }
         init
         {
             if (value == null)
@@ -66,7 +66,7 @@ public sealed record class SpecieListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "dist", value);
+            JsonModel.Set(this._rawQueryData, "dist", value);
         }
     }
 
@@ -75,7 +75,7 @@ public sealed record class SpecieListParams : ParamsBase
     /// </summary>
     public bool? Hotspot
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "hotspot"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "hotspot"); }
         init
         {
             if (value == null)
@@ -83,7 +83,7 @@ public sealed record class SpecieListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "hotspot", value);
+            JsonModel.Set(this._rawQueryData, "hotspot", value);
         }
     }
 
@@ -92,7 +92,7 @@ public sealed record class SpecieListParams : ParamsBase
     /// </summary>
     public bool? IncludeProvisional
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "includeProvisional"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "includeProvisional"); }
         init
         {
             if (value == null)
@@ -100,7 +100,7 @@ public sealed record class SpecieListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "includeProvisional", value);
+            JsonModel.Set(this._rawQueryData, "includeProvisional", value);
         }
     }
 
@@ -109,7 +109,7 @@ public sealed record class SpecieListParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
         init
         {
             if (value == null)
@@ -117,7 +117,7 @@ public sealed record class SpecieListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "maxResults", value);
+            JsonModel.Set(this._rawQueryData, "maxResults", value);
         }
     }
 
@@ -126,7 +126,7 @@ public sealed record class SpecieListParams : ParamsBase
     /// </summary>
     public string? SppLocale
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "sppLocale"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "sppLocale"); }
         init
         {
             if (value == null)
@@ -134,7 +134,7 @@ public sealed record class SpecieListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "sppLocale", value);
+            JsonModel.Set(this._rawQueryData, "sppLocale", value);
         }
     }
 
@@ -164,7 +164,7 @@ public sealed record class SpecieListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SpecieListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

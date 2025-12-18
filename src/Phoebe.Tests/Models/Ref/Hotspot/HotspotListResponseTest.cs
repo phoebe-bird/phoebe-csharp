@@ -80,8 +80,8 @@ public class HotspotListResponseTest : TestBase
             Subnational2Code = "subnational2Code",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<HotspotListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<HotspotListResponse>(element);
         Assert.NotNull(deserialized);
 
         string expectedCountryCode = "countryCode";

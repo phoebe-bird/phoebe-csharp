@@ -7,12 +7,12 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Taxonomy.Locales;
 
-[JsonConverter(typeof(ModelConverter<LocaleListResponse, LocaleListResponseFromRaw>))]
-public sealed record class LocaleListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<LocaleListResponse, LocaleListResponseFromRaw>))]
+public sealed record class LocaleListResponse : JsonModel
 {
     public string? Code
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "code"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "code"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class LocaleListResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "code", value);
+            JsonModel.Set(this._rawData, "code", value);
         }
     }
 
     public string? LastUpdated
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "lastUpdated"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "lastUpdated"); }
         init
         {
             if (value == null)
@@ -34,13 +34,13 @@ public sealed record class LocaleListResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "lastUpdated", value);
+            JsonModel.Set(this._rawData, "lastUpdated", value);
         }
     }
 
     public string? Name
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "name"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "name"); }
         init
         {
             if (value == null)
@@ -48,7 +48,7 @@ public sealed record class LocaleListResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "name", value);
+            JsonModel.Set(this._rawData, "name", value);
         }
     }
 
@@ -87,7 +87,7 @@ public sealed record class LocaleListResponse : ModelBase
     }
 }
 
-class LocaleListResponseFromRaw : IFromRaw<LocaleListResponse>
+class LocaleListResponseFromRaw : IFromRawJson<LocaleListResponse>
 {
     /// <inheritdoc/>
     public LocaleListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

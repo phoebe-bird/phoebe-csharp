@@ -24,7 +24,7 @@ public sealed record class SpeciesGroupListParams : ParamsBase
     /// </summary>
     public string? GroupNameLocale
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "groupNameLocale"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "groupNameLocale"); }
         init
         {
             if (value == null)
@@ -32,7 +32,7 @@ public sealed record class SpeciesGroupListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "groupNameLocale", value);
+            JsonModel.Set(this._rawQueryData, "groupNameLocale", value);
         }
     }
 
@@ -62,7 +62,7 @@ public sealed record class SpeciesGroupListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SpeciesGroupListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

@@ -50,8 +50,8 @@ public class StatRetrieveResponseTest : TestBase
             NumSpecies = 0,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<StatRetrieveResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<StatRetrieveResponse>(element);
         Assert.NotNull(deserialized);
 
         int expectedNumChecklists = 0;

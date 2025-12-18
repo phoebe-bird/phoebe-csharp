@@ -7,12 +7,12 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Data.Observations;
 
-[JsonConverter(typeof(ModelConverter<Observation, ObservationFromRaw>))]
-public sealed record class Observation : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Observation, ObservationFromRaw>))]
+public sealed record class Observation : JsonModel
 {
     public long? ID
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "id"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawData, "id"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "id", value);
+            JsonModel.Set(this._rawData, "id", value);
         }
     }
 
     public string? ComName
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "comName"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "comName"); }
         init
         {
             if (value == null)
@@ -34,13 +34,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "comName", value);
+            JsonModel.Set(this._rawData, "comName", value);
         }
     }
 
     public string? Firstname
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "firstname"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "firstname"); }
         init
         {
             if (value == null)
@@ -48,13 +48,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "firstname", value);
+            JsonModel.Set(this._rawData, "firstname", value);
         }
     }
 
     public long? HowMany
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "howMany"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawData, "howMany"); }
         init
         {
             if (value == null)
@@ -62,13 +62,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "howMany", value);
+            JsonModel.Set(this._rawData, "howMany", value);
         }
     }
 
     public string? Lastname
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "lastname"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "lastname"); }
         init
         {
             if (value == null)
@@ -76,13 +76,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "lastname", value);
+            JsonModel.Set(this._rawData, "lastname", value);
         }
     }
 
     public float? Lat
     {
-        get { return ModelBase.GetNullableStruct<float>(this.RawData, "lat"); }
+        get { return JsonModel.GetNullableStruct<float>(this.RawData, "lat"); }
         init
         {
             if (value == null)
@@ -90,13 +90,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "lat", value);
+            JsonModel.Set(this._rawData, "lat", value);
         }
     }
 
     public float? Lng
     {
-        get { return ModelBase.GetNullableStruct<float>(this.RawData, "lng"); }
+        get { return JsonModel.GetNullableStruct<float>(this.RawData, "lng"); }
         init
         {
             if (value == null)
@@ -104,13 +104,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "lng", value);
+            JsonModel.Set(this._rawData, "lng", value);
         }
     }
 
     public bool? LocationPrivate
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "locationPrivate"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "locationPrivate"); }
         init
         {
             if (value == null)
@@ -118,13 +118,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "locationPrivate", value);
+            JsonModel.Set(this._rawData, "locationPrivate", value);
         }
     }
 
     public string? LocID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "locId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "locId"); }
         init
         {
             if (value == null)
@@ -132,13 +132,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "locId", value);
+            JsonModel.Set(this._rawData, "locId", value);
         }
     }
 
     public string? LocName
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "locName"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "locName"); }
         init
         {
             if (value == null)
@@ -146,13 +146,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "locName", value);
+            JsonModel.Set(this._rawData, "locName", value);
         }
     }
 
     public string? ObsDt
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "obsDt"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "obsDt"); }
         init
         {
             if (value == null)
@@ -160,13 +160,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "obsDt", value);
+            JsonModel.Set(this._rawData, "obsDt", value);
         }
     }
 
     public bool? ObsReviewed
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "obsReviewed"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "obsReviewed"); }
         init
         {
             if (value == null)
@@ -174,13 +174,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "obsReviewed", value);
+            JsonModel.Set(this._rawData, "obsReviewed", value);
         }
     }
 
     public bool? ObsValid
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "obsValid"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "obsValid"); }
         init
         {
             if (value == null)
@@ -188,13 +188,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "obsValid", value);
+            JsonModel.Set(this._rawData, "obsValid", value);
         }
     }
 
     public string? SciName
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "sciName"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "sciName"); }
         init
         {
             if (value == null)
@@ -202,13 +202,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "sciName", value);
+            JsonModel.Set(this._rawData, "sciName", value);
         }
     }
 
     public string? SpeciesCode
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "speciesCode"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "speciesCode"); }
         init
         {
             if (value == null)
@@ -216,13 +216,13 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "speciesCode", value);
+            JsonModel.Set(this._rawData, "speciesCode", value);
         }
     }
 
     public string? SubID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "subId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "subId"); }
         init
         {
             if (value == null)
@@ -230,7 +230,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "subId", value);
+            JsonModel.Set(this._rawData, "subId", value);
         }
     }
 
@@ -280,7 +280,7 @@ public sealed record class Observation : ModelBase
     }
 }
 
-class ObservationFromRaw : IFromRaw<Observation>
+class ObservationFromRaw : IFromRawJson<Observation>
 {
     /// <inheritdoc/>
     public Observation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

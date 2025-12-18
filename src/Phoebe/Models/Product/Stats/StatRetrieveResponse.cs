@@ -7,12 +7,12 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Product.Stats;
 
-[JsonConverter(typeof(ModelConverter<StatRetrieveResponse, StatRetrieveResponseFromRaw>))]
-public sealed record class StatRetrieveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<StatRetrieveResponse, StatRetrieveResponseFromRaw>))]
+public sealed record class StatRetrieveResponse : JsonModel
 {
     public int? NumChecklists
     {
-        get { return ModelBase.GetNullableStruct<int>(this.RawData, "numChecklists"); }
+        get { return JsonModel.GetNullableStruct<int>(this.RawData, "numChecklists"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class StatRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "numChecklists", value);
+            JsonModel.Set(this._rawData, "numChecklists", value);
         }
     }
 
     public int? NumContributors
     {
-        get { return ModelBase.GetNullableStruct<int>(this.RawData, "numContributors"); }
+        get { return JsonModel.GetNullableStruct<int>(this.RawData, "numContributors"); }
         init
         {
             if (value == null)
@@ -34,13 +34,13 @@ public sealed record class StatRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "numContributors", value);
+            JsonModel.Set(this._rawData, "numContributors", value);
         }
     }
 
     public int? NumSpecies
     {
-        get { return ModelBase.GetNullableStruct<int>(this.RawData, "numSpecies"); }
+        get { return JsonModel.GetNullableStruct<int>(this.RawData, "numSpecies"); }
         init
         {
             if (value == null)
@@ -48,7 +48,7 @@ public sealed record class StatRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "numSpecies", value);
+            JsonModel.Set(this._rawData, "numSpecies", value);
         }
     }
 
@@ -87,7 +87,7 @@ public sealed record class StatRetrieveResponse : ModelBase
     }
 }
 
-class StatRetrieveResponseFromRaw : IFromRaw<StatRetrieveResponse>
+class StatRetrieveResponseFromRaw : IFromRawJson<StatRetrieveResponse>
 {
     /// <inheritdoc/>
     public StatRetrieveResponse FromRawUnchecked(

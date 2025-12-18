@@ -23,7 +23,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Cat
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "cat"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "cat"); }
         init
         {
             if (value == null)
@@ -31,7 +31,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "cat", value);
+            JsonModel.Set(this._rawQueryData, "cat", value);
         }
     }
 
@@ -40,7 +40,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Fmt>? Fmt
     {
-        get { return ModelBase.GetNullableClass<ApiEnum<string, Fmt>>(this.RawQueryData, "fmt"); }
+        get { return JsonModel.GetNullableClass<ApiEnum<string, Fmt>>(this.RawQueryData, "fmt"); }
         init
         {
             if (value == null)
@@ -48,7 +48,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "fmt", value);
+            JsonModel.Set(this._rawQueryData, "fmt", value);
         }
     }
 
@@ -57,7 +57,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Locale
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "locale"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "locale"); }
         init
         {
             if (value == null)
@@ -65,7 +65,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "locale", value);
+            JsonModel.Set(this._rawQueryData, "locale", value);
         }
     }
 
@@ -74,7 +74,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Species
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "species"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "species"); }
         init
         {
             if (value == null)
@@ -82,7 +82,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "species", value);
+            JsonModel.Set(this._rawQueryData, "species", value);
         }
     }
 
@@ -91,7 +91,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Version
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "version"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "version"); }
         init
         {
             if (value == null)
@@ -99,7 +99,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "version", value);
+            JsonModel.Set(this._rawQueryData, "version", value);
         }
     }
 
@@ -129,7 +129,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static EbirdRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
