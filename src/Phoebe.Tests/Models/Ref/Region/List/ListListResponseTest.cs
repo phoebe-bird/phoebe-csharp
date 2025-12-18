@@ -33,8 +33,8 @@ public class ListListResponseTest : TestBase
     {
         var model = new ListListResponse { Code = "US-NY", Name = "New York" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ListListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ListListResponse>(element);
         Assert.NotNull(deserialized);
 
         string expectedCode = "US-NY";

@@ -7,12 +7,14 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Taxonomy.SpeciesGroups;
 
-[JsonConverter(typeof(ModelConverter<SpeciesGroupListResponse, SpeciesGroupListResponseFromRaw>))]
-public sealed record class SpeciesGroupListResponse : ModelBase
+[JsonConverter(
+    typeof(JsonModelConverter<SpeciesGroupListResponse, SpeciesGroupListResponseFromRaw>)
+)]
+public sealed record class SpeciesGroupListResponse : JsonModel
 {
     public string? GroupName
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "groupName"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "groupName"); }
         init
         {
             if (value == null)
@@ -20,13 +22,13 @@ public sealed record class SpeciesGroupListResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "groupName", value);
+            JsonModel.Set(this._rawData, "groupName", value);
         }
     }
 
     public long? GroupOrder
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "groupOrder"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawData, "groupOrder"); }
         init
         {
             if (value == null)
@@ -34,7 +36,7 @@ public sealed record class SpeciesGroupListResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "groupOrder", value);
+            JsonModel.Set(this._rawData, "groupOrder", value);
         }
     }
 
@@ -42,7 +44,7 @@ public sealed record class SpeciesGroupListResponse : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<List<List<float>>>(this.RawData, "taxonOrderBounds");
+            return JsonModel.GetNullableClass<List<List<float>>>(this.RawData, "taxonOrderBounds");
         }
         init
         {
@@ -51,7 +53,7 @@ public sealed record class SpeciesGroupListResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "taxonOrderBounds", value);
+            JsonModel.Set(this._rawData, "taxonOrderBounds", value);
         }
     }
 
@@ -90,7 +92,7 @@ public sealed record class SpeciesGroupListResponse : ModelBase
     }
 }
 
-class SpeciesGroupListResponseFromRaw : IFromRaw<SpeciesGroupListResponse>
+class SpeciesGroupListResponseFromRaw : IFromRawJson<SpeciesGroupListResponse>
 {
     /// <inheritdoc/>
     public SpeciesGroupListResponse FromRawUnchecked(

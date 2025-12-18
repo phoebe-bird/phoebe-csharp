@@ -33,8 +33,8 @@ public class AdjacentListResponseTest : TestBase
     {
         var model = new AdjacentListResponse { Code = "US-CT", Name = "Connecticut" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AdjacentListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AdjacentListResponse>(element);
         Assert.NotNull(deserialized);
 
         string expectedCode = "US-CT";

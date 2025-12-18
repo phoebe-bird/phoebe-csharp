@@ -20,7 +20,7 @@ public sealed record class LocaleListParams : ParamsBase
 {
     public string? AcceptLanguage
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawHeaderData, "Accept-Language"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawHeaderData, "Accept-Language"); }
         init
         {
             if (value == null)
@@ -28,7 +28,7 @@ public sealed record class LocaleListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawHeaderData, "Accept-Language", value);
+            JsonModel.Set(this._rawHeaderData, "Accept-Language", value);
         }
     }
 
@@ -58,7 +58,7 @@ public sealed record class LocaleListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static LocaleListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

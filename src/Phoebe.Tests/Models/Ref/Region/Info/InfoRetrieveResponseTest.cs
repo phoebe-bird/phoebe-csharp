@@ -69,8 +69,8 @@ public class InfoRetrieveResponseTest : TestBase
             Result = "Madison, New York, United States",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InfoRetrieveResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<InfoRetrieveResponse>(element);
         Assert.NotNull(deserialized);
 
         Bounds expectedBounds = new()
@@ -205,8 +205,8 @@ public class BoundsTest : TestBase
             MinY = 42.896f,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Bounds>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Bounds>(element);
         Assert.NotNull(deserialized);
 
         float expectedMaxX = -75.764f;

@@ -7,12 +7,12 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Product.Top100;
 
-[JsonConverter(typeof(ModelConverter<Top100RetrieveResponse, Top100RetrieveResponseFromRaw>))]
-public sealed record class Top100RetrieveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Top100RetrieveResponse, Top100RetrieveResponseFromRaw>))]
+public sealed record class Top100RetrieveResponse : JsonModel
 {
     public int? NumCompleteChecklists
     {
-        get { return ModelBase.GetNullableStruct<int>(this.RawData, "numCompleteChecklists"); }
+        get { return JsonModel.GetNullableStruct<int>(this.RawData, "numCompleteChecklists"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "numCompleteChecklists", value);
+            JsonModel.Set(this._rawData, "numCompleteChecklists", value);
         }
     }
 
     public int? NumSpecies
     {
-        get { return ModelBase.GetNullableStruct<int>(this.RawData, "numSpecies"); }
+        get { return JsonModel.GetNullableStruct<int>(this.RawData, "numSpecies"); }
         init
         {
             if (value == null)
@@ -34,13 +34,13 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "numSpecies", value);
+            JsonModel.Set(this._rawData, "numSpecies", value);
         }
     }
 
     public string? ProfileHandle
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "profileHandle"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "profileHandle"); }
         init
         {
             if (value == null)
@@ -48,13 +48,13 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "profileHandle", value);
+            JsonModel.Set(this._rawData, "profileHandle", value);
         }
     }
 
     public int? RowNum
     {
-        get { return ModelBase.GetNullableStruct<int>(this.RawData, "rowNum"); }
+        get { return JsonModel.GetNullableStruct<int>(this.RawData, "rowNum"); }
         init
         {
             if (value == null)
@@ -62,13 +62,13 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "rowNum", value);
+            JsonModel.Set(this._rawData, "rowNum", value);
         }
     }
 
     public string? UserDisplayName
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "userDisplayName"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "userDisplayName"); }
         init
         {
             if (value == null)
@@ -76,13 +76,13 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "userDisplayName", value);
+            JsonModel.Set(this._rawData, "userDisplayName", value);
         }
     }
 
     public string? UserID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "userId"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "userId"); }
         init
         {
             if (value == null)
@@ -90,7 +90,7 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "userId", value);
+            JsonModel.Set(this._rawData, "userId", value);
         }
     }
 
@@ -132,7 +132,7 @@ public sealed record class Top100RetrieveResponse : ModelBase
     }
 }
 
-class Top100RetrieveResponseFromRaw : IFromRaw<Top100RetrieveResponse>
+class Top100RetrieveResponseFromRaw : IFromRawJson<Top100RetrieveResponse>
 {
     /// <inheritdoc/>
     public Top100RetrieveResponse FromRawUnchecked(

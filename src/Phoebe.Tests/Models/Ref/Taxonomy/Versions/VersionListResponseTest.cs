@@ -33,8 +33,8 @@ public class VersionListResponseTest : TestBase
     {
         var model = new VersionListResponse { AuthorityVer = 2017, Latest = true };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<VersionListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<VersionListResponse>(element);
         Assert.NotNull(deserialized);
 
         double expectedAuthorityVer = 2017;

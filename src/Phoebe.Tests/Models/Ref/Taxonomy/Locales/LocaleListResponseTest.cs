@@ -50,8 +50,8 @@ public class LocaleListResponseTest : TestBase
             Name = "English",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<LocaleListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<LocaleListResponse>(element);
         Assert.NotNull(deserialized);
 
         string expectedCode = "en";

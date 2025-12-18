@@ -18,14 +18,14 @@ public sealed record class GeoRetrieveParams : ParamsBase
 {
     public required float Lat
     {
-        get { return ModelBase.GetNotNullStruct<float>(this.RawQueryData, "lat"); }
-        init { ModelBase.Set(this._rawQueryData, "lat", value); }
+        get { return JsonModel.GetNotNullStruct<float>(this.RawQueryData, "lat"); }
+        init { JsonModel.Set(this._rawQueryData, "lat", value); }
     }
 
     public required float Lng
     {
-        get { return ModelBase.GetNotNullStruct<float>(this.RawQueryData, "lng"); }
-        init { ModelBase.Set(this._rawQueryData, "lng", value); }
+        get { return JsonModel.GetNotNullStruct<float>(this.RawQueryData, "lng"); }
+        init { JsonModel.Set(this._rawQueryData, "lng", value); }
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
     /// </summary>
     public long? Back
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "back"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "back"); }
         init
         {
             if (value == null)
@@ -41,7 +41,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "back", value);
+            JsonModel.Set(this._rawQueryData, "back", value);
         }
     }
 
@@ -50,7 +50,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
     /// </summary>
     public long? Dist
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "dist"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "dist"); }
         init
         {
             if (value == null)
@@ -58,7 +58,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "dist", value);
+            JsonModel.Set(this._rawQueryData, "dist", value);
         }
     }
 
@@ -69,7 +69,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<
+            return JsonModel.GetNullableClass<
                 ApiEnum<string, global::Phoebe.Models.Ref.Hotspot.Geo.Fmt>
             >(this.RawQueryData, "fmt");
         }
@@ -80,7 +80,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "fmt", value);
+            JsonModel.Set(this._rawQueryData, "fmt", value);
         }
     }
 
@@ -110,7 +110,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static GeoRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

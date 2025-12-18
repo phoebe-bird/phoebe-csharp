@@ -33,7 +33,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
     /// </summary>
     public string? Delim
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "delim"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "delim"); }
         init
         {
             if (value == null)
@@ -41,7 +41,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "delim", value);
+            JsonModel.Set(this._rawQueryData, "delim", value);
         }
     }
 
@@ -52,7 +52,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, RegionNameFormat>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, RegionNameFormat>>(
                 this.RawQueryData,
                 "regionNameFormat"
             );
@@ -64,7 +64,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "regionNameFormat", value);
+            JsonModel.Set(this._rawQueryData, "regionNameFormat", value);
         }
     }
 
@@ -94,7 +94,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static InfoRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

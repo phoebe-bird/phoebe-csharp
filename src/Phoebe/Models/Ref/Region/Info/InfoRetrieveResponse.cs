@@ -7,12 +7,12 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Region.Info;
 
-[JsonConverter(typeof(ModelConverter<InfoRetrieveResponse, InfoRetrieveResponseFromRaw>))]
-public sealed record class InfoRetrieveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<InfoRetrieveResponse, InfoRetrieveResponseFromRaw>))]
+public sealed record class InfoRetrieveResponse : JsonModel
 {
     public Bounds? Bounds
     {
-        get { return ModelBase.GetNullableClass<Bounds>(this.RawData, "bounds"); }
+        get { return JsonModel.GetNullableClass<Bounds>(this.RawData, "bounds"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "bounds", value);
+            JsonModel.Set(this._rawData, "bounds", value);
         }
     }
 
     public string? Result
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "result"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "result"); }
         init
         {
             if (value == null)
@@ -34,7 +34,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "result", value);
+            JsonModel.Set(this._rawData, "result", value);
         }
     }
 
@@ -72,7 +72,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
     }
 }
 
-class InfoRetrieveResponseFromRaw : IFromRaw<InfoRetrieveResponse>
+class InfoRetrieveResponseFromRaw : IFromRawJson<InfoRetrieveResponse>
 {
     /// <inheritdoc/>
     public InfoRetrieveResponse FromRawUnchecked(
@@ -80,12 +80,12 @@ class InfoRetrieveResponseFromRaw : IFromRaw<InfoRetrieveResponse>
     ) => InfoRetrieveResponse.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Bounds, BoundsFromRaw>))]
-public sealed record class Bounds : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Bounds, BoundsFromRaw>))]
+public sealed record class Bounds : JsonModel
 {
     public float? MaxX
     {
-        get { return ModelBase.GetNullableStruct<float>(this.RawData, "maxX"); }
+        get { return JsonModel.GetNullableStruct<float>(this.RawData, "maxX"); }
         init
         {
             if (value == null)
@@ -93,13 +93,13 @@ public sealed record class Bounds : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "maxX", value);
+            JsonModel.Set(this._rawData, "maxX", value);
         }
     }
 
     public float? MaxY
     {
-        get { return ModelBase.GetNullableStruct<float>(this.RawData, "maxY"); }
+        get { return JsonModel.GetNullableStruct<float>(this.RawData, "maxY"); }
         init
         {
             if (value == null)
@@ -107,13 +107,13 @@ public sealed record class Bounds : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "maxY", value);
+            JsonModel.Set(this._rawData, "maxY", value);
         }
     }
 
     public float? MinX
     {
-        get { return ModelBase.GetNullableStruct<float>(this.RawData, "minX"); }
+        get { return JsonModel.GetNullableStruct<float>(this.RawData, "minX"); }
         init
         {
             if (value == null)
@@ -121,13 +121,13 @@ public sealed record class Bounds : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "minX", value);
+            JsonModel.Set(this._rawData, "minX", value);
         }
     }
 
     public float? MinY
     {
-        get { return ModelBase.GetNullableStruct<float>(this.RawData, "minY"); }
+        get { return JsonModel.GetNullableStruct<float>(this.RawData, "minY"); }
         init
         {
             if (value == null)
@@ -135,7 +135,7 @@ public sealed record class Bounds : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "minY", value);
+            JsonModel.Set(this._rawData, "minY", value);
         }
     }
 
@@ -173,7 +173,7 @@ public sealed record class Bounds : ModelBase
     }
 }
 
-class BoundsFromRaw : IFromRaw<Bounds>
+class BoundsFromRaw : IFromRawJson<Bounds>
 {
     /// <inheritdoc/>
     public Bounds FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

@@ -7,12 +7,12 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Taxonomy.Versions;
 
-[JsonConverter(typeof(ModelConverter<VersionListResponse, VersionListResponseFromRaw>))]
-public sealed record class VersionListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<VersionListResponse, VersionListResponseFromRaw>))]
+public sealed record class VersionListResponse : JsonModel
 {
     public double? AuthorityVer
     {
-        get { return ModelBase.GetNullableStruct<double>(this.RawData, "authorityVer"); }
+        get { return JsonModel.GetNullableStruct<double>(this.RawData, "authorityVer"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class VersionListResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "authorityVer", value);
+            JsonModel.Set(this._rawData, "authorityVer", value);
         }
     }
 
     public bool? Latest
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "latest"); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "latest"); }
         init
         {
             if (value == null)
@@ -34,7 +34,7 @@ public sealed record class VersionListResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "latest", value);
+            JsonModel.Set(this._rawData, "latest", value);
         }
     }
 
@@ -72,7 +72,7 @@ public sealed record class VersionListResponse : ModelBase
     }
 }
 
-class VersionListResponseFromRaw : IFromRaw<VersionListResponse>
+class VersionListResponseFromRaw : IFromRawJson<VersionListResponse>
 {
     /// <inheritdoc/>
     public VersionListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

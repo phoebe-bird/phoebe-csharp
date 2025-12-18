@@ -80,8 +80,8 @@ public class GeoRetrieveResponseTest : TestBase
             Subnational2Code = "subnational2Code",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<GeoRetrieveResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<GeoRetrieveResponse>(element);
         Assert.NotNull(deserialized);
 
         string expectedCountryCode = "countryCode";

@@ -7,12 +7,12 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Region.Adjacent;
 
-[JsonConverter(typeof(ModelConverter<AdjacentListResponse, AdjacentListResponseFromRaw>))]
-public sealed record class AdjacentListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AdjacentListResponse, AdjacentListResponseFromRaw>))]
+public sealed record class AdjacentListResponse : JsonModel
 {
     public string? Code
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "code"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "code"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class AdjacentListResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "code", value);
+            JsonModel.Set(this._rawData, "code", value);
         }
     }
 
     public string? Name
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "name"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "name"); }
         init
         {
             if (value == null)
@@ -34,7 +34,7 @@ public sealed record class AdjacentListResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "name", value);
+            JsonModel.Set(this._rawData, "name", value);
         }
     }
 
@@ -72,7 +72,7 @@ public sealed record class AdjacentListResponse : ModelBase
     }
 }
 
-class AdjacentListResponseFromRaw : IFromRaw<AdjacentListResponse>
+class AdjacentListResponseFromRaw : IFromRawJson<AdjacentListResponse>
 {
     /// <inheritdoc/>
     public AdjacentListResponse FromRawUnchecked(

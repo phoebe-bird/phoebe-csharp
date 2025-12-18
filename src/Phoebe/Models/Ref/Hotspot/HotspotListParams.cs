@@ -22,7 +22,7 @@ public sealed record class HotspotListParams : ParamsBase
     /// </summary>
     public long? Back
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "back"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "back"); }
         init
         {
             if (value == null)
@@ -30,7 +30,7 @@ public sealed record class HotspotListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "back", value);
+            JsonModel.Set(this._rawQueryData, "back", value);
         }
     }
 
@@ -39,7 +39,7 @@ public sealed record class HotspotListParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Fmt>? Fmt
     {
-        get { return ModelBase.GetNullableClass<ApiEnum<string, Fmt>>(this.RawQueryData, "fmt"); }
+        get { return JsonModel.GetNullableClass<ApiEnum<string, Fmt>>(this.RawQueryData, "fmt"); }
         init
         {
             if (value == null)
@@ -47,7 +47,7 @@ public sealed record class HotspotListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "fmt", value);
+            JsonModel.Set(this._rawQueryData, "fmt", value);
         }
     }
 
@@ -77,7 +77,7 @@ public sealed record class HotspotListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static HotspotListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

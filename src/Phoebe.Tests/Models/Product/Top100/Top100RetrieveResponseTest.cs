@@ -65,8 +65,8 @@ public class Top100RetrieveResponseTest : TestBase
             UserID = "userId",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Top100RetrieveResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Top100RetrieveResponse>(element);
         Assert.NotNull(deserialized);
 
         int expectedNumCompleteChecklists = 0;

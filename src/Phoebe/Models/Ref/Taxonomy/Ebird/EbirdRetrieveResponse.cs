@@ -7,12 +7,12 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Taxonomy.Ebird;
 
-[JsonConverter(typeof(ModelConverter<EbirdRetrieveResponse, EbirdRetrieveResponseFromRaw>))]
-public sealed record class EbirdRetrieveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<EbirdRetrieveResponse, EbirdRetrieveResponseFromRaw>))]
+public sealed record class EbirdRetrieveResponse : JsonModel
 {
     public IReadOnlyList<string>? BandingCodes
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "bandingCodes"); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "bandingCodes"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "bandingCodes", value);
+            JsonModel.Set(this._rawData, "bandingCodes", value);
         }
     }
 
     public string? Category
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "category"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "category"); }
         init
         {
             if (value == null)
@@ -34,13 +34,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "category", value);
+            JsonModel.Set(this._rawData, "category", value);
         }
     }
 
     public string? ComName
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "comName"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "comName"); }
         init
         {
             if (value == null)
@@ -48,13 +48,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "comName", value);
+            JsonModel.Set(this._rawData, "comName", value);
         }
     }
 
     public IReadOnlyList<string>? ComNameCodes
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "comNameCodes"); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "comNameCodes"); }
         init
         {
             if (value == null)
@@ -62,13 +62,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "comNameCodes", value);
+            JsonModel.Set(this._rawData, "comNameCodes", value);
         }
     }
 
     public string? FamilyCode
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "familyCode"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "familyCode"); }
         init
         {
             if (value == null)
@@ -76,13 +76,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "familyCode", value);
+            JsonModel.Set(this._rawData, "familyCode", value);
         }
     }
 
     public string? FamilyComName
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "familyComName"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "familyComName"); }
         init
         {
             if (value == null)
@@ -90,13 +90,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "familyComName", value);
+            JsonModel.Set(this._rawData, "familyComName", value);
         }
     }
 
     public string? FamilySciName
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "familySciName"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "familySciName"); }
         init
         {
             if (value == null)
@@ -104,13 +104,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "familySciName", value);
+            JsonModel.Set(this._rawData, "familySciName", value);
         }
     }
 
     public string? Order
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "order"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "order"); }
         init
         {
             if (value == null)
@@ -118,13 +118,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "order", value);
+            JsonModel.Set(this._rawData, "order", value);
         }
     }
 
     public string? SciName
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "sciName"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "sciName"); }
         init
         {
             if (value == null)
@@ -132,13 +132,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "sciName", value);
+            JsonModel.Set(this._rawData, "sciName", value);
         }
     }
 
     public IReadOnlyList<string>? SciNameCodes
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "sciNameCodes"); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "sciNameCodes"); }
         init
         {
             if (value == null)
@@ -146,13 +146,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "sciNameCodes", value);
+            JsonModel.Set(this._rawData, "sciNameCodes", value);
         }
     }
 
     public string? SpeciesCode
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "speciesCode"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "speciesCode"); }
         init
         {
             if (value == null)
@@ -160,13 +160,13 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "speciesCode", value);
+            JsonModel.Set(this._rawData, "speciesCode", value);
         }
     }
 
     public int? TaxonOrder
     {
-        get { return ModelBase.GetNullableStruct<int>(this.RawData, "taxonOrder"); }
+        get { return JsonModel.GetNullableStruct<int>(this.RawData, "taxonOrder"); }
         init
         {
             if (value == null)
@@ -174,7 +174,7 @@ public sealed record class EbirdRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "taxonOrder", value);
+            JsonModel.Set(this._rawData, "taxonOrder", value);
         }
     }
 
@@ -222,7 +222,7 @@ public sealed record class EbirdRetrieveResponse : ModelBase
     }
 }
 
-class EbirdRetrieveResponseFromRaw : IFromRaw<EbirdRetrieveResponse>
+class EbirdRetrieveResponseFromRaw : IFromRawJson<EbirdRetrieveResponse>
 {
     /// <inheritdoc/>
     public EbirdRetrieveResponse FromRawUnchecked(

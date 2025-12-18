@@ -100,8 +100,8 @@ public class InfoRetrieveResponseTest : TestBase
             Subnational1Name = "subnational1Name",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InfoRetrieveResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<InfoRetrieveResponse>(element);
         Assert.NotNull(deserialized);
 
         string expectedCountryCode = "countryCode";

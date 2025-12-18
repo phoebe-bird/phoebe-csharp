@@ -7,12 +7,12 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Region.List;
 
-[JsonConverter(typeof(ModelConverter<ListListResponse, ListListResponseFromRaw>))]
-public sealed record class ListListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ListListResponse, ListListResponseFromRaw>))]
+public sealed record class ListListResponse : JsonModel
 {
     public string? Code
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "code"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "code"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class ListListResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "code", value);
+            JsonModel.Set(this._rawData, "code", value);
         }
     }
 
     public string? Name
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "name"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "name"); }
         init
         {
             if (value == null)
@@ -34,7 +34,7 @@ public sealed record class ListListResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "name", value);
+            JsonModel.Set(this._rawData, "name", value);
         }
     }
 
@@ -72,7 +72,7 @@ public sealed record class ListListResponse : ModelBase
     }
 }
 
-class ListListResponseFromRaw : IFromRaw<ListListResponse>
+class ListListResponseFromRaw : IFromRawJson<ListListResponse>
 {
     /// <inheritdoc/>
     public ListListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

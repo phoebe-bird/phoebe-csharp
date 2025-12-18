@@ -28,7 +28,7 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
         init
         {
             if (value == null)
@@ -36,7 +36,7 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "maxResults", value);
+            JsonModel.Set(this._rawQueryData, "maxResults", value);
         }
     }
 
@@ -47,7 +47,7 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, SortKey>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, SortKey>>(
                 this.RawQueryData,
                 "sortKey"
             );
@@ -59,7 +59,7 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "sortKey", value);
+            JsonModel.Set(this._rawQueryData, "sortKey", value);
         }
     }
 
@@ -89,7 +89,7 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static HistoricalRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

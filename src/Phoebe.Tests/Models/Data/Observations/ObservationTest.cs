@@ -115,8 +115,8 @@ public class ObservationTest : TestBase
             SubID = "subId",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Observation>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Observation>(element);
         Assert.NotNull(deserialized);
 
         long expectedID = 0;
