@@ -281,6 +281,8 @@ public sealed class PhoebeClient : IPhoebeClient
         return e is IOException || e is PhoebeIOException;
     }
 
+    public void Dispose() => this.HttpClient.Dispose();
+
     public PhoebeClient()
     {
         _options = new();

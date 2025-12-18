@@ -19,7 +19,7 @@ namespace Phoebe;
 /// breaking changes in non-major versions. We may add new methods in the future that
 /// cause existing derived classes to break.</para>
 /// </summary>
-public interface IPhoebeClient
+public interface IPhoebeClient : IDisposable
 {
     /// <summary>
     /// The HTTP client to use for making requests in the SDK.

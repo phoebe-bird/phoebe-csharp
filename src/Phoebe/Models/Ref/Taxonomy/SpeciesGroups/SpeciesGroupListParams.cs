@@ -78,7 +78,7 @@ public sealed record class SpeciesGroupListParams : ParamsBase
     {
         return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
-                + string.Format("/ref/sppgroup/{0}", this.SpeciesGrouping.Raw())
+                + string.Format("/ref/sppgroup/{0}", this.SpeciesGrouping)
         )
         {
             Query = this.QueryString(options),
