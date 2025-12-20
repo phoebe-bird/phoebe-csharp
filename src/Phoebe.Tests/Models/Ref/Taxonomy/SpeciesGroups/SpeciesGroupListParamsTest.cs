@@ -5,6 +5,49 @@ using Phoebe.Models.Ref.Taxonomy.SpeciesGroups;
 
 namespace Phoebe.Tests.Models.Ref.Taxonomy.SpeciesGroups;
 
+public class SpeciesGroupListParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new SpeciesGroupListParams
+        {
+            SpeciesGrouping = SpeciesGrouping.Merlin,
+            GroupNameLocale = "groupNameLocale",
+        };
+
+        ApiEnum<string, SpeciesGrouping> expectedSpeciesGrouping = SpeciesGrouping.Merlin;
+        string expectedGroupNameLocale = "groupNameLocale";
+
+        Assert.Equal(expectedSpeciesGrouping, parameters.SpeciesGrouping);
+        Assert.Equal(expectedGroupNameLocale, parameters.GroupNameLocale);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new SpeciesGroupListParams { SpeciesGrouping = SpeciesGrouping.Merlin };
+
+        Assert.Null(parameters.GroupNameLocale);
+        Assert.False(parameters.RawQueryData.ContainsKey("groupNameLocale"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new SpeciesGroupListParams
+        {
+            SpeciesGrouping = SpeciesGrouping.Merlin,
+
+            // Null should be interpreted as omitted for these properties
+            GroupNameLocale = null,
+        };
+
+        Assert.Null(parameters.GroupNameLocale);
+        Assert.False(parameters.RawQueryData.ContainsKey("groupNameLocale"));
+    }
+}
+
 public class SpeciesGroupingTest : TestBase
 {
     [Theory]

@@ -5,6 +5,75 @@ using Phoebe.Models.Product.Top100;
 
 namespace Phoebe.Tests.Models.Product.Top100;
 
+public class Top100RetrieveParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new Top100RetrieveParams
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+            MaxResults = 1,
+            RankedBy = RankedBy.Spp,
+        };
+
+        string expectedRegionCode = "regionCode";
+        long expectedY = 0;
+        long expectedM = 1;
+        long expectedD = 1;
+        long expectedMaxResults = 1;
+        ApiEnum<string, RankedBy> expectedRankedBy = RankedBy.Spp;
+
+        Assert.Equal(expectedRegionCode, parameters.RegionCode);
+        Assert.Equal(expectedY, parameters.Y);
+        Assert.Equal(expectedM, parameters.M);
+        Assert.Equal(expectedD, parameters.D);
+        Assert.Equal(expectedMaxResults, parameters.MaxResults);
+        Assert.Equal(expectedRankedBy, parameters.RankedBy);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new Top100RetrieveParams
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+        };
+
+        Assert.Null(parameters.MaxResults);
+        Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
+        Assert.Null(parameters.RankedBy);
+        Assert.False(parameters.RawQueryData.ContainsKey("rankedBy"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new Top100RetrieveParams
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+
+            // Null should be interpreted as omitted for these properties
+            MaxResults = null,
+            RankedBy = null,
+        };
+
+        Assert.Null(parameters.MaxResults);
+        Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
+        Assert.Null(parameters.RankedBy);
+        Assert.False(parameters.RawQueryData.ContainsKey("rankedBy"));
+    }
+}
+
 public class RankedByTest : TestBase
 {
     [Theory]

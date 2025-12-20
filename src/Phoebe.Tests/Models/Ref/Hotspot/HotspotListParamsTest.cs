@@ -5,6 +5,57 @@ using Phoebe.Models.Ref.Hotspot;
 
 namespace Phoebe.Tests.Models.Ref.Hotspot;
 
+public class HotspotListParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new HotspotListParams
+        {
+            RegionCode = "regionCode",
+            Back = 1,
+            Fmt = Fmt.Csv,
+        };
+
+        string expectedRegionCode = "regionCode";
+        long expectedBack = 1;
+        ApiEnum<string, Fmt> expectedFmt = Fmt.Csv;
+
+        Assert.Equal(expectedRegionCode, parameters.RegionCode);
+        Assert.Equal(expectedBack, parameters.Back);
+        Assert.Equal(expectedFmt, parameters.Fmt);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new HotspotListParams { RegionCode = "regionCode" };
+
+        Assert.Null(parameters.Back);
+        Assert.False(parameters.RawQueryData.ContainsKey("back"));
+        Assert.Null(parameters.Fmt);
+        Assert.False(parameters.RawQueryData.ContainsKey("fmt"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new HotspotListParams
+        {
+            RegionCode = "regionCode",
+
+            // Null should be interpreted as omitted for these properties
+            Back = null,
+            Fmt = null,
+        };
+
+        Assert.Null(parameters.Back);
+        Assert.False(parameters.RawQueryData.ContainsKey("back"));
+        Assert.Null(parameters.Fmt);
+        Assert.False(parameters.RawQueryData.ContainsKey("fmt"));
+    }
+}
+
 public class FmtTest : TestBase
 {
     [Theory]

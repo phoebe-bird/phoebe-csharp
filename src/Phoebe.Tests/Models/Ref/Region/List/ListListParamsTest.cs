@@ -5,6 +5,57 @@ using Phoebe.Models.Ref.Region.List;
 
 namespace Phoebe.Tests.Models.Ref.Region.List;
 
+public class ListListParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new ListListParams
+        {
+            RegionType = "regionType",
+            ParentRegionCode = "parentRegionCode",
+            Fmt = Fmt.Csv,
+        };
+
+        string expectedRegionType = "regionType";
+        string expectedParentRegionCode = "parentRegionCode";
+        ApiEnum<string, Fmt> expectedFmt = Fmt.Csv;
+
+        Assert.Equal(expectedRegionType, parameters.RegionType);
+        Assert.Equal(expectedParentRegionCode, parameters.ParentRegionCode);
+        Assert.Equal(expectedFmt, parameters.Fmt);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new ListListParams
+        {
+            RegionType = "regionType",
+            ParentRegionCode = "parentRegionCode",
+        };
+
+        Assert.Null(parameters.Fmt);
+        Assert.False(parameters.RawQueryData.ContainsKey("fmt"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new ListListParams
+        {
+            RegionType = "regionType",
+            ParentRegionCode = "parentRegionCode",
+
+            // Null should be interpreted as omitted for these properties
+            Fmt = null,
+        };
+
+        Assert.Null(parameters.Fmt);
+        Assert.False(parameters.RawQueryData.ContainsKey("fmt"));
+    }
+}
+
 public class FmtTest : TestBase
 {
     [Theory]
