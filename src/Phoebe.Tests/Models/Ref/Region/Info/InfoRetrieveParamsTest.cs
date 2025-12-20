@@ -5,6 +5,57 @@ using Phoebe.Models.Ref.Region.Info;
 
 namespace Phoebe.Tests.Models.Ref.Region.Info;
 
+public class InfoRetrieveParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new InfoRetrieveParams
+        {
+            RegionCode = "regionCode",
+            Delim = "delim",
+            RegionNameFormat = RegionNameFormat.Detailed,
+        };
+
+        string expectedRegionCode = "regionCode";
+        string expectedDelim = "delim";
+        ApiEnum<string, RegionNameFormat> expectedRegionNameFormat = RegionNameFormat.Detailed;
+
+        Assert.Equal(expectedRegionCode, parameters.RegionCode);
+        Assert.Equal(expectedDelim, parameters.Delim);
+        Assert.Equal(expectedRegionNameFormat, parameters.RegionNameFormat);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new InfoRetrieveParams { RegionCode = "regionCode" };
+
+        Assert.Null(parameters.Delim);
+        Assert.False(parameters.RawQueryData.ContainsKey("delim"));
+        Assert.Null(parameters.RegionNameFormat);
+        Assert.False(parameters.RawQueryData.ContainsKey("regionNameFormat"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new InfoRetrieveParams
+        {
+            RegionCode = "regionCode",
+
+            // Null should be interpreted as omitted for these properties
+            Delim = null,
+            RegionNameFormat = null,
+        };
+
+        Assert.Null(parameters.Delim);
+        Assert.False(parameters.RawQueryData.ContainsKey("delim"));
+        Assert.Null(parameters.RegionNameFormat);
+        Assert.False(parameters.RawQueryData.ContainsKey("regionNameFormat"));
+    }
+}
+
 public class RegionNameFormatTest : TestBase
 {
     [Theory]

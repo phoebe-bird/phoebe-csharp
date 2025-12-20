@@ -5,6 +5,109 @@ using Phoebe.Models.Data.Observations.Geo.Recent;
 
 namespace Phoebe.Tests.Models.Data.Observations.Geo.Recent;
 
+public class RecentListParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new RecentListParams
+        {
+            Lat = -90,
+            Lng = -180,
+            Back = 1,
+            Cat = Cat.Species,
+            Dist = 0,
+            Hotspot = true,
+            IncludeProvisional = true,
+            MaxResults = 1,
+            Sort = Sort.Date,
+            SppLocale = "sppLocale",
+        };
+
+        float expectedLat = -90;
+        float expectedLng = -180;
+        long expectedBack = 1;
+        ApiEnum<string, Cat> expectedCat = Cat.Species;
+        long expectedDist = 0;
+        bool expectedHotspot = true;
+        bool expectedIncludeProvisional = true;
+        long expectedMaxResults = 1;
+        ApiEnum<string, Sort> expectedSort = Sort.Date;
+        string expectedSppLocale = "sppLocale";
+
+        Assert.Equal(expectedLat, parameters.Lat);
+        Assert.Equal(expectedLng, parameters.Lng);
+        Assert.Equal(expectedBack, parameters.Back);
+        Assert.Equal(expectedCat, parameters.Cat);
+        Assert.Equal(expectedDist, parameters.Dist);
+        Assert.Equal(expectedHotspot, parameters.Hotspot);
+        Assert.Equal(expectedIncludeProvisional, parameters.IncludeProvisional);
+        Assert.Equal(expectedMaxResults, parameters.MaxResults);
+        Assert.Equal(expectedSort, parameters.Sort);
+        Assert.Equal(expectedSppLocale, parameters.SppLocale);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new RecentListParams { Lat = -90, Lng = -180 };
+
+        Assert.Null(parameters.Back);
+        Assert.False(parameters.RawQueryData.ContainsKey("back"));
+        Assert.Null(parameters.Cat);
+        Assert.False(parameters.RawQueryData.ContainsKey("cat"));
+        Assert.Null(parameters.Dist);
+        Assert.False(parameters.RawQueryData.ContainsKey("dist"));
+        Assert.Null(parameters.Hotspot);
+        Assert.False(parameters.RawQueryData.ContainsKey("hotspot"));
+        Assert.Null(parameters.IncludeProvisional);
+        Assert.False(parameters.RawQueryData.ContainsKey("includeProvisional"));
+        Assert.Null(parameters.MaxResults);
+        Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
+        Assert.Null(parameters.Sort);
+        Assert.False(parameters.RawQueryData.ContainsKey("sort"));
+        Assert.Null(parameters.SppLocale);
+        Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new RecentListParams
+        {
+            Lat = -90,
+            Lng = -180,
+
+            // Null should be interpreted as omitted for these properties
+            Back = null,
+            Cat = null,
+            Dist = null,
+            Hotspot = null,
+            IncludeProvisional = null,
+            MaxResults = null,
+            Sort = null,
+            SppLocale = null,
+        };
+
+        Assert.Null(parameters.Back);
+        Assert.False(parameters.RawQueryData.ContainsKey("back"));
+        Assert.Null(parameters.Cat);
+        Assert.False(parameters.RawQueryData.ContainsKey("cat"));
+        Assert.Null(parameters.Dist);
+        Assert.False(parameters.RawQueryData.ContainsKey("dist"));
+        Assert.Null(parameters.Hotspot);
+        Assert.False(parameters.RawQueryData.ContainsKey("hotspot"));
+        Assert.Null(parameters.IncludeProvisional);
+        Assert.False(parameters.RawQueryData.ContainsKey("includeProvisional"));
+        Assert.Null(parameters.MaxResults);
+        Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
+        Assert.Null(parameters.Sort);
+        Assert.False(parameters.RawQueryData.ContainsKey("sort"));
+        Assert.Null(parameters.SppLocale);
+        Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
+    }
+}
+
 public class CatTest : TestBase
 {
     [Theory]

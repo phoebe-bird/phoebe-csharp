@@ -1,9 +1,132 @@
+using System.Collections.Generic;
 using System.Text.Json;
 using Phoebe.Core;
 using Phoebe.Exceptions;
 using Phoebe.Models.Data.Observations.Recent.Historic;
 
 namespace Phoebe.Tests.Models.Data.Observations.Recent.Historic;
+
+public class HistoricListParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new HistoricListParams
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+            Cat = Cat.Species,
+            Detail = Detail.Simple,
+            Hotspot = true,
+            IncludeProvisional = true,
+            MaxResults = 1,
+            R = ["string"],
+            Rank = Rank.Mrec,
+            SppLocale = "sppLocale",
+        };
+
+        string expectedRegionCode = "regionCode";
+        long expectedY = 0;
+        long expectedM = 1;
+        long expectedD = 1;
+        ApiEnum<string, Cat> expectedCat = Cat.Species;
+        ApiEnum<string, Detail> expectedDetail = Detail.Simple;
+        bool expectedHotspot = true;
+        bool expectedIncludeProvisional = true;
+        long expectedMaxResults = 1;
+        List<string> expectedR = ["string"];
+        ApiEnum<string, Rank> expectedRank = Rank.Mrec;
+        string expectedSppLocale = "sppLocale";
+
+        Assert.Equal(expectedRegionCode, parameters.RegionCode);
+        Assert.Equal(expectedY, parameters.Y);
+        Assert.Equal(expectedM, parameters.M);
+        Assert.Equal(expectedD, parameters.D);
+        Assert.Equal(expectedCat, parameters.Cat);
+        Assert.Equal(expectedDetail, parameters.Detail);
+        Assert.Equal(expectedHotspot, parameters.Hotspot);
+        Assert.Equal(expectedIncludeProvisional, parameters.IncludeProvisional);
+        Assert.Equal(expectedMaxResults, parameters.MaxResults);
+        Assert.NotNull(parameters.R);
+        Assert.Equal(expectedR.Count, parameters.R.Count);
+        for (int i = 0; i < expectedR.Count; i++)
+        {
+            Assert.Equal(expectedR[i], parameters.R[i]);
+        }
+        Assert.Equal(expectedRank, parameters.Rank);
+        Assert.Equal(expectedSppLocale, parameters.SppLocale);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new HistoricListParams
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+        };
+
+        Assert.Null(parameters.Cat);
+        Assert.False(parameters.RawQueryData.ContainsKey("cat"));
+        Assert.Null(parameters.Detail);
+        Assert.False(parameters.RawQueryData.ContainsKey("detail"));
+        Assert.Null(parameters.Hotspot);
+        Assert.False(parameters.RawQueryData.ContainsKey("hotspot"));
+        Assert.Null(parameters.IncludeProvisional);
+        Assert.False(parameters.RawQueryData.ContainsKey("includeProvisional"));
+        Assert.Null(parameters.MaxResults);
+        Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
+        Assert.Null(parameters.R);
+        Assert.False(parameters.RawQueryData.ContainsKey("r"));
+        Assert.Null(parameters.Rank);
+        Assert.False(parameters.RawQueryData.ContainsKey("rank"));
+        Assert.Null(parameters.SppLocale);
+        Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new HistoricListParams
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+
+            // Null should be interpreted as omitted for these properties
+            Cat = null,
+            Detail = null,
+            Hotspot = null,
+            IncludeProvisional = null,
+            MaxResults = null,
+            R = null,
+            Rank = null,
+            SppLocale = null,
+        };
+
+        Assert.Null(parameters.Cat);
+        Assert.False(parameters.RawQueryData.ContainsKey("cat"));
+        Assert.Null(parameters.Detail);
+        Assert.False(parameters.RawQueryData.ContainsKey("detail"));
+        Assert.Null(parameters.Hotspot);
+        Assert.False(parameters.RawQueryData.ContainsKey("hotspot"));
+        Assert.Null(parameters.IncludeProvisional);
+        Assert.False(parameters.RawQueryData.ContainsKey("includeProvisional"));
+        Assert.Null(parameters.MaxResults);
+        Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
+        Assert.Null(parameters.R);
+        Assert.False(parameters.RawQueryData.ContainsKey("r"));
+        Assert.Null(parameters.Rank);
+        Assert.False(parameters.RawQueryData.ContainsKey("rank"));
+        Assert.Null(parameters.SppLocale);
+        Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
+    }
+}
 
 public class CatTest : TestBase
 {

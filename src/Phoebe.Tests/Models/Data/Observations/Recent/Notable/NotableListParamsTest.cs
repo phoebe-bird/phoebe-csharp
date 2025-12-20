@@ -1,9 +1,98 @@
+using System.Collections.Generic;
 using System.Text.Json;
 using Phoebe.Core;
 using Phoebe.Exceptions;
 using Phoebe.Models.Data.Observations.Recent.Notable;
 
 namespace Phoebe.Tests.Models.Data.Observations.Recent.Notable;
+
+public class NotableListParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new NotableListParams
+        {
+            RegionCode = "regionCode",
+            Back = 1,
+            Detail = Detail.Simple,
+            Hotspot = true,
+            MaxResults = 1,
+            R = ["string"],
+            SppLocale = "sppLocale",
+        };
+
+        string expectedRegionCode = "regionCode";
+        long expectedBack = 1;
+        ApiEnum<string, Detail> expectedDetail = Detail.Simple;
+        bool expectedHotspot = true;
+        long expectedMaxResults = 1;
+        List<string> expectedR = ["string"];
+        string expectedSppLocale = "sppLocale";
+
+        Assert.Equal(expectedRegionCode, parameters.RegionCode);
+        Assert.Equal(expectedBack, parameters.Back);
+        Assert.Equal(expectedDetail, parameters.Detail);
+        Assert.Equal(expectedHotspot, parameters.Hotspot);
+        Assert.Equal(expectedMaxResults, parameters.MaxResults);
+        Assert.NotNull(parameters.R);
+        Assert.Equal(expectedR.Count, parameters.R.Count);
+        for (int i = 0; i < expectedR.Count; i++)
+        {
+            Assert.Equal(expectedR[i], parameters.R[i]);
+        }
+        Assert.Equal(expectedSppLocale, parameters.SppLocale);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new NotableListParams { RegionCode = "regionCode" };
+
+        Assert.Null(parameters.Back);
+        Assert.False(parameters.RawQueryData.ContainsKey("back"));
+        Assert.Null(parameters.Detail);
+        Assert.False(parameters.RawQueryData.ContainsKey("detail"));
+        Assert.Null(parameters.Hotspot);
+        Assert.False(parameters.RawQueryData.ContainsKey("hotspot"));
+        Assert.Null(parameters.MaxResults);
+        Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
+        Assert.Null(parameters.R);
+        Assert.False(parameters.RawQueryData.ContainsKey("r"));
+        Assert.Null(parameters.SppLocale);
+        Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new NotableListParams
+        {
+            RegionCode = "regionCode",
+
+            // Null should be interpreted as omitted for these properties
+            Back = null,
+            Detail = null,
+            Hotspot = null,
+            MaxResults = null,
+            R = null,
+            SppLocale = null,
+        };
+
+        Assert.Null(parameters.Back);
+        Assert.False(parameters.RawQueryData.ContainsKey("back"));
+        Assert.Null(parameters.Detail);
+        Assert.False(parameters.RawQueryData.ContainsKey("detail"));
+        Assert.Null(parameters.Hotspot);
+        Assert.False(parameters.RawQueryData.ContainsKey("hotspot"));
+        Assert.Null(parameters.MaxResults);
+        Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
+        Assert.Null(parameters.R);
+        Assert.False(parameters.RawQueryData.ContainsKey("r"));
+        Assert.Null(parameters.SppLocale);
+        Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
+    }
+}
 
 public class DetailTest : TestBase
 {

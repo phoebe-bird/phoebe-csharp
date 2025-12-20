@@ -1,21 +1,18 @@
 using System.Collections.Generic;
-using System.Text.Json;
-using Phoebe.Core;
-using Phoebe.Exceptions;
-using Phoebe.Models.Data.Observations.Recent;
+using Phoebe.Models.Data.Observations.Recent.Species;
 
-namespace Phoebe.Tests.Models.Data.Observations.Recent;
+namespace Phoebe.Tests.Models.Data.Observations.Recent.Species;
 
-public class RecentListParamsTest : TestBase
+public class SpecieRetrieveParamsTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var parameters = new RecentListParams
+        var parameters = new SpecieRetrieveParams
         {
             RegionCode = "regionCode",
+            SpeciesCode = "speciesCode",
             Back = 1,
-            Cat = Cat.Species,
             Hotspot = true,
             IncludeProvisional = true,
             MaxResults = 1,
@@ -24,8 +21,8 @@ public class RecentListParamsTest : TestBase
         };
 
         string expectedRegionCode = "regionCode";
+        string expectedSpeciesCode = "speciesCode";
         long expectedBack = 1;
-        ApiEnum<string, Cat> expectedCat = Cat.Species;
         bool expectedHotspot = true;
         bool expectedIncludeProvisional = true;
         long expectedMaxResults = 1;
@@ -33,8 +30,8 @@ public class RecentListParamsTest : TestBase
         string expectedSppLocale = "sppLocale";
 
         Assert.Equal(expectedRegionCode, parameters.RegionCode);
+        Assert.Equal(expectedSpeciesCode, parameters.SpeciesCode);
         Assert.Equal(expectedBack, parameters.Back);
-        Assert.Equal(expectedCat, parameters.Cat);
         Assert.Equal(expectedHotspot, parameters.Hotspot);
         Assert.Equal(expectedIncludeProvisional, parameters.IncludeProvisional);
         Assert.Equal(expectedMaxResults, parameters.MaxResults);
@@ -50,12 +47,14 @@ public class RecentListParamsTest : TestBase
     [Fact]
     public void OptionalNonNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new RecentListParams { RegionCode = "regionCode" };
+        var parameters = new SpecieRetrieveParams
+        {
+            RegionCode = "regionCode",
+            SpeciesCode = "speciesCode",
+        };
 
         Assert.Null(parameters.Back);
         Assert.False(parameters.RawQueryData.ContainsKey("back"));
-        Assert.Null(parameters.Cat);
-        Assert.False(parameters.RawQueryData.ContainsKey("cat"));
         Assert.Null(parameters.Hotspot);
         Assert.False(parameters.RawQueryData.ContainsKey("hotspot"));
         Assert.Null(parameters.IncludeProvisional);
@@ -71,13 +70,13 @@ public class RecentListParamsTest : TestBase
     [Fact]
     public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
     {
-        var parameters = new RecentListParams
+        var parameters = new SpecieRetrieveParams
         {
             RegionCode = "regionCode",
+            SpeciesCode = "speciesCode",
 
             // Null should be interpreted as omitted for these properties
             Back = null,
-            Cat = null,
             Hotspot = null,
             IncludeProvisional = null,
             MaxResults = null,
@@ -87,8 +86,6 @@ public class RecentListParamsTest : TestBase
 
         Assert.Null(parameters.Back);
         Assert.False(parameters.RawQueryData.ContainsKey("back"));
-        Assert.Null(parameters.Cat);
-        Assert.False(parameters.RawQueryData.ContainsKey("cat"));
         Assert.Null(parameters.Hotspot);
         Assert.False(parameters.RawQueryData.ContainsKey("hotspot"));
         Assert.Null(parameters.IncludeProvisional);
@@ -99,75 +96,5 @@ public class RecentListParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("r"));
         Assert.Null(parameters.SppLocale);
         Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
-    }
-}
-
-public class CatTest : TestBase
-{
-    [Theory]
-    [InlineData(Cat.Species)]
-    [InlineData(Cat.Slash)]
-    [InlineData(Cat.Issf)]
-    [InlineData(Cat.Spuh)]
-    [InlineData(Cat.Hybrid)]
-    [InlineData(Cat.Domestic)]
-    [InlineData(Cat.Form)]
-    [InlineData(Cat.Intergrade)]
-    public void Validation_Works(Cat rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Cat> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Cat>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<PhoebeInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Cat.Species)]
-    [InlineData(Cat.Slash)]
-    [InlineData(Cat.Issf)]
-    [InlineData(Cat.Spuh)]
-    [InlineData(Cat.Hybrid)]
-    [InlineData(Cat.Domestic)]
-    [InlineData(Cat.Form)]
-    [InlineData(Cat.Intergrade)]
-    public void SerializationRoundtrip_Works(Cat rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Cat> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Cat>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Cat>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Cat>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
     }
 }
