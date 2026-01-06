@@ -1,3 +1,4 @@
+using System;
 using Phoebe.Models.Product.Lists;
 
 namespace Phoebe.Tests.Models.Product.Lists;
@@ -38,5 +39,18 @@ public class ListRetrieveParamsTest : TestBase
 
         Assert.Null(parameters.MaxResults);
         Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        ListRetrieveParams parameters = new() { RegionCode = "regionCode", MaxResults = 1 };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri("https://api.ebird.org/v2/product/lists/regionCode?maxResults=1"),
+            url
+        );
     }
 }

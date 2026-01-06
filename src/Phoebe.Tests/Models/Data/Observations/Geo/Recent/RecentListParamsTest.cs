@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Phoebe.Core;
 using Phoebe.Exceptions;
@@ -105,6 +106,33 @@ public class RecentListParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("sort"));
         Assert.Null(parameters.SppLocale);
         Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        RecentListParams parameters = new()
+        {
+            Lat = -90,
+            Lng = -180,
+            Back = 1,
+            Cat = Cat.Species,
+            Dist = 0,
+            Hotspot = true,
+            IncludeProvisional = true,
+            MaxResults = 1,
+            Sort = Sort.Date,
+            SppLocale = "sppLocale",
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.ebird.org/v2/data/obs/geo/recent?lat=-90&lng=-180&back=1&cat=species&dist=0&hotspot=true&includeProvisional=true&maxResults=1&sort=date&sppLocale=sppLocale"
+            ),
+            url
+        );
     }
 }
 

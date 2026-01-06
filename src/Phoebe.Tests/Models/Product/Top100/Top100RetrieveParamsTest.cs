@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Phoebe.Core;
 using Phoebe.Exceptions;
@@ -71,6 +72,29 @@ public class Top100RetrieveParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
         Assert.Null(parameters.RankedBy);
         Assert.False(parameters.RawQueryData.ContainsKey("rankedBy"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        Top100RetrieveParams parameters = new()
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+            MaxResults = 1,
+            RankedBy = RankedBy.Spp,
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.ebird.org/v2/product/top100/regionCode/0/1/1?maxResults=1&rankedBy=spp"
+            ),
+            url
+        );
     }
 }
 

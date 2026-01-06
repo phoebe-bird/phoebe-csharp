@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Phoebe.Models.Data.Observations.Recent.Species;
 
@@ -96,5 +97,30 @@ public class SpecieRetrieveParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("r"));
         Assert.Null(parameters.SppLocale);
         Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        SpecieRetrieveParams parameters = new()
+        {
+            RegionCode = "regionCode",
+            SpeciesCode = "speciesCode",
+            Back = 1,
+            Hotspot = true,
+            IncludeProvisional = true,
+            MaxResults = 1,
+            R = ["string"],
+            SppLocale = "sppLocale",
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.ebird.org/v2/data/obs/regionCode/recent/speciesCode?back=1&hotspot=true&includeProvisional=true&maxResults=1&r=string&sppLocale=sppLocale"
+            ),
+            url
+        );
     }
 }

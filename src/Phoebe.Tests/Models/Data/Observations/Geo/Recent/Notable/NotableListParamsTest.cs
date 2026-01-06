@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Phoebe.Core;
 using Phoebe.Exceptions;
@@ -89,6 +90,31 @@ public class NotableListParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
         Assert.Null(parameters.SppLocale);
         Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        NotableListParams parameters = new()
+        {
+            Lat = -90,
+            Lng = -180,
+            Back = 1,
+            Detail = Detail.Simple,
+            Dist = 0,
+            Hotspot = true,
+            MaxResults = 1,
+            SppLocale = "sppLocale",
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.ebird.org/v2/data/obs/geo/recent/notable?lat=-90&lng=-180&back=1&detail=simple&dist=0&hotspot=true&maxResults=1&sppLocale=sppLocale"
+            ),
+            url
+        );
     }
 }
 

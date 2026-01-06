@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Phoebe.Core;
@@ -125,6 +126,35 @@ public class HistoricListParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("rank"));
         Assert.Null(parameters.SppLocale);
         Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        HistoricListParams parameters = new()
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+            Cat = Cat.Species,
+            Detail = Detail.Simple,
+            Hotspot = true,
+            IncludeProvisional = true,
+            MaxResults = 1,
+            R = ["string"],
+            Rank = Rank.Mrec,
+            SppLocale = "sppLocale",
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.ebird.org/v2/data/obs/regionCode/historic/0/1/1?cat=species&detail=simple&hotspot=true&includeProvisional=true&maxResults=1&r=string&rank=mrec&sppLocale=sppLocale"
+            ),
+            url
+        );
     }
 }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Phoebe.Core;
@@ -91,6 +92,30 @@ public class NotableListParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("r"));
         Assert.Null(parameters.SppLocale);
         Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        NotableListParams parameters = new()
+        {
+            RegionCode = "regionCode",
+            Back = 1,
+            Detail = Detail.Simple,
+            Hotspot = true,
+            MaxResults = 1,
+            R = ["string"],
+            SppLocale = "sppLocale",
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.ebird.org/v2/data/obs/regionCode/recent/notable?back=1&detail=simple&hotspot=true&maxResults=1&r=string&sppLocale=sppLocale"
+            ),
+            url
+        );
     }
 }
 
