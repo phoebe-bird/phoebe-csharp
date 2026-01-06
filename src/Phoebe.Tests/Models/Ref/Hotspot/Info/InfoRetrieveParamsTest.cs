@@ -1,3 +1,4 @@
+using System;
 using Phoebe.Models.Ref.Hotspot.Info;
 
 namespace Phoebe.Tests.Models.Ref.Hotspot.Info;
@@ -12,5 +13,15 @@ public class InfoRetrieveParamsTest : TestBase
         string expectedLocID = "locId";
 
         Assert.Equal(expectedLocID, parameters.LocID);
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        InfoRetrieveParams parameters = new() { LocID = "locId" };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.ebird.org/v2/ref/hotspot/info/locId"), url);
     }
 }

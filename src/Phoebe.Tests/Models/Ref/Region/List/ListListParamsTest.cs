@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Phoebe.Core;
 using Phoebe.Exceptions;
@@ -53,6 +54,24 @@ public class ListListParamsTest : TestBase
 
         Assert.Null(parameters.Fmt);
         Assert.False(parameters.RawQueryData.ContainsKey("fmt"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        ListListParams parameters = new()
+        {
+            RegionType = "regionType",
+            ParentRegionCode = "parentRegionCode",
+            Fmt = Fmt.Csv,
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri("https://api.ebird.org/v2/ref/region/list/regionType/parentRegionCode?fmt=csv"),
+            url
+        );
     }
 }
 

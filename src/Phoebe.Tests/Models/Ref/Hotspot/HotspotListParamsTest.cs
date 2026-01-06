@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Phoebe.Core;
 using Phoebe.Exceptions;
@@ -53,6 +54,24 @@ public class HotspotListParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("back"));
         Assert.Null(parameters.Fmt);
         Assert.False(parameters.RawQueryData.ContainsKey("fmt"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        HotspotListParams parameters = new()
+        {
+            RegionCode = "regionCode",
+            Back = 1,
+            Fmt = Fmt.Csv,
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri("https://api.ebird.org/v2/ref/hotspot/regionCode?back=1&fmt=csv"),
+            url
+        );
     }
 }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Phoebe.Core;
 using Phoebe.Exceptions;
@@ -71,6 +72,29 @@ public class HistoricalRetrieveParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
         Assert.Null(parameters.SortKey);
         Assert.False(parameters.RawQueryData.ContainsKey("sortKey"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        HistoricalRetrieveParams parameters = new()
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+            MaxResults = 1,
+            SortKey = SortKey.ObsDt,
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.ebird.org/v2/product/lists/regionCode/0/1/1?maxResults=1&sortKey=obs_dt"
+            ),
+            url
+        );
     }
 }
 

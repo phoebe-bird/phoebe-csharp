@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Phoebe.Core;
 using Phoebe.Exceptions;
@@ -53,6 +54,26 @@ public class InfoRetrieveParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("delim"));
         Assert.Null(parameters.RegionNameFormat);
         Assert.False(parameters.RawQueryData.ContainsKey("regionNameFormat"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        InfoRetrieveParams parameters = new()
+        {
+            RegionCode = "regionCode",
+            Delim = "delim",
+            RegionNameFormat = RegionNameFormat.Detailed,
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.ebird.org/v2/ref/region/info/regionCode?delim=delim&regionNameFormat=detailed"
+            ),
+            url
+        );
     }
 }
 

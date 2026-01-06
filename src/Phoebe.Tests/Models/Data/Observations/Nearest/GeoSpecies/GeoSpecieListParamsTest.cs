@@ -1,3 +1,4 @@
+using System;
 using Phoebe.Models.Data.Observations.Nearest.GeoSpecies;
 
 namespace Phoebe.Tests.Models.Data.Observations.Nearest.GeoSpecies;
@@ -95,5 +96,31 @@ public class GeoSpecieListParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("maxResults"));
         Assert.Null(parameters.SppLocale);
         Assert.False(parameters.RawQueryData.ContainsKey("sppLocale"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        GeoSpecieListParams parameters = new()
+        {
+            SpeciesCode = "speciesCode",
+            Lat = -90,
+            Lng = -180,
+            Back = 1,
+            Dist = 0,
+            Hotspot = true,
+            IncludeProvisional = true,
+            MaxResults = 1,
+            SppLocale = "sppLocale",
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.ebird.org/v2/data/nearest/geo/recent/speciesCode?lat=-90&lng=-180&back=1&dist=0&hotspot=true&includeProvisional=true&maxResults=1&sppLocale=sppLocale"
+            ),
+            url
+        );
     }
 }

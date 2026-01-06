@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Phoebe.Core;
 using Phoebe.Exceptions;
@@ -72,6 +73,28 @@ public class EbirdRetrieveParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("species"));
         Assert.Null(parameters.Version);
         Assert.False(parameters.RawQueryData.ContainsKey("version"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        EbirdRetrieveParams parameters = new()
+        {
+            Cat = "cat",
+            Fmt = Fmt.Csv,
+            Locale = "locale",
+            Species = "species",
+            Version = "version",
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.ebird.org/v2/ref/taxonomy/ebird?cat=cat&fmt=csv&locale=locale&species=species&version=version"
+            ),
+            url
+        );
     }
 }
 

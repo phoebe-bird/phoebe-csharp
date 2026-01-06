@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Phoebe.Core;
 using Phoebe.Exceptions;
@@ -45,6 +46,23 @@ public class SpeciesGroupListParamsTest : TestBase
 
         Assert.Null(parameters.GroupNameLocale);
         Assert.False(parameters.RawQueryData.ContainsKey("groupNameLocale"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        SpeciesGroupListParams parameters = new()
+        {
+            SpeciesGrouping = SpeciesGrouping.Merlin,
+            GroupNameLocale = "groupNameLocale",
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri("https://api.ebird.org/v2/ref/sppgroup/merlin?groupNameLocale=groupNameLocale"),
+            url
+        );
     }
 }
 

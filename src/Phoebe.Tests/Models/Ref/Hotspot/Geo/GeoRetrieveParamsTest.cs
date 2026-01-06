@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Phoebe.Core;
 using Phoebe.Exceptions;
@@ -65,6 +66,28 @@ public class GeoRetrieveParamsTest : TestBase
         Assert.False(parameters.RawQueryData.ContainsKey("dist"));
         Assert.Null(parameters.Fmt);
         Assert.False(parameters.RawQueryData.ContainsKey("fmt"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        GeoRetrieveParams parameters = new()
+        {
+            Lat = -90,
+            Lng = -180,
+            Back = 1,
+            Dist = 0,
+            Fmt = Fmt.Csv,
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.ebird.org/v2/ref/hotspot/geo?lat=-90&lng=-180&back=1&dist=0&fmt=csv"
+            ),
+            url
+        );
     }
 }
 
