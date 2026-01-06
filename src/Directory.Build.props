@@ -4,7 +4,7 @@
     <Company>Phoebe</Company>
     <PackageTags>sdk;api;http;library</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <Copyright>Copyright 2025 Phoebe</Copyright>
+    <Copyright>Copyright 2026 Phoebe</Copyright>
     <PackageProjectUrl>https://science.ebird.org/en/use-ebird-data/download-ebird-data-products</PackageProjectUrl>
     <RepositoryUrl>https://www.github.com/phoebe-bird/phoebe-csharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
