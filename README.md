@@ -58,7 +58,7 @@ Or manually:
 ```csharp
 using Phoebe;
 
-PhoebeClient client = new() { APIKey = "My API Key" };
+PhoebeClient client = new() { ApiKey = "My API Key" };
 ```
 
 Or using a combination of the two approaches.
@@ -67,7 +67,7 @@ See this table for the available options:
 
 | Property  | Environment variable | Required | Default value                |
 | --------- | -------------------- | -------- | ---------------------------- |
-| `APIKey`  | `EBIRD_API_KEY`      | true     | -                            |
+| `ApiKey`  | `EBIRD_API_KEY`      | true     | -                            |
 | `BaseUrl` | `PHOEBE_BASE_URL`    | true     | `"https://api.ebird.org/v2"` |
 
 ### Modifying configuration

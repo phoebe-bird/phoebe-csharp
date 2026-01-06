@@ -108,7 +108,7 @@ public class NotableListParamsTest : TestBase
             SppLocale = "sppLocale",
         };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(
             new Uri(

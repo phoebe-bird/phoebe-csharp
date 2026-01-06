@@ -46,7 +46,7 @@ public class ListRetrieveParamsTest : TestBase
     {
         ListRetrieveParams parameters = new() { RegionCode = "regionCode", MaxResults = 1 };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(
             new Uri("https://api.ebird.org/v2/product/lists/regionCode?maxResults=1"),

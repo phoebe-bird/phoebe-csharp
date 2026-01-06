@@ -15,7 +15,7 @@ public class ListRetrieveResponseTest : TestBase
             ChecklistID = "checklistId",
             CreationDt = "creationDt",
             DurationHrs = 0,
-            ISOObsDate = "isoObsDate",
+            IsoObsDate = "isoObsDate",
             LastEditedDt = "lastEditedDt",
             Loc = new()
             {
@@ -73,7 +73,7 @@ public class ListRetrieveResponseTest : TestBase
         string expectedChecklistID = "checklistId";
         string expectedCreationDt = "creationDt";
         double expectedDurationHrs = 0;
-        string expectedISOObsDate = "isoObsDate";
+        string expectedIsoObsDate = "isoObsDate";
         string expectedLastEditedDt = "lastEditedDt";
         Loc expectedLoc = new()
         {
@@ -130,7 +130,7 @@ public class ListRetrieveResponseTest : TestBase
         Assert.Equal(expectedChecklistID, model.ChecklistID);
         Assert.Equal(expectedCreationDt, model.CreationDt);
         Assert.Equal(expectedDurationHrs, model.DurationHrs);
-        Assert.Equal(expectedISOObsDate, model.ISOObsDate);
+        Assert.Equal(expectedIsoObsDate, model.IsoObsDate);
         Assert.Equal(expectedLastEditedDt, model.LastEditedDt);
         Assert.Equal(expectedLoc, model.Loc);
         Assert.Equal(expectedLocID, model.LocID);
@@ -162,7 +162,7 @@ public class ListRetrieveResponseTest : TestBase
             ChecklistID = "checklistId",
             CreationDt = "creationDt",
             DurationHrs = 0,
-            ISOObsDate = "isoObsDate",
+            IsoObsDate = "isoObsDate",
             LastEditedDt = "lastEditedDt",
             Loc = new()
             {
@@ -231,7 +231,7 @@ public class ListRetrieveResponseTest : TestBase
             ChecklistID = "checklistId",
             CreationDt = "creationDt",
             DurationHrs = 0,
-            ISOObsDate = "isoObsDate",
+            IsoObsDate = "isoObsDate",
             LastEditedDt = "lastEditedDt",
             Loc = new()
             {
@@ -293,7 +293,7 @@ public class ListRetrieveResponseTest : TestBase
         string expectedChecklistID = "checklistId";
         string expectedCreationDt = "creationDt";
         double expectedDurationHrs = 0;
-        string expectedISOObsDate = "isoObsDate";
+        string expectedIsoObsDate = "isoObsDate";
         string expectedLastEditedDt = "lastEditedDt";
         Loc expectedLoc = new()
         {
@@ -350,7 +350,7 @@ public class ListRetrieveResponseTest : TestBase
         Assert.Equal(expectedChecklistID, deserialized.ChecklistID);
         Assert.Equal(expectedCreationDt, deserialized.CreationDt);
         Assert.Equal(expectedDurationHrs, deserialized.DurationHrs);
-        Assert.Equal(expectedISOObsDate, deserialized.ISOObsDate);
+        Assert.Equal(expectedIsoObsDate, deserialized.IsoObsDate);
         Assert.Equal(expectedLastEditedDt, deserialized.LastEditedDt);
         Assert.Equal(expectedLoc, deserialized.Loc);
         Assert.Equal(expectedLocID, deserialized.LocID);
@@ -382,7 +382,7 @@ public class ListRetrieveResponseTest : TestBase
             ChecklistID = "checklistId",
             CreationDt = "creationDt",
             DurationHrs = 0,
-            ISOObsDate = "isoObsDate",
+            IsoObsDate = "isoObsDate",
             LastEditedDt = "lastEditedDt",
             Loc = new()
             {
@@ -452,7 +452,7 @@ public class ListRetrieveResponseTest : TestBase
         Assert.False(model.RawData.ContainsKey("creationDt"));
         Assert.Null(model.DurationHrs);
         Assert.False(model.RawData.ContainsKey("durationHrs"));
-        Assert.Null(model.ISOObsDate);
+        Assert.Null(model.IsoObsDate);
         Assert.False(model.RawData.ContainsKey("isoObsDate"));
         Assert.Null(model.LastEditedDt);
         Assert.False(model.RawData.ContainsKey("lastEditedDt"));
@@ -504,7 +504,7 @@ public class ListRetrieveResponseTest : TestBase
             ChecklistID = null,
             CreationDt = null,
             DurationHrs = null,
-            ISOObsDate = null,
+            IsoObsDate = null,
             LastEditedDt = null,
             Loc = null,
             LocID = null,
@@ -530,7 +530,7 @@ public class ListRetrieveResponseTest : TestBase
         Assert.False(model.RawData.ContainsKey("creationDt"));
         Assert.Null(model.DurationHrs);
         Assert.False(model.RawData.ContainsKey("durationHrs"));
-        Assert.Null(model.ISOObsDate);
+        Assert.Null(model.IsoObsDate);
         Assert.False(model.RawData.ContainsKey("isoObsDate"));
         Assert.Null(model.LastEditedDt);
         Assert.False(model.RawData.ContainsKey("lastEditedDt"));
@@ -574,7 +574,7 @@ public class ListRetrieveResponseTest : TestBase
             ChecklistID = null,
             CreationDt = null,
             DurationHrs = null,
-            ISOObsDate = null,
+            IsoObsDate = null,
             LastEditedDt = null,
             Loc = null,
             LocID = null,

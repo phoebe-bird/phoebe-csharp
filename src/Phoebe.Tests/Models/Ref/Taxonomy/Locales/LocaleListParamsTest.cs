@@ -42,7 +42,7 @@ public class LocaleListParamsTest : TestBase
     {
         LocaleListParams parameters = new();
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.ebird.org/v2/ref/taxa-locales/ebird"), url);
     }

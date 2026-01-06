@@ -66,7 +66,7 @@ public class InfoRetrieveParamsTest : TestBase
             RegionNameFormat = RegionNameFormat.Detailed,
         };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(
             new Uri(

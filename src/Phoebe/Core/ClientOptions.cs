@@ -82,11 +82,11 @@ public struct ClientOptions()
     Lazy<string> _apiKey = new(() =>
         Environment.GetEnvironmentVariable("EBIRD_API_KEY")
         ?? throw new PhoebeInvalidDataException(
-            string.Format("{0} cannot be null", nameof(APIKey)),
-            new ArgumentNullException(nameof(APIKey))
+            string.Format("{0} cannot be null", nameof(ApiKey)),
+            new ArgumentNullException(nameof(ApiKey))
         )
     );
-    public string APIKey
+    public string ApiKey
     {
         readonly get { return _apiKey.Value; }
         set { _apiKey = new(() => value); }
