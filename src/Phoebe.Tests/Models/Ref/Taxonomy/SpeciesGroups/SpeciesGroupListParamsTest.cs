@@ -57,7 +57,7 @@ public class SpeciesGroupListParamsTest : TestBase
             GroupNameLocale = "groupNameLocale",
         };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(
             new Uri("https://api.ebird.org/v2/ref/sppgroup/merlin?groupNameLocale=groupNameLocale"),

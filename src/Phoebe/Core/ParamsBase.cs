@@ -196,9 +196,9 @@ public abstract record class ParamsBase
             request.Headers.Add(header.Key, header.Value);
         }
 
-        if (options.APIKey != null)
+        if (options.ApiKey != null)
         {
-            request.Headers.Add("X-eBirdApiToken", options.APIKey);
+            request.Headers.Add("X-eBirdApiToken", options.ApiKey);
         }
         request.Headers.Add(
             "X-Stainless-Timeout",

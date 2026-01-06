@@ -20,7 +20,7 @@ public class FormListParamsTest : TestBase
     {
         FormListParams parameters = new() { SpeciesCode = "speciesCode" };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.ebird.org/v2/ref/taxon/forms/speciesCode"), url);
     }

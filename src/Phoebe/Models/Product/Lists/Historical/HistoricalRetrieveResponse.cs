@@ -68,7 +68,7 @@ public sealed record class HistoricalRetrieveResponse : JsonModel
         }
     }
 
-    public string? ISOObsDate
+    public string? IsoObsDate
     {
         get { return JsonModel.GetNullableClass<string>(this.RawData, "isoObsDate"); }
         init
@@ -310,7 +310,7 @@ public sealed record class HistoricalRetrieveResponse : JsonModel
         _ = this.ChecklistID;
         _ = this.CreationDt;
         _ = this.DurationHrs;
-        _ = this.ISOObsDate;
+        _ = this.IsoObsDate;
         _ = this.LastEditedDt;
         this.Loc?.Validate();
         _ = this.LocID;
