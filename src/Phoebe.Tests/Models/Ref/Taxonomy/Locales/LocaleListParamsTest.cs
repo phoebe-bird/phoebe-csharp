@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using Phoebe.Models.Ref.Taxonomy.Locales;
 
 namespace Phoebe.Tests.Models.Ref.Taxonomy.Locales;
@@ -45,5 +46,16 @@ public class LocaleListParamsTest : TestBase
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.ebird.org/v2/ref/taxa-locales/ebird"), url);
+    }
+
+    [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        LocaleListParams parameters = new() { AcceptLanguage = "en" };
+
+        parameters.AddHeadersToRequest(requestMessage, new() { ApiKey = "My API Key" });
+
+        Assert.Equal(["en"], requestMessage.Headers.GetValues("Accept-Language"));
     }
 }
