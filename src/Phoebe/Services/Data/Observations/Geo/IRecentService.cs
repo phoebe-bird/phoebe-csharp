@@ -17,6 +17,12 @@ namespace Phoebe.Services.Data.Observations.Geo;
 public interface IRecentService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    global::Phoebe.Services.Data.Observations.Geo.IRecentServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -36,6 +42,35 @@ public interface IRecentService
     /// region specified.
     /// </summary>
     Task<List<Observation>> List(
+        RecentListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="global::Phoebe.Services.Data.Observations.Geo.IRecentService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IRecentServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    global::Phoebe.Services.Data.Observations.Geo.IRecentServiceWithRawResponse WithOptions(
+        Func<ClientOptions, ClientOptions> modifier
+    );
+
+    ISpecieServiceWithRawResponse Species { get; }
+
+    INotableServiceWithRawResponse Notable { get; }
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /data/obs/geo/recent`, but is otherwise the
+    /// same as <see cref="global::Phoebe.Services.Data.Observations.Geo.IRecentService.List(RecentListParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<Observation>>> List(
         RecentListParams parameters,
         CancellationToken cancellationToken = default
     );

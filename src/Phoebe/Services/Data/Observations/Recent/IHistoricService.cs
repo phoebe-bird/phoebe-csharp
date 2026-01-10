@@ -16,6 +16,12 @@ namespace Phoebe.Services.Data.Observations.Recent;
 public interface IHistoricService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IHistoricServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -35,6 +41,36 @@ public interface IHistoricService
 
     /// <inheritdoc cref="List(HistoricListParams, CancellationToken)"/>
     Task<List<Observation>> List(
+        long d,
+        HistoricListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IHistoricService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IHistoricServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IHistoricServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /data/obs/{regionCode}/historic/{y}/{m}/{d}`, but is otherwise the
+    /// same as <see cref="IHistoricService.List(HistoricListParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<Observation>>> List(
+        HistoricListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="List(HistoricListParams, CancellationToken)"/>
+    Task<HttpResponse<List<Observation>>> List(
         long d,
         HistoricListParams parameters,
         CancellationToken cancellationToken = default

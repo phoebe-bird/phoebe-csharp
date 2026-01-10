@@ -16,6 +16,12 @@ namespace Phoebe.Services.Data.Observations.Geo.Recent;
 public interface ISpecieService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    ISpecieServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -41,6 +47,36 @@ public interface ISpecieService
 
     /// <inheritdoc cref="List(SpecieListParams, CancellationToken)"/>
     Task<List<Observation>> List(
+        string speciesCode,
+        SpecieListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="ISpecieService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface ISpecieServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    ISpecieServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /data/obs/geo/recent/{speciesCode}`, but is otherwise the
+    /// same as <see cref="ISpecieService.List(SpecieListParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<Observation>>> List(
+        SpecieListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="List(SpecieListParams, CancellationToken)"/>
+    Task<HttpResponse<List<Observation>>> List(
         string speciesCode,
         SpecieListParams parameters,
         CancellationToken cancellationToken = default

@@ -15,6 +15,12 @@ namespace Phoebe.Services.Product;
 public interface ISpeciesListService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    ISpeciesListServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -33,6 +39,36 @@ public interface ISpeciesListService
 
     /// <inheritdoc cref="List(SpeciesListListParams, CancellationToken)"/>
     Task<List<string>> List(
+        string regionCode,
+        SpeciesListListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="ISpeciesListService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface ISpeciesListServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    ISpeciesListServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /product/spplist/{regionCode}`, but is otherwise the
+    /// same as <see cref="ISpeciesListService.List(SpeciesListListParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<string>>> List(
+        SpeciesListListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="List(SpeciesListListParams, CancellationToken)"/>
+    Task<HttpResponse<List<string>>> List(
         string regionCode,
         SpeciesListListParams? parameters = null,
         CancellationToken cancellationToken = default

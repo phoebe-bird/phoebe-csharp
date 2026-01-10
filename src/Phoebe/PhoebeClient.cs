@@ -14,6 +14,104 @@ namespace Phoebe;
 /// <inheritdoc/>
 public sealed class PhoebeClient : IPhoebeClient
 {
+    readonly ClientOptions _options;
+
+    /// <inheritdoc/>
+    public HttpClient HttpClient
+    {
+        get { return this._options.HttpClient; }
+        init { this._options.HttpClient = value; }
+    }
+
+    /// <inheritdoc/>
+    public string BaseUrl
+    {
+        get { return this._options.BaseUrl; }
+        init { this._options.BaseUrl = value; }
+    }
+
+    /// <inheritdoc/>
+    public bool ResponseValidation
+    {
+        get { return this._options.ResponseValidation; }
+        init { this._options.ResponseValidation = value; }
+    }
+
+    /// <inheritdoc/>
+    public int? MaxRetries
+    {
+        get { return this._options.MaxRetries; }
+        init { this._options.MaxRetries = value; }
+    }
+
+    /// <inheritdoc/>
+    public TimeSpan? Timeout
+    {
+        get { return this._options.Timeout; }
+        init { this._options.Timeout = value; }
+    }
+
+    /// <inheritdoc/>
+    public string ApiKey
+    {
+        get { return this._options.ApiKey; }
+        init { this._options.ApiKey = value; }
+    }
+
+    readonly Lazy<IPhoebeClientWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IPhoebeClientWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    /// <inheritdoc/>
+    public IPhoebeClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new PhoebeClient(modifier(this._options));
+    }
+
+    readonly Lazy<IDataService> _data;
+    public IDataService Data
+    {
+        get { return _data.Value; }
+    }
+
+    readonly Lazy<IProductService> _product;
+    public IProductService Product
+    {
+        get { return _product.Value; }
+    }
+
+    readonly Lazy<IRefService> _ref;
+    public IRefService Ref
+    {
+        get { return _ref.Value; }
+    }
+
+    public void Dispose() => this.HttpClient.Dispose();
+
+    public PhoebeClient()
+    {
+        _options = new();
+
+        _withRawResponse = new(() => new PhoebeClientWithRawResponse(this._options));
+        _data = new(() => new DataService(this));
+        _product = new(() => new ProductService(this));
+        _ref = new(() => new RefService(this));
+    }
+
+    public PhoebeClient(ClientOptions options)
+        : this()
+    {
+        _options = options;
+    }
+}
+
+/// <inheritdoc/>
+public sealed class PhoebeClientWithRawResponse : IPhoebeClientWithRawResponse
+{
 #if NET
     static readonly Random Random = Random.Shared;
 #else
@@ -70,25 +168,25 @@ public sealed class PhoebeClient : IPhoebeClient
     }
 
     /// <inheritdoc/>
-    public IPhoebeClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    public IPhoebeClientWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
-        return new PhoebeClient(modifier(this._options));
+        return new PhoebeClientWithRawResponse(modifier(this._options));
     }
 
-    readonly Lazy<IDataService> _data;
-    public IDataService Data
+    readonly Lazy<IDataServiceWithRawResponse> _data;
+    public IDataServiceWithRawResponse Data
     {
         get { return _data.Value; }
     }
 
-    readonly Lazy<IProductService> _product;
-    public IProductService Product
+    readonly Lazy<IProductServiceWithRawResponse> _product;
+    public IProductServiceWithRawResponse Product
     {
         get { return _product.Value; }
     }
 
-    readonly Lazy<IRefService> _ref;
-    public IRefService Ref
+    readonly Lazy<IRefServiceWithRawResponse> _ref;
+    public IRefServiceWithRawResponse Ref
     {
         get { return _ref.Value; }
     }
@@ -283,16 +381,16 @@ public sealed class PhoebeClient : IPhoebeClient
 
     public void Dispose() => this.HttpClient.Dispose();
 
-    public PhoebeClient()
+    public PhoebeClientWithRawResponse()
     {
         _options = new();
 
-        _data = new(() => new DataService(this));
-        _product = new(() => new ProductService(this));
-        _ref = new(() => new RefService(this));
+        _data = new(() => new DataServiceWithRawResponse(this));
+        _product = new(() => new ProductServiceWithRawResponse(this));
+        _ref = new(() => new RefServiceWithRawResponse(this));
     }
 
-    public PhoebeClient(ClientOptions options)
+    public PhoebeClientWithRawResponse(ClientOptions options)
         : this()
     {
         _options = options;

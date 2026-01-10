@@ -17,6 +17,12 @@ namespace Phoebe.Services.Data.Observations;
 public interface IRecentService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IRecentServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -41,6 +47,42 @@ public interface IRecentService
 
     /// <inheritdoc cref="List(RecentListParams, CancellationToken)"/>
     Task<List<Observation>> List(
+        string regionCode,
+        RecentListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IRecentService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IRecentServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IRecentServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    INotableServiceWithRawResponse Notable { get; }
+
+    ISpecieServiceWithRawResponse Species { get; }
+
+    IHistoricServiceWithRawResponse Historic { get; }
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /data/obs/{regionCode}/recent`, but is otherwise the
+    /// same as <see cref="IRecentService.List(RecentListParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<Observation>>> List(
+        RecentListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="List(RecentListParams, CancellationToken)"/>
+    Task<HttpResponse<List<Observation>>> List(
         string regionCode,
         RecentListParams? parameters = null,
         CancellationToken cancellationToken = default

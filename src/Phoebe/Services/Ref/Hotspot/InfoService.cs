@@ -11,21 +11,72 @@ namespace Phoebe.Services.Ref.Hotspot;
 /// <inheritdoc/>
 public sealed class InfoService : IInfoService
 {
+    readonly Lazy<IInfoServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IInfoServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
     /// <inheritdoc/>
     public IInfoService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new InfoService(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public InfoService(IPhoebeClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new InfoServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<InfoRetrieveResponse> Retrieve(
+        InfoRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Retrieve(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<InfoRetrieveResponse> Retrieve(
+        string locID,
+        InfoRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Retrieve(parameters with { LocID = locID }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class InfoServiceWithRawResponse : IInfoServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IInfoServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new InfoServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public InfoServiceWithRawResponse(IPhoebeClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<InfoRetrieveResponse> Retrieve(
+    public async Task<HttpResponse<InfoRetrieveResponse>> Retrieve(
         InfoRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -40,21 +91,25 @@ public sealed class InfoService : IInfoService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var info = await response
-            .Deserialize<InfoRetrieveResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            info.Validate();
-        }
-        return info;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var info = await response
+                    .Deserialize<InfoRetrieveResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    info.Validate();
+                }
+                return info;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<InfoRetrieveResponse> Retrieve(
+    public Task<HttpResponse<InfoRetrieveResponse>> Retrieve(
         string locID,
         InfoRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -62,6 +117,6 @@ public sealed class InfoService : IInfoService
     {
         parameters ??= new();
 
-        return await this.Retrieve(parameters with { LocID = locID }, cancellationToken);
+        return this.Retrieve(parameters with { LocID = locID }, cancellationToken);
     }
 }

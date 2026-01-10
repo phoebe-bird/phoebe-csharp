@@ -15,6 +15,12 @@ namespace Phoebe.Services.Ref.Region;
 public interface IListService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IListServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -34,6 +40,36 @@ public interface IListService
 
     /// <inheritdoc cref="List(ListListParams, CancellationToken)"/>
     Task<List<ListListResponse>> List(
+        string parentRegionCode,
+        ListListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IListService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IListServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IListServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /ref/region/list/{regionType}/{parentRegionCode}`, but is otherwise the
+    /// same as <see cref="IListService.List(ListListParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<ListListResponse>>> List(
+        ListListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="List(ListListParams, CancellationToken)"/>
+    Task<HttpResponse<List<ListListResponse>>> List(
         string parentRegionCode,
         ListListParams parameters,
         CancellationToken cancellationToken = default

@@ -11,21 +11,60 @@ namespace Phoebe.Services.Ref.Taxonomy;
 /// <inheritdoc/>
 public sealed class EbirdService : IEbirdService
 {
+    readonly Lazy<IEbirdServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IEbirdServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
     /// <inheritdoc/>
     public IEbirdService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new EbirdService(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public EbirdService(IPhoebeClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new EbirdServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<List<EbirdRetrieveResponse>> Retrieve(
+        EbirdRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Retrieve(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class EbirdServiceWithRawResponse : IEbirdServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IEbirdServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new EbirdServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public EbirdServiceWithRawResponse(IPhoebeClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<List<EbirdRetrieveResponse>> Retrieve(
+    public async Task<HttpResponse<List<EbirdRetrieveResponse>>> Retrieve(
         EbirdRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
     )
@@ -37,19 +76,23 @@ public sealed class EbirdService : IEbirdService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var ebirds = await response
-            .Deserialize<List<EbirdRetrieveResponse>>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            foreach (var item in ebirds)
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
             {
-                item.Validate();
+                var ebirds = await response
+                    .Deserialize<List<EbirdRetrieveResponse>>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    foreach (var item in ebirds)
+                    {
+                        item.Validate();
+                    }
+                }
+                return ebirds;
             }
-        }
-        return ebirds;
+        );
     }
 }

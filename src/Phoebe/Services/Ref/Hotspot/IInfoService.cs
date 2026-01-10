@@ -14,6 +14,12 @@ namespace Phoebe.Services.Ref.Hotspot;
 public interface IInfoService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IInfoServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -32,6 +38,36 @@ public interface IInfoService
 
     /// <inheritdoc cref="Retrieve(InfoRetrieveParams, CancellationToken)"/>
     Task<InfoRetrieveResponse> Retrieve(
+        string locID,
+        InfoRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IInfoService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IInfoServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IInfoServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /ref/hotspot/info/{locId}`, but is otherwise the
+    /// same as <see cref="IInfoService.Retrieve(InfoRetrieveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<InfoRetrieveResponse>> Retrieve(
+        InfoRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(InfoRetrieveParams, CancellationToken)"/>
+    Task<HttpResponse<InfoRetrieveResponse>> Retrieve(
         string locID,
         InfoRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default

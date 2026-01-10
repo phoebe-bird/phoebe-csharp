@@ -14,6 +14,12 @@ namespace Phoebe.Services.Product;
 public interface IStatService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IStatServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -32,6 +38,36 @@ public interface IStatService
 
     /// <inheritdoc cref="Retrieve(StatRetrieveParams, CancellationToken)"/>
     Task<StatRetrieveResponse> Retrieve(
+        long d,
+        StatRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IStatService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IStatServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IStatServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /product/stats/{regionCode}/{y}/{m}/{d}`, but is otherwise the
+    /// same as <see cref="IStatService.Retrieve(StatRetrieveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<StatRetrieveResponse>> Retrieve(
+        StatRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(StatRetrieveParams, CancellationToken)"/>
+    Task<HttpResponse<StatRetrieveResponse>> Retrieve(
         long d,
         StatRetrieveParams parameters,
         CancellationToken cancellationToken = default
