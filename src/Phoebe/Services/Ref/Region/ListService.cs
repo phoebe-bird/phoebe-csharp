@@ -12,21 +12,76 @@ namespace Phoebe.Services.Ref.Region;
 /// <inheritdoc/>
 public sealed class ListService : IListService
 {
+    readonly Lazy<IListServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IListServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
     /// <inheritdoc/>
     public IListService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new ListService(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public ListService(IPhoebeClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new ListServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<List<ListListResponse>> List(
+        ListListParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.List(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<List<ListListResponse>> List(
+        string parentRegionCode,
+        ListListParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.List(
+            parameters with
+            {
+                ParentRegionCode = parentRegionCode,
+            },
+            cancellationToken
+        );
+    }
+}
+
+/// <inheritdoc/>
+public sealed class ListServiceWithRawResponse : IListServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IListServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new ListServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public ListServiceWithRawResponse(IPhoebeClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<List<ListListResponse>> List(
+    public async Task<HttpResponse<List<ListListResponse>>> List(
         ListListParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -41,30 +96,34 @@ public sealed class ListService : IListService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var lists = await response
-            .Deserialize<List<ListListResponse>>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            foreach (var item in lists)
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
             {
-                item.Validate();
+                var lists = await response
+                    .Deserialize<List<ListListResponse>>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    foreach (var item in lists)
+                    {
+                        item.Validate();
+                    }
+                }
+                return lists;
             }
-        }
-        return lists;
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<List<ListListResponse>> List(
+    public Task<HttpResponse<List<ListListResponse>>> List(
         string parentRegionCode,
         ListListParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.List(
+        return this.List(
             parameters with
             {
                 ParentRegionCode = parentRegionCode,

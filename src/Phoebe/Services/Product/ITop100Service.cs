@@ -15,6 +15,12 @@ namespace Phoebe.Services.Product;
 public interface ITop100Service
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    ITop100ServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -47,6 +53,36 @@ public interface ITop100Service
 
     /// <inheritdoc cref="Retrieve(Top100RetrieveParams, CancellationToken)"/>
     Task<List<Top100RetrieveResponse>> Retrieve(
+        long d,
+        Top100RetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="ITop100Service"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface ITop100ServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    ITop100ServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /product/top100/{regionCode}/{y}/{m}/{d}`, but is otherwise the
+    /// same as <see cref="ITop100Service.Retrieve(Top100RetrieveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<Top100RetrieveResponse>>> Retrieve(
+        Top100RetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(Top100RetrieveParams, CancellationToken)"/>
+    Task<HttpResponse<List<Top100RetrieveResponse>>> Retrieve(
         long d,
         Top100RetrieveParams parameters,
         CancellationToken cancellationToken = default

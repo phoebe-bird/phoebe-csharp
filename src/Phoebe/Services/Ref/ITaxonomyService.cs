@@ -12,6 +12,12 @@ namespace Phoebe.Services.Ref;
 public interface ITaxonomyService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    ITaxonomyServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -27,4 +33,28 @@ public interface ITaxonomyService
     IVersionService Versions { get; }
 
     ISpeciesGroupService SpeciesGroups { get; }
+}
+
+/// <summary>
+/// A view of <see cref="ITaxonomyService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface ITaxonomyServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    ITaxonomyServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    IEbirdServiceWithRawResponse Ebird { get; }
+
+    IFormServiceWithRawResponse Forms { get; }
+
+    ILocaleServiceWithRawResponse Locales { get; }
+
+    IVersionServiceWithRawResponse Versions { get; }
+
+    ISpeciesGroupServiceWithRawResponse SpeciesGroups { get; }
 }

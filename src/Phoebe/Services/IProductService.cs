@@ -12,6 +12,12 @@ namespace Phoebe.Services;
 public interface IProductService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IProductServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -27,4 +33,28 @@ public interface IProductService
     ISpeciesListService SpeciesList { get; }
 
     IChecklistService Checklist { get; }
+}
+
+/// <summary>
+/// A view of <see cref="IProductService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IProductServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IProductServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    IListServiceWithRawResponse Lists { get; }
+
+    ITop100ServiceWithRawResponse Top100 { get; }
+
+    IStatServiceWithRawResponse Stats { get; }
+
+    ISpeciesListServiceWithRawResponse SpeciesList { get; }
+
+    IChecklistServiceWithRawResponse Checklist { get; }
 }

@@ -15,6 +15,12 @@ namespace Phoebe.Services.Ref.Taxonomy;
 public interface IEbirdService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IEbirdServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -28,6 +34,29 @@ public interface IEbirdService
     /// comma separating each code. Otherwise the full taxonomy is downloaded.
     /// </summary>
     Task<List<EbirdRetrieveResponse>> Retrieve(
+        EbirdRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IEbirdService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IEbirdServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IEbirdServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /ref/taxonomy/ebird`, but is otherwise the
+    /// same as <see cref="IEbirdService.Retrieve(EbirdRetrieveParams?, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<EbirdRetrieveResponse>>> Retrieve(
         EbirdRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
     );

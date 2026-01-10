@@ -11,21 +11,70 @@ namespace Phoebe.Services.Product;
 /// <inheritdoc/>
 public sealed class StatService : IStatService
 {
+    readonly Lazy<IStatServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IStatServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
     /// <inheritdoc/>
     public IStatService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new StatService(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public StatService(IPhoebeClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new StatServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<StatRetrieveResponse> Retrieve(
+        StatRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Retrieve(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<StatRetrieveResponse> Retrieve(
+        long d,
+        StatRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Retrieve(parameters with { D = d }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class StatServiceWithRawResponse : IStatServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IStatServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new StatServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public StatServiceWithRawResponse(IPhoebeClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<StatRetrieveResponse> Retrieve(
+    public async Task<HttpResponse<StatRetrieveResponse>> Retrieve(
         StatRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -40,26 +89,30 @@ public sealed class StatService : IStatService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var stat = await response
-            .Deserialize<StatRetrieveResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            stat.Validate();
-        }
-        return stat;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var stat = await response
+                    .Deserialize<StatRetrieveResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    stat.Validate();
+                }
+                return stat;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<StatRetrieveResponse> Retrieve(
+    public Task<HttpResponse<StatRetrieveResponse>> Retrieve(
         long d,
         StatRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.Retrieve(parameters with { D = d }, cancellationToken);
+        return this.Retrieve(parameters with { D = d }, cancellationToken);
     }
 }

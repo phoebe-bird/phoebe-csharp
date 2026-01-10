@@ -13,6 +13,16 @@ namespace Phoebe.Services.Data.Observations.Geo;
 /// <inheritdoc/>
 public sealed class RecentService : global::Phoebe.Services.Data.Observations.Geo.IRecentService
 {
+    readonly Lazy<global::Phoebe.Services.Data.Observations.Geo.IRecentServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public global::Phoebe.Services.Data.Observations.Geo.IRecentServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
     /// <inheritdoc/>
     public global::Phoebe.Services.Data.Observations.Geo.IRecentService WithOptions(
         Func<ClientOptions, ClientOptions> modifier
@@ -23,11 +33,15 @@ public sealed class RecentService : global::Phoebe.Services.Data.Observations.Ge
         );
     }
 
-    readonly IPhoebeClient _client;
-
     public RecentService(IPhoebeClient client)
     {
         _client = client;
+
+        _withRawResponse = new(() =>
+            new global::Phoebe.Services.Data.Observations.Geo.RecentServiceWithRawResponse(
+                client.WithRawResponse
+            )
+        );
         _species = new(() => new SpecieService(client));
         _notable = new(() => new NotableService(client));
     }
@@ -50,24 +64,77 @@ public sealed class RecentService : global::Phoebe.Services.Data.Observations.Ge
         CancellationToken cancellationToken = default
     )
     {
+        using var response = await this
+            .WithRawResponse.List(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class RecentServiceWithRawResponse
+    : global::Phoebe.Services.Data.Observations.Geo.IRecentServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public global::Phoebe.Services.Data.Observations.Geo.IRecentServiceWithRawResponse WithOptions(
+        Func<ClientOptions, ClientOptions> modifier
+    )
+    {
+        return new global::Phoebe.Services.Data.Observations.Geo.RecentServiceWithRawResponse(
+            this._client.WithOptions(modifier)
+        );
+    }
+
+    public RecentServiceWithRawResponse(IPhoebeClientWithRawResponse client)
+    {
+        _client = client;
+
+        _species = new(() => new SpecieServiceWithRawResponse(client));
+        _notable = new(() => new NotableServiceWithRawResponse(client));
+    }
+
+    readonly Lazy<ISpecieServiceWithRawResponse> _species;
+    public ISpecieServiceWithRawResponse Species
+    {
+        get { return _species.Value; }
+    }
+
+    readonly Lazy<INotableServiceWithRawResponse> _notable;
+    public INotableServiceWithRawResponse Notable
+    {
+        get { return _notable.Value; }
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<List<Observation>>> List(
+        RecentListParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
         HttpRequest<RecentListParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var observations = await response
-            .Deserialize<List<Observation>>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            foreach (var item in observations)
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
             {
-                item.Validate();
+                var observations = await response
+                    .Deserialize<List<Observation>>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    foreach (var item in observations)
+                    {
+                        item.Validate();
+                    }
+                }
+                return observations;
             }
-        }
-        return observations;
+        );
     }
 }

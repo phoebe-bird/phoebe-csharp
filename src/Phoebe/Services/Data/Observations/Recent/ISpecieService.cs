@@ -16,6 +16,12 @@ namespace Phoebe.Services.Data.Observations.Recent;
 public interface ISpecieService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    ISpecieServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -40,6 +46,36 @@ public interface ISpecieService
 
     /// <inheritdoc cref="Retrieve(SpecieRetrieveParams, CancellationToken)"/>
     Task<List<Observation>> Retrieve(
+        string speciesCode,
+        SpecieRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="ISpecieService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface ISpecieServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    ISpecieServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /data/obs/{regionCode}/recent/{speciesCode}`, but is otherwise the
+    /// same as <see cref="ISpecieService.Retrieve(SpecieRetrieveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<Observation>>> Retrieve(
+        SpecieRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(SpecieRetrieveParams, CancellationToken)"/>
+    Task<HttpResponse<List<Observation>>> Retrieve(
         string speciesCode,
         SpecieRetrieveParams parameters,
         CancellationToken cancellationToken = default

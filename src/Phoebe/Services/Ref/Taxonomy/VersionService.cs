@@ -11,21 +11,60 @@ namespace Phoebe.Services.Ref.Taxonomy;
 /// <inheritdoc/>
 public sealed class VersionService : IVersionService
 {
+    readonly Lazy<IVersionServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IVersionServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
     /// <inheritdoc/>
     public IVersionService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new VersionService(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public VersionService(IPhoebeClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new VersionServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<List<VersionListResponse>> List(
+        VersionListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.List(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class VersionServiceWithRawResponse : IVersionServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IVersionServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new VersionServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public VersionServiceWithRawResponse(IPhoebeClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<List<VersionListResponse>> List(
+    public async Task<HttpResponse<List<VersionListResponse>>> List(
         VersionListParams? parameters = null,
         CancellationToken cancellationToken = default
     )
@@ -37,19 +76,23 @@ public sealed class VersionService : IVersionService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var versions = await response
-            .Deserialize<List<VersionListResponse>>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            foreach (var item in versions)
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
             {
-                item.Validate();
+                var versions = await response
+                    .Deserialize<List<VersionListResponse>>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    foreach (var item in versions)
+                    {
+                        item.Validate();
+                    }
+                }
+                return versions;
             }
-        }
-        return versions;
+        );
     }
 }

@@ -11,21 +11,60 @@ namespace Phoebe.Services.Ref.Taxonomy;
 /// <inheritdoc/>
 public sealed class LocaleService : ILocaleService
 {
+    readonly Lazy<ILocaleServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public ILocaleServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
     /// <inheritdoc/>
     public ILocaleService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new LocaleService(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public LocaleService(IPhoebeClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new LocaleServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<List<LocaleListResponse>> List(
+        LocaleListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.List(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class LocaleServiceWithRawResponse : ILocaleServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public ILocaleServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new LocaleServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public LocaleServiceWithRawResponse(IPhoebeClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<List<LocaleListResponse>> List(
+    public async Task<HttpResponse<List<LocaleListResponse>>> List(
         LocaleListParams? parameters = null,
         CancellationToken cancellationToken = default
     )
@@ -37,19 +76,23 @@ public sealed class LocaleService : ILocaleService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var locales = await response
-            .Deserialize<List<LocaleListResponse>>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            foreach (var item in locales)
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
             {
-                item.Validate();
+                var locales = await response
+                    .Deserialize<List<LocaleListResponse>>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    foreach (var item in locales)
+                    {
+                        item.Validate();
+                    }
+                }
+                return locales;
             }
-        }
-        return locales;
+        );
     }
 }

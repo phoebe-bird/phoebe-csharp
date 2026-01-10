@@ -16,6 +16,12 @@ namespace Phoebe.Services.Ref;
 public interface IHotspotService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IHotspotServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -36,6 +42,40 @@ public interface IHotspotService
 
     /// <inheritdoc cref="List(HotspotListParams, CancellationToken)"/>
     Task<List<HotspotListResponse>> List(
+        string regionCode,
+        HotspotListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IHotspotService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IHotspotServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IHotspotServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    IGeoServiceWithRawResponse Geo { get; }
+
+    IInfoServiceWithRawResponse Info { get; }
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /ref/hotspot/{regionCode}`, but is otherwise the
+    /// same as <see cref="IHotspotService.List(HotspotListParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<HotspotListResponse>>> List(
+        HotspotListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="List(HotspotListParams, CancellationToken)"/>
+    Task<HttpResponse<List<HotspotListResponse>>> List(
         string regionCode,
         HotspotListParams? parameters = null,
         CancellationToken cancellationToken = default

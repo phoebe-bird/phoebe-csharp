@@ -16,6 +16,12 @@ namespace Phoebe.Services.Data.Observations.Recent;
 public interface INotableService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    INotableServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -35,6 +41,36 @@ public interface INotableService
 
     /// <inheritdoc cref="List(NotableListParams, CancellationToken)"/>
     Task<List<Observation>> List(
+        string regionCode,
+        NotableListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="INotableService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface INotableServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    INotableServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /data/obs/{regionCode}/recent/notable`, but is otherwise the
+    /// same as <see cref="INotableService.List(NotableListParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<Observation>>> List(
+        NotableListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="List(NotableListParams, CancellationToken)"/>
+    Task<HttpResponse<List<Observation>>> List(
         string regionCode,
         NotableListParams? parameters = null,
         CancellationToken cancellationToken = default

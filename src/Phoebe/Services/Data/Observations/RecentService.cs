@@ -14,17 +14,27 @@ namespace Phoebe.Services.Data.Observations;
 /// <inheritdoc/>
 public sealed class RecentService : IRecentService
 {
+    readonly Lazy<IRecentServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IRecentServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
     /// <inheritdoc/>
     public IRecentService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new RecentService(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public RecentService(IPhoebeClient client)
     {
         _client = client;
+
+        _withRawResponse = new(() => new RecentServiceWithRawResponse(client.WithRawResponse));
         _notable = new(() => new NotableService(client));
         _species = new(() => new SpecieService(client));
         _historic = new(() => new HistoricService(client));
@@ -54,6 +64,69 @@ public sealed class RecentService : IRecentService
         CancellationToken cancellationToken = default
     )
     {
+        using var response = await this
+            .WithRawResponse.List(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<List<Observation>> List(
+        string regionCode,
+        RecentListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.List(parameters with { RegionCode = regionCode }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class RecentServiceWithRawResponse : IRecentServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IRecentServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new RecentServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public RecentServiceWithRawResponse(IPhoebeClientWithRawResponse client)
+    {
+        _client = client;
+
+        _notable = new(() => new NotableServiceWithRawResponse(client));
+        _species = new(() => new SpecieServiceWithRawResponse(client));
+        _historic = new(() => new HistoricServiceWithRawResponse(client));
+    }
+
+    readonly Lazy<INotableServiceWithRawResponse> _notable;
+    public INotableServiceWithRawResponse Notable
+    {
+        get { return _notable.Value; }
+    }
+
+    readonly Lazy<ISpecieServiceWithRawResponse> _species;
+    public ISpecieServiceWithRawResponse Species
+    {
+        get { return _species.Value; }
+    }
+
+    readonly Lazy<IHistoricServiceWithRawResponse> _historic;
+    public IHistoricServiceWithRawResponse Historic
+    {
+        get { return _historic.Value; }
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<List<Observation>>> List(
+        RecentListParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
         if (parameters.RegionCode == null)
         {
             throw new PhoebeInvalidDataException("'parameters.RegionCode' cannot be null");
@@ -64,24 +137,28 @@ public sealed class RecentService : IRecentService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var observations = await response
-            .Deserialize<List<Observation>>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            foreach (var item in observations)
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
             {
-                item.Validate();
+                var observations = await response
+                    .Deserialize<List<Observation>>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    foreach (var item in observations)
+                    {
+                        item.Validate();
+                    }
+                }
+                return observations;
             }
-        }
-        return observations;
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<List<Observation>> List(
+    public Task<HttpResponse<List<Observation>>> List(
         string regionCode,
         RecentListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -89,6 +166,6 @@ public sealed class RecentService : IRecentService
     {
         parameters ??= new();
 
-        return await this.List(parameters with { RegionCode = regionCode }, cancellationToken);
+        return this.List(parameters with { RegionCode = regionCode }, cancellationToken);
     }
 }

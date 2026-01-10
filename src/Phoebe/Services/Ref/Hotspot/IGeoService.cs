@@ -15,6 +15,12 @@ namespace Phoebe.Services.Ref.Hotspot;
 public interface IGeoService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IGeoServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -26,6 +32,29 @@ public interface IGeoService
     /// set of coordinates.
     /// </summary>
     Task<List<GeoRetrieveResponse>> Retrieve(
+        GeoRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IGeoService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IGeoServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IGeoServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /ref/hotspot/geo`, but is otherwise the
+    /// same as <see cref="IGeoService.Retrieve(GeoRetrieveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<GeoRetrieveResponse>>> Retrieve(
         GeoRetrieveParams parameters,
         CancellationToken cancellationToken = default
     );

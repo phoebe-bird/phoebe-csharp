@@ -13,21 +13,70 @@ namespace Phoebe.Services.Data.Observations.Recent;
 /// <inheritdoc/>
 public sealed class HistoricService : IHistoricService
 {
+    readonly Lazy<IHistoricServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IHistoricServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
     /// <inheritdoc/>
     public IHistoricService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new HistoricService(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public HistoricService(IPhoebeClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new HistoricServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<List<Observation>> List(
+        HistoricListParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.List(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<List<Observation>> List(
+        long d,
+        HistoricListParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.List(parameters with { D = d }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class HistoricServiceWithRawResponse : IHistoricServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IHistoricServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new HistoricServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public HistoricServiceWithRawResponse(IPhoebeClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<List<Observation>> List(
+    public async Task<HttpResponse<List<Observation>>> List(
         HistoricListParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -42,29 +91,33 @@ public sealed class HistoricService : IHistoricService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var observations = await response
-            .Deserialize<List<Observation>>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            foreach (var item in observations)
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
             {
-                item.Validate();
+                var observations = await response
+                    .Deserialize<List<Observation>>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    foreach (var item in observations)
+                    {
+                        item.Validate();
+                    }
+                }
+                return observations;
             }
-        }
-        return observations;
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<List<Observation>> List(
+    public Task<HttpResponse<List<Observation>>> List(
         long d,
         HistoricListParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.List(parameters with { D = d }, cancellationToken);
+        return this.List(parameters with { D = d }, cancellationToken);
     }
 }

@@ -11,21 +11,72 @@ namespace Phoebe.Services.Product;
 /// <inheritdoc/>
 public sealed class ChecklistService : IChecklistService
 {
+    readonly Lazy<IChecklistServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IChecklistServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
     /// <inheritdoc/>
     public IChecklistService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new ChecklistService(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public ChecklistService(IPhoebeClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new ChecklistServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<ChecklistViewResponse> View(
+        ChecklistViewParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.View(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<ChecklistViewResponse> View(
+        string subID,
+        ChecklistViewParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.View(parameters with { SubID = subID }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class ChecklistServiceWithRawResponse : IChecklistServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IChecklistServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new ChecklistServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public ChecklistServiceWithRawResponse(IPhoebeClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<ChecklistViewResponse> View(
+    public async Task<HttpResponse<ChecklistViewResponse>> View(
         ChecklistViewParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -40,21 +91,25 @@ public sealed class ChecklistService : IChecklistService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<ChecklistViewResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<ChecklistViewResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<ChecklistViewResponse> View(
+    public Task<HttpResponse<ChecklistViewResponse>> View(
         string subID,
         ChecklistViewParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -62,6 +117,6 @@ public sealed class ChecklistService : IChecklistService
     {
         parameters ??= new();
 
-        return await this.View(parameters with { SubID = subID }, cancellationToken);
+        return this.View(parameters with { SubID = subID }, cancellationToken);
     }
 }

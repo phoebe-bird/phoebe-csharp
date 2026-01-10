@@ -12,6 +12,12 @@ namespace Phoebe.Services.Data.Observations;
 public interface IGeoService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IGeoServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -19,4 +25,20 @@ public interface IGeoService
     IGeoService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     Geo::IRecentService Recent { get; }
+}
+
+/// <summary>
+/// A view of <see cref="IGeoService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IGeoServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IGeoServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    Geo::IRecentServiceWithRawResponse Recent { get; }
 }

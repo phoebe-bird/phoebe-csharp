@@ -12,6 +12,12 @@ namespace Phoebe.Services;
 public interface IDataService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IDataServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -19,4 +25,20 @@ public interface IDataService
     IDataService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     IObservationService Observations { get; }
+}
+
+/// <summary>
+/// A view of <see cref="IDataService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IDataServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IDataServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    IObservationServiceWithRawResponse Observations { get; }
 }
