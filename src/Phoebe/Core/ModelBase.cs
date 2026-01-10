@@ -51,7 +51,7 @@ public abstract record class ModelBase
         },
     };
 
-    private protected static readonly JsonSerializerOptions ToStringSerializerOptions = new(
+    internal static readonly JsonSerializerOptions ToStringSerializerOptions = new(
         SerializerOptions
     )
     {
