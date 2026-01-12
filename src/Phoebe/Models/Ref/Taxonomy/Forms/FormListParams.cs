@@ -19,7 +19,10 @@ public sealed record class FormListParams : ParamsBase
     public FormListParams() { }
 
     public FormListParams(FormListParams formListParams)
-        : base(formListParams) { }
+        : base(formListParams)
+    {
+        this.SpeciesCode = formListParams.SpeciesCode;
+    }
 
     public FormListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

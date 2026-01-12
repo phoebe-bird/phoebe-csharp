@@ -128,7 +128,10 @@ public sealed record class NotableListParams : ParamsBase
     public NotableListParams() { }
 
     public NotableListParams(NotableListParams notableListParams)
-        : base(notableListParams) { }
+        : base(notableListParams)
+    {
+        this.RegionCode = notableListParams.RegionCode;
+    }
 
     public NotableListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

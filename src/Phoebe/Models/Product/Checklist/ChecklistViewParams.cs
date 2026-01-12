@@ -22,7 +22,10 @@ public sealed record class ChecklistViewParams : ParamsBase
     public ChecklistViewParams() { }
 
     public ChecklistViewParams(ChecklistViewParams checklistViewParams)
-        : base(checklistViewParams) { }
+        : base(checklistViewParams)
+    {
+        this.SubID = checklistViewParams.SubID;
+    }
 
     public ChecklistViewParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

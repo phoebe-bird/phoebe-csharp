@@ -20,7 +20,10 @@ public sealed record class SpeciesListListParams : ParamsBase
     public SpeciesListListParams() { }
 
     public SpeciesListListParams(SpeciesListListParams speciesListListParams)
-        : base(speciesListListParams) { }
+        : base(speciesListListParams)
+    {
+        this.RegionCode = speciesListListParams.RegionCode;
+    }
 
     public SpeciesListListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

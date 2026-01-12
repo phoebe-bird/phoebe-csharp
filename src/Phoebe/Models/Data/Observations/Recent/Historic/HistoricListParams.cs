@@ -172,7 +172,13 @@ public sealed record class HistoricListParams : ParamsBase
     public HistoricListParams() { }
 
     public HistoricListParams(HistoricListParams historicListParams)
-        : base(historicListParams) { }
+        : base(historicListParams)
+    {
+        this.RegionCode = historicListParams.RegionCode;
+        this.Y = historicListParams.Y;
+        this.M = historicListParams.M;
+        this.D = historicListParams.D;
+    }
 
     public HistoricListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

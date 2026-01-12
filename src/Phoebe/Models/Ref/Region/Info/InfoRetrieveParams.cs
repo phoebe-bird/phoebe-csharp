@@ -71,7 +71,10 @@ public sealed record class InfoRetrieveParams : ParamsBase
     public InfoRetrieveParams() { }
 
     public InfoRetrieveParams(InfoRetrieveParams infoRetrieveParams)
-        : base(infoRetrieveParams) { }
+        : base(infoRetrieveParams)
+    {
+        this.RegionCode = infoRetrieveParams.RegionCode;
+    }
 
     public InfoRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

@@ -54,7 +54,10 @@ public sealed record class HotspotListParams : ParamsBase
     public HotspotListParams() { }
 
     public HotspotListParams(HotspotListParams hotspotListParams)
-        : base(hotspotListParams) { }
+        : base(hotspotListParams)
+    {
+        this.RegionCode = hotspotListParams.RegionCode;
+    }
 
     public HotspotListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

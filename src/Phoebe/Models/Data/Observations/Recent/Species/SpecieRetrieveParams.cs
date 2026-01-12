@@ -130,7 +130,11 @@ public sealed record class SpecieRetrieveParams : ParamsBase
     public SpecieRetrieveParams() { }
 
     public SpecieRetrieveParams(SpecieRetrieveParams specieRetrieveParams)
-        : base(specieRetrieveParams) { }
+        : base(specieRetrieveParams)
+    {
+        this.RegionCode = specieRetrieveParams.RegionCode;
+        this.SpeciesCode = specieRetrieveParams.SpeciesCode;
+    }
 
     public SpecieRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

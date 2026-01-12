@@ -81,7 +81,13 @@ public sealed record class Top100RetrieveParams : ParamsBase
     public Top100RetrieveParams() { }
 
     public Top100RetrieveParams(Top100RetrieveParams top100RetrieveParams)
-        : base(top100RetrieveParams) { }
+        : base(top100RetrieveParams)
+    {
+        this.RegionCode = top100RetrieveParams.RegionCode;
+        this.Y = top100RetrieveParams.Y;
+        this.M = top100RetrieveParams.M;
+        this.D = top100RetrieveParams.D;
+    }
 
     public Top100RetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
