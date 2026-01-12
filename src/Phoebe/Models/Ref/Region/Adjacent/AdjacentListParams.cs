@@ -19,7 +19,10 @@ public sealed record class AdjacentListParams : ParamsBase
     public AdjacentListParams() { }
 
     public AdjacentListParams(AdjacentListParams adjacentListParams)
-        : base(adjacentListParams) { }
+        : base(adjacentListParams)
+    {
+        this.RegionCode = adjacentListParams.RegionCode;
+    }
 
     public AdjacentListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

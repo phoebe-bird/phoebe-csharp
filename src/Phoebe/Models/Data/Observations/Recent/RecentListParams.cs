@@ -141,7 +141,10 @@ public sealed record class RecentListParams : ParamsBase
     public RecentListParams() { }
 
     public RecentListParams(RecentListParams recentListParams)
-        : base(recentListParams) { }
+        : base(recentListParams)
+    {
+        this.RegionCode = recentListParams.RegionCode;
+    }
 
     public RecentListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

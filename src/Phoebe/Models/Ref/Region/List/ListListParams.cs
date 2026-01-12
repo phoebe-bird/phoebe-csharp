@@ -42,7 +42,11 @@ public sealed record class ListListParams : ParamsBase
     public ListListParams() { }
 
     public ListListParams(ListListParams listListParams)
-        : base(listListParams) { }
+        : base(listListParams)
+    {
+        this.RegionType = listListParams.RegionType;
+        this.ParentRegionCode = listListParams.ParentRegionCode;
+    }
 
     public ListListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

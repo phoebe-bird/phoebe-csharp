@@ -35,7 +35,10 @@ public sealed record class ListRetrieveParams : ParamsBase
     public ListRetrieveParams() { }
 
     public ListRetrieveParams(ListRetrieveParams listRetrieveParams)
-        : base(listRetrieveParams) { }
+        : base(listRetrieveParams)
+    {
+        this.RegionCode = listRetrieveParams.RegionCode;
+    }
 
     public ListRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

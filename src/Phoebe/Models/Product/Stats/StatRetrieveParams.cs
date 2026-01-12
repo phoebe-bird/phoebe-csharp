@@ -26,7 +26,13 @@ public sealed record class StatRetrieveParams : ParamsBase
     public StatRetrieveParams() { }
 
     public StatRetrieveParams(StatRetrieveParams statRetrieveParams)
-        : base(statRetrieveParams) { }
+        : base(statRetrieveParams)
+    {
+        this.RegionCode = statRetrieveParams.RegionCode;
+        this.Y = statRetrieveParams.Y;
+        this.M = statRetrieveParams.M;
+        this.D = statRetrieveParams.D;
+    }
 
     public StatRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

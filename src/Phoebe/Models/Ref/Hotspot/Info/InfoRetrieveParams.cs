@@ -20,7 +20,10 @@ public sealed record class InfoRetrieveParams : ParamsBase
     public InfoRetrieveParams() { }
 
     public InfoRetrieveParams(InfoRetrieveParams infoRetrieveParams)
-        : base(infoRetrieveParams) { }
+        : base(infoRetrieveParams)
+    {
+        this.LocID = infoRetrieveParams.LocID;
+    }
 
     public InfoRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
