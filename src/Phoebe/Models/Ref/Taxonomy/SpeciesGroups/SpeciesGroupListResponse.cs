@@ -46,8 +46,13 @@ public sealed record class SpeciesGroupListResponse : JsonModel
     {
         get
         {
-            return this._rawData.GetNullableStruct<ImmutableArray<ImmutableArray<float>>>(
-                "taxonOrderBounds"
+            return ImmutableArray.ToImmutableArray(
+                Enumerable.Select(
+                    this._rawData.GetNullableStruct<ImmutableArray<ImmutableArray<float>>>(
+                        "taxonOrderBounds"
+                    ),
+                    (item) => (IReadOnlyList<float>)item
+                )
             );
         }
         init
