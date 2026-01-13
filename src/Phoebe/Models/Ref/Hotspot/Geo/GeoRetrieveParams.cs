@@ -18,13 +18,21 @@ public sealed record class GeoRetrieveParams : ParamsBase
 {
     public required float Lat
     {
-        get { return this._rawQueryData.GetNotNullStruct<float>("lat"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNotNullStruct<float>("lat");
+        }
         init { this._rawQueryData.Set("lat", value); }
     }
 
     public required float Lng
     {
-        get { return this._rawQueryData.GetNotNullStruct<float>("lng"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNotNullStruct<float>("lng");
+        }
         init { this._rawQueryData.Set("lng", value); }
     }
 
@@ -33,7 +41,11 @@ public sealed record class GeoRetrieveParams : ParamsBase
     /// </summary>
     public long? Back
     {
-        get { return this._rawQueryData.GetNullableStruct<long>("back"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("back");
+        }
         init
         {
             if (value == null)
@@ -50,7 +62,11 @@ public sealed record class GeoRetrieveParams : ParamsBase
     /// </summary>
     public long? Dist
     {
-        get { return this._rawQueryData.GetNullableStruct<long>("dist"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("dist");
+        }
         init
         {
             if (value == null)
@@ -69,6 +85,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
     {
         get
         {
+            this._rawQueryData.Freeze();
             return this._rawQueryData.GetNullableClass<
                 ApiEnum<string, global::Phoebe.Models.Ref.Hotspot.Geo.Fmt>
             >("fmt");

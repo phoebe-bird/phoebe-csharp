@@ -12,7 +12,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 {
     public Bounds? Bounds
     {
-        get { return this._rawData.GetNullableClass<Bounds>("bounds"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Bounds>("bounds");
+        }
         init
         {
             if (value == null)
@@ -26,7 +30,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public string? Result
     {
-        get { return this._rawData.GetNullableClass<string>("result"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("result");
+        }
         init
         {
             if (value == null)
@@ -85,7 +93,11 @@ public sealed record class Bounds : JsonModel
 {
     public float? MaxX
     {
-        get { return this._rawData.GetNullableStruct<float>("maxX"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<float>("maxX");
+        }
         init
         {
             if (value == null)
@@ -99,7 +111,11 @@ public sealed record class Bounds : JsonModel
 
     public float? MaxY
     {
-        get { return this._rawData.GetNullableStruct<float>("maxY"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<float>("maxY");
+        }
         init
         {
             if (value == null)
@@ -113,7 +129,11 @@ public sealed record class Bounds : JsonModel
 
     public float? MinX
     {
-        get { return this._rawData.GetNullableStruct<float>("minX"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<float>("minX");
+        }
         init
         {
             if (value == null)
@@ -127,7 +147,11 @@ public sealed record class Bounds : JsonModel
 
     public float? MinY
     {
-        get { return this._rawData.GetNullableStruct<float>("minY"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<float>("minY");
+        }
         init
         {
             if (value == null)

@@ -24,7 +24,11 @@ public sealed record class SpeciesGroupListParams : ParamsBase
     /// </summary>
     public string? GroupNameLocale
     {
-        get { return this._rawQueryData.GetNullableClass<string>("groupNameLocale"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("groupNameLocale");
+        }
         init
         {
             if (value == null)

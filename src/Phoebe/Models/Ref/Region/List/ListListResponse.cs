@@ -12,7 +12,11 @@ public sealed record class ListListResponse : JsonModel
 {
     public string? Code
     {
-        get { return this._rawData.GetNullableClass<string>("code"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("code");
+        }
         init
         {
             if (value == null)
@@ -26,7 +30,11 @@ public sealed record class ListListResponse : JsonModel
 
     public string? Name
     {
-        get { return this._rawData.GetNullableClass<string>("name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("name");
+        }
         init
         {
             if (value == null)

@@ -22,7 +22,11 @@ public sealed record class HotspotListParams : ParamsBase
     /// </summary>
     public long? Back
     {
-        get { return this._rawQueryData.GetNullableStruct<long>("back"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("back");
+        }
         init
         {
             if (value == null)
@@ -39,7 +43,11 @@ public sealed record class HotspotListParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Fmt>? Fmt
     {
-        get { return this._rawQueryData.GetNullableClass<ApiEnum<string, Fmt>>("fmt"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Fmt>>("fmt");
+        }
         init
         {
             if (value == null)

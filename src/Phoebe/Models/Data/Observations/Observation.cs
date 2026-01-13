@@ -12,7 +12,11 @@ public sealed record class Observation : JsonModel
 {
     public long? ID
     {
-        get { return this._rawData.GetNullableStruct<long>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("id");
+        }
         init
         {
             if (value == null)
@@ -26,7 +30,11 @@ public sealed record class Observation : JsonModel
 
     public string? ComName
     {
-        get { return this._rawData.GetNullableClass<string>("comName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("comName");
+        }
         init
         {
             if (value == null)
@@ -40,7 +48,11 @@ public sealed record class Observation : JsonModel
 
     public string? Firstname
     {
-        get { return this._rawData.GetNullableClass<string>("firstname"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("firstname");
+        }
         init
         {
             if (value == null)
@@ -54,7 +66,11 @@ public sealed record class Observation : JsonModel
 
     public long? HowMany
     {
-        get { return this._rawData.GetNullableStruct<long>("howMany"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("howMany");
+        }
         init
         {
             if (value == null)
@@ -68,7 +84,11 @@ public sealed record class Observation : JsonModel
 
     public string? Lastname
     {
-        get { return this._rawData.GetNullableClass<string>("lastname"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("lastname");
+        }
         init
         {
             if (value == null)
@@ -82,7 +102,11 @@ public sealed record class Observation : JsonModel
 
     public float? Lat
     {
-        get { return this._rawData.GetNullableStruct<float>("lat"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<float>("lat");
+        }
         init
         {
             if (value == null)
@@ -96,7 +120,11 @@ public sealed record class Observation : JsonModel
 
     public float? Lng
     {
-        get { return this._rawData.GetNullableStruct<float>("lng"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<float>("lng");
+        }
         init
         {
             if (value == null)
@@ -110,7 +138,11 @@ public sealed record class Observation : JsonModel
 
     public bool? LocationPrivate
     {
-        get { return this._rawData.GetNullableStruct<bool>("locationPrivate"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("locationPrivate");
+        }
         init
         {
             if (value == null)
@@ -124,7 +156,11 @@ public sealed record class Observation : JsonModel
 
     public string? LocID
     {
-        get { return this._rawData.GetNullableClass<string>("locId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locId");
+        }
         init
         {
             if (value == null)
@@ -138,7 +174,11 @@ public sealed record class Observation : JsonModel
 
     public string? LocName
     {
-        get { return this._rawData.GetNullableClass<string>("locName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locName");
+        }
         init
         {
             if (value == null)
@@ -152,7 +192,11 @@ public sealed record class Observation : JsonModel
 
     public string? ObsDt
     {
-        get { return this._rawData.GetNullableClass<string>("obsDt"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("obsDt");
+        }
         init
         {
             if (value == null)
@@ -166,7 +210,11 @@ public sealed record class Observation : JsonModel
 
     public bool? ObsReviewed
     {
-        get { return this._rawData.GetNullableStruct<bool>("obsReviewed"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("obsReviewed");
+        }
         init
         {
             if (value == null)
@@ -180,7 +228,11 @@ public sealed record class Observation : JsonModel
 
     public bool? ObsValid
     {
-        get { return this._rawData.GetNullableStruct<bool>("obsValid"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("obsValid");
+        }
         init
         {
             if (value == null)
@@ -194,7 +246,11 @@ public sealed record class Observation : JsonModel
 
     public string? SciName
     {
-        get { return this._rawData.GetNullableClass<string>("sciName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("sciName");
+        }
         init
         {
             if (value == null)
@@ -208,7 +264,11 @@ public sealed record class Observation : JsonModel
 
     public string? SpeciesCode
     {
-        get { return this._rawData.GetNullableClass<string>("speciesCode"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("speciesCode");
+        }
         init
         {
             if (value == null)
@@ -222,7 +282,11 @@ public sealed record class Observation : JsonModel
 
     public string? SubID
     {
-        get { return this._rawData.GetNullableClass<string>("subId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subId");
+        }
         init
         {
             if (value == null)

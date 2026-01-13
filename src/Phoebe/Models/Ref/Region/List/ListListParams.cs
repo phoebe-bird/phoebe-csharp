@@ -27,7 +27,11 @@ public sealed record class ListListParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Fmt>? Fmt
     {
-        get { return this._rawQueryData.GetNullableClass<ApiEnum<string, Fmt>>("fmt"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Fmt>>("fmt");
+        }
         init
         {
             if (value == null)

@@ -23,7 +23,11 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Cat
     {
-        get { return this._rawQueryData.GetNullableClass<string>("cat"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("cat");
+        }
         init
         {
             if (value == null)
@@ -40,7 +44,11 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Fmt>? Fmt
     {
-        get { return this._rawQueryData.GetNullableClass<ApiEnum<string, Fmt>>("fmt"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Fmt>>("fmt");
+        }
         init
         {
             if (value == null)
@@ -57,7 +65,11 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Locale
     {
-        get { return this._rawQueryData.GetNullableClass<string>("locale"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("locale");
+        }
         init
         {
             if (value == null)
@@ -74,7 +86,11 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Species
     {
-        get { return this._rawQueryData.GetNullableClass<string>("species"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("species");
+        }
         init
         {
             if (value == null)
@@ -91,7 +107,11 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Version
     {
-        get { return this._rawQueryData.GetNullableClass<string>("version"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("version");
+        }
         init
         {
             if (value == null)

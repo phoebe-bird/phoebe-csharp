@@ -33,7 +33,11 @@ public sealed record class InfoRetrieveParams : ParamsBase
     /// </summary>
     public string? Delim
     {
-        get { return this._rawQueryData.GetNullableClass<string>("delim"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("delim");
+        }
         init
         {
             if (value == null)
@@ -52,6 +56,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
     {
         get
         {
+            this._rawQueryData.Freeze();
             return this._rawQueryData.GetNullableClass<ApiEnum<string, RegionNameFormat>>(
                 "regionNameFormat"
             );

@@ -12,7 +12,11 @@ public sealed record class HotspotListResponse : JsonModel
 {
     public string? CountryCode
     {
-        get { return this._rawData.GetNullableClass<string>("countryCode"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("countryCode");
+        }
         init
         {
             if (value == null)
@@ -26,7 +30,11 @@ public sealed record class HotspotListResponse : JsonModel
 
     public double? Lat
     {
-        get { return this._rawData.GetNullableStruct<double>("lat"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("lat");
+        }
         init
         {
             if (value == null)
@@ -40,7 +48,11 @@ public sealed record class HotspotListResponse : JsonModel
 
     public string? LatestObsDt
     {
-        get { return this._rawData.GetNullableClass<string>("latestObsDt"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("latestObsDt");
+        }
         init
         {
             if (value == null)
@@ -54,7 +66,11 @@ public sealed record class HotspotListResponse : JsonModel
 
     public double? Lng
     {
-        get { return this._rawData.GetNullableStruct<double>("lng"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("lng");
+        }
         init
         {
             if (value == null)
@@ -68,7 +84,11 @@ public sealed record class HotspotListResponse : JsonModel
 
     public string? LocID
     {
-        get { return this._rawData.GetNullableClass<string>("locId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locId");
+        }
         init
         {
             if (value == null)
@@ -82,7 +102,11 @@ public sealed record class HotspotListResponse : JsonModel
 
     public string? LocName
     {
-        get { return this._rawData.GetNullableClass<string>("locName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locName");
+        }
         init
         {
             if (value == null)
@@ -96,7 +120,11 @@ public sealed record class HotspotListResponse : JsonModel
 
     public int? NumSpeciesAllTime
     {
-        get { return this._rawData.GetNullableStruct<int>("numSpeciesAllTime"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("numSpeciesAllTime");
+        }
         init
         {
             if (value == null)
@@ -110,7 +138,11 @@ public sealed record class HotspotListResponse : JsonModel
 
     public string? Subnational1Code
     {
-        get { return this._rawData.GetNullableClass<string>("subnational1Code"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subnational1Code");
+        }
         init
         {
             if (value == null)
@@ -124,7 +156,11 @@ public sealed record class HotspotListResponse : JsonModel
 
     public string? Subnational2Code
     {
-        get { return this._rawData.GetNullableClass<string>("subnational2Code"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subnational2Code");
+        }
         init
         {
             if (value == null)
