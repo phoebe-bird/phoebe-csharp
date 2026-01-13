@@ -62,7 +62,7 @@ public sealed record class SpeciesGroupListResponse : JsonModel
                 value == null
                     ? null
                     : ImmutableArray.ToImmutableArray(
-                        Enumerable.Select(value, (item) => ImmutableArray.ToImmutableArray(value))
+                        Enumerable.Select(value, (item) => ImmutableArray.ToImmutableArray(item))
                     )
             );
         }
