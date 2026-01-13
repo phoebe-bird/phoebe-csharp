@@ -64,7 +64,7 @@ public sealed record class SpeciesGroupListResponse : JsonModel
             }
 
             return ImmutableArray.ToImmutableArray(
-                Enumerable.Select(value, (item) => (IReadOnlyList<float>)item)
+                Enumerable.Select(value.Value, (item) => (IReadOnlyList<float>)item)
             );
         }
         init
