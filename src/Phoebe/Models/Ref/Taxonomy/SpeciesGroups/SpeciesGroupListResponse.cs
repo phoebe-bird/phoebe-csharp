@@ -55,13 +55,16 @@ public sealed record class SpeciesGroupListResponse : JsonModel
         get
         {
             this._rawData.Freeze();
+            var value = this._rawData.GetNullableStruct<ImmutableArray<ImmutableArray<float>>>(
+                "taxonOrderBounds"
+            );
+            if (value == null)
+            {
+                return null;
+            }
+
             return ImmutableArray.ToImmutableArray(
-                Enumerable.Select(
-                    this._rawData.GetNullableStruct<ImmutableArray<ImmutableArray<float>>>(
-                        "taxonOrderBounds"
-                    ),
-                    (item) => (IReadOnlyList<float>)item
-                )
+                Enumerable.Select(value, (item) => (IReadOnlyList<float>)item)
             );
         }
         init
