@@ -27,7 +27,7 @@ public sealed record class ListListParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Fmt>? Fmt
     {
-        get { return JsonModel.GetNullableClass<ApiEnum<string, Fmt>>(this.RawQueryData, "fmt"); }
+        get { return this._rawQueryData.GetNullableClass<ApiEnum<string, Fmt>>("fmt"); }
         init
         {
             if (value == null)
@@ -35,7 +35,7 @@ public sealed record class ListListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "fmt", value);
+            this._rawQueryData.Set("fmt", value);
         }
     }
 
@@ -53,8 +53,8 @@ public sealed record class ListListParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -64,8 +64,8 @@ public sealed record class ListListParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 

@@ -12,7 +12,7 @@ public sealed record class AdjacentListResponse : JsonModel
 {
     public string? Code
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "code"); }
+        get { return this._rawData.GetNullableClass<string>("code"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class AdjacentListResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "code", value);
+            this._rawData.Set("code", value);
         }
     }
 
     public string? Name
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "name"); }
+        get { return this._rawData.GetNullableClass<string>("name"); }
         init
         {
             if (value == null)
@@ -34,7 +34,7 @@ public sealed record class AdjacentListResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "name", value);
+            this._rawData.Set("name", value);
         }
     }
 
@@ -52,14 +52,14 @@ public sealed record class AdjacentListResponse : JsonModel
 
     public AdjacentListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AdjacentListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

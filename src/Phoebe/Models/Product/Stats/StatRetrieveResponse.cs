@@ -12,7 +12,7 @@ public sealed record class StatRetrieveResponse : JsonModel
 {
     public int? NumChecklists
     {
-        get { return JsonModel.GetNullableStruct<int>(this.RawData, "numChecklists"); }
+        get { return this._rawData.GetNullableStruct<int>("numChecklists"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class StatRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "numChecklists", value);
+            this._rawData.Set("numChecklists", value);
         }
     }
 
     public int? NumContributors
     {
-        get { return JsonModel.GetNullableStruct<int>(this.RawData, "numContributors"); }
+        get { return this._rawData.GetNullableStruct<int>("numContributors"); }
         init
         {
             if (value == null)
@@ -34,13 +34,13 @@ public sealed record class StatRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "numContributors", value);
+            this._rawData.Set("numContributors", value);
         }
     }
 
     public int? NumSpecies
     {
-        get { return JsonModel.GetNullableStruct<int>(this.RawData, "numSpecies"); }
+        get { return this._rawData.GetNullableStruct<int>("numSpecies"); }
         init
         {
             if (value == null)
@@ -48,7 +48,7 @@ public sealed record class StatRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "numSpecies", value);
+            this._rawData.Set("numSpecies", value);
         }
     }
 
@@ -67,14 +67,14 @@ public sealed record class StatRetrieveResponse : JsonModel
 
     public StatRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     StatRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

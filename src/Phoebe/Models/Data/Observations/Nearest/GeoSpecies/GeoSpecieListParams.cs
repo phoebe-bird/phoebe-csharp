@@ -19,14 +19,14 @@ public sealed record class GeoSpecieListParams : ParamsBase
 
     public required float Lat
     {
-        get { return JsonModel.GetNotNullStruct<float>(this.RawQueryData, "lat"); }
-        init { JsonModel.Set(this._rawQueryData, "lat", value); }
+        get { return this._rawQueryData.GetNotNullStruct<float>("lat"); }
+        init { this._rawQueryData.Set("lat", value); }
     }
 
     public required float Lng
     {
-        get { return JsonModel.GetNotNullStruct<float>(this.RawQueryData, "lng"); }
-        init { JsonModel.Set(this._rawQueryData, "lng", value); }
+        get { return this._rawQueryData.GetNotNullStruct<float>("lng"); }
+        init { this._rawQueryData.Set("lng", value); }
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
     /// </summary>
     public long? Back
     {
-        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "back"); }
+        get { return this._rawQueryData.GetNullableStruct<long>("back"); }
         init
         {
             if (value == null)
@@ -42,7 +42,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "back", value);
+            this._rawQueryData.Set("back", value);
         }
     }
 
@@ -51,7 +51,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
     /// </summary>
     public long? Dist
     {
-        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "dist"); }
+        get { return this._rawQueryData.GetNullableStruct<long>("dist"); }
         init
         {
             if (value == null)
@@ -59,7 +59,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "dist", value);
+            this._rawQueryData.Set("dist", value);
         }
     }
 
@@ -68,7 +68,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
     /// </summary>
     public bool? Hotspot
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "hotspot"); }
+        get { return this._rawQueryData.GetNullableStruct<bool>("hotspot"); }
         init
         {
             if (value == null)
@@ -76,7 +76,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "hotspot", value);
+            this._rawQueryData.Set("hotspot", value);
         }
     }
 
@@ -85,7 +85,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
     /// </summary>
     public bool? IncludeProvisional
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "includeProvisional"); }
+        get { return this._rawQueryData.GetNullableStruct<bool>("includeProvisional"); }
         init
         {
             if (value == null)
@@ -93,7 +93,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "includeProvisional", value);
+            this._rawQueryData.Set("includeProvisional", value);
         }
     }
 
@@ -102,7 +102,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
+        get { return this._rawQueryData.GetNullableStruct<long>("maxResults"); }
         init
         {
             if (value == null)
@@ -110,7 +110,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "maxResults", value);
+            this._rawQueryData.Set("maxResults", value);
         }
     }
 
@@ -119,7 +119,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
     /// </summary>
     public string? SppLocale
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "sppLocale"); }
+        get { return this._rawQueryData.GetNullableClass<string>("sppLocale"); }
         init
         {
             if (value == null)
@@ -127,7 +127,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "sppLocale", value);
+            this._rawQueryData.Set("sppLocale", value);
         }
     }
 
@@ -144,8 +144,8 @@ public sealed record class GeoSpecieListParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -155,8 +155,8 @@ public sealed record class GeoSpecieListParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 
