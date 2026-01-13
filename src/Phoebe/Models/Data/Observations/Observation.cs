@@ -12,7 +12,7 @@ public sealed record class Observation : JsonModel
 {
     public long? ID
     {
-        get { return JsonModel.GetNullableStruct<long>(this.RawData, "id"); }
+        get { return this._rawData.GetNullableStruct<long>("id"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "id", value);
+            this._rawData.Set("id", value);
         }
     }
 
     public string? ComName
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "comName"); }
+        get { return this._rawData.GetNullableClass<string>("comName"); }
         init
         {
             if (value == null)
@@ -34,13 +34,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "comName", value);
+            this._rawData.Set("comName", value);
         }
     }
 
     public string? Firstname
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "firstname"); }
+        get { return this._rawData.GetNullableClass<string>("firstname"); }
         init
         {
             if (value == null)
@@ -48,13 +48,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "firstname", value);
+            this._rawData.Set("firstname", value);
         }
     }
 
     public long? HowMany
     {
-        get { return JsonModel.GetNullableStruct<long>(this.RawData, "howMany"); }
+        get { return this._rawData.GetNullableStruct<long>("howMany"); }
         init
         {
             if (value == null)
@@ -62,13 +62,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "howMany", value);
+            this._rawData.Set("howMany", value);
         }
     }
 
     public string? Lastname
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "lastname"); }
+        get { return this._rawData.GetNullableClass<string>("lastname"); }
         init
         {
             if (value == null)
@@ -76,13 +76,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "lastname", value);
+            this._rawData.Set("lastname", value);
         }
     }
 
     public float? Lat
     {
-        get { return JsonModel.GetNullableStruct<float>(this.RawData, "lat"); }
+        get { return this._rawData.GetNullableStruct<float>("lat"); }
         init
         {
             if (value == null)
@@ -90,13 +90,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "lat", value);
+            this._rawData.Set("lat", value);
         }
     }
 
     public float? Lng
     {
-        get { return JsonModel.GetNullableStruct<float>(this.RawData, "lng"); }
+        get { return this._rawData.GetNullableStruct<float>("lng"); }
         init
         {
             if (value == null)
@@ -104,13 +104,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "lng", value);
+            this._rawData.Set("lng", value);
         }
     }
 
     public bool? LocationPrivate
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "locationPrivate"); }
+        get { return this._rawData.GetNullableStruct<bool>("locationPrivate"); }
         init
         {
             if (value == null)
@@ -118,13 +118,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "locationPrivate", value);
+            this._rawData.Set("locationPrivate", value);
         }
     }
 
     public string? LocID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "locId"); }
+        get { return this._rawData.GetNullableClass<string>("locId"); }
         init
         {
             if (value == null)
@@ -132,13 +132,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "locId", value);
+            this._rawData.Set("locId", value);
         }
     }
 
     public string? LocName
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "locName"); }
+        get { return this._rawData.GetNullableClass<string>("locName"); }
         init
         {
             if (value == null)
@@ -146,13 +146,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "locName", value);
+            this._rawData.Set("locName", value);
         }
     }
 
     public string? ObsDt
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "obsDt"); }
+        get { return this._rawData.GetNullableClass<string>("obsDt"); }
         init
         {
             if (value == null)
@@ -160,13 +160,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "obsDt", value);
+            this._rawData.Set("obsDt", value);
         }
     }
 
     public bool? ObsReviewed
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "obsReviewed"); }
+        get { return this._rawData.GetNullableStruct<bool>("obsReviewed"); }
         init
         {
             if (value == null)
@@ -174,13 +174,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "obsReviewed", value);
+            this._rawData.Set("obsReviewed", value);
         }
     }
 
     public bool? ObsValid
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "obsValid"); }
+        get { return this._rawData.GetNullableStruct<bool>("obsValid"); }
         init
         {
             if (value == null)
@@ -188,13 +188,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "obsValid", value);
+            this._rawData.Set("obsValid", value);
         }
     }
 
     public string? SciName
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "sciName"); }
+        get { return this._rawData.GetNullableClass<string>("sciName"); }
         init
         {
             if (value == null)
@@ -202,13 +202,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "sciName", value);
+            this._rawData.Set("sciName", value);
         }
     }
 
     public string? SpeciesCode
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "speciesCode"); }
+        get { return this._rawData.GetNullableClass<string>("speciesCode"); }
         init
         {
             if (value == null)
@@ -216,13 +216,13 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "speciesCode", value);
+            this._rawData.Set("speciesCode", value);
         }
     }
 
     public string? SubID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "subId"); }
+        get { return this._rawData.GetNullableClass<string>("subId"); }
         init
         {
             if (value == null)
@@ -230,7 +230,7 @@ public sealed record class Observation : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "subId", value);
+            this._rawData.Set("subId", value);
         }
     }
 
@@ -262,14 +262,14 @@ public sealed record class Observation : JsonModel
 
     public Observation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Observation(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

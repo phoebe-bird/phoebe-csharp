@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,7 +13,7 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 {
     public IReadOnlyList<string>? BandingCodes
     {
-        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "bandingCodes"); }
+        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("bandingCodes"); }
         init
         {
             if (value == null)
@@ -20,13 +21,16 @@ public sealed record class EbirdRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "bandingCodes", value);
+            this._rawData.Set<ImmutableArray<string>?>(
+                "bandingCodes",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
     public string? Category
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "category"); }
+        get { return this._rawData.GetNullableClass<string>("category"); }
         init
         {
             if (value == null)
@@ -34,13 +38,13 @@ public sealed record class EbirdRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "category", value);
+            this._rawData.Set("category", value);
         }
     }
 
     public string? ComName
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "comName"); }
+        get { return this._rawData.GetNullableClass<string>("comName"); }
         init
         {
             if (value == null)
@@ -48,13 +52,13 @@ public sealed record class EbirdRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "comName", value);
+            this._rawData.Set("comName", value);
         }
     }
 
     public IReadOnlyList<string>? ComNameCodes
     {
-        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "comNameCodes"); }
+        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("comNameCodes"); }
         init
         {
             if (value == null)
@@ -62,13 +66,16 @@ public sealed record class EbirdRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "comNameCodes", value);
+            this._rawData.Set<ImmutableArray<string>?>(
+                "comNameCodes",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
     public string? FamilyCode
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "familyCode"); }
+        get { return this._rawData.GetNullableClass<string>("familyCode"); }
         init
         {
             if (value == null)
@@ -76,13 +83,13 @@ public sealed record class EbirdRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "familyCode", value);
+            this._rawData.Set("familyCode", value);
         }
     }
 
     public string? FamilyComName
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "familyComName"); }
+        get { return this._rawData.GetNullableClass<string>("familyComName"); }
         init
         {
             if (value == null)
@@ -90,13 +97,13 @@ public sealed record class EbirdRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "familyComName", value);
+            this._rawData.Set("familyComName", value);
         }
     }
 
     public string? FamilySciName
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "familySciName"); }
+        get { return this._rawData.GetNullableClass<string>("familySciName"); }
         init
         {
             if (value == null)
@@ -104,13 +111,13 @@ public sealed record class EbirdRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "familySciName", value);
+            this._rawData.Set("familySciName", value);
         }
     }
 
     public string? Order
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "order"); }
+        get { return this._rawData.GetNullableClass<string>("order"); }
         init
         {
             if (value == null)
@@ -118,13 +125,13 @@ public sealed record class EbirdRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "order", value);
+            this._rawData.Set("order", value);
         }
     }
 
     public string? SciName
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "sciName"); }
+        get { return this._rawData.GetNullableClass<string>("sciName"); }
         init
         {
             if (value == null)
@@ -132,13 +139,13 @@ public sealed record class EbirdRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "sciName", value);
+            this._rawData.Set("sciName", value);
         }
     }
 
     public IReadOnlyList<string>? SciNameCodes
     {
-        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "sciNameCodes"); }
+        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("sciNameCodes"); }
         init
         {
             if (value == null)
@@ -146,13 +153,16 @@ public sealed record class EbirdRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "sciNameCodes", value);
+            this._rawData.Set<ImmutableArray<string>?>(
+                "sciNameCodes",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
     public string? SpeciesCode
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "speciesCode"); }
+        get { return this._rawData.GetNullableClass<string>("speciesCode"); }
         init
         {
             if (value == null)
@@ -160,13 +170,13 @@ public sealed record class EbirdRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "speciesCode", value);
+            this._rawData.Set("speciesCode", value);
         }
     }
 
     public int? TaxonOrder
     {
-        get { return JsonModel.GetNullableStruct<int>(this.RawData, "taxonOrder"); }
+        get { return this._rawData.GetNullableStruct<int>("taxonOrder"); }
         init
         {
             if (value == null)
@@ -174,7 +184,7 @@ public sealed record class EbirdRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "taxonOrder", value);
+            this._rawData.Set("taxonOrder", value);
         }
     }
 
@@ -202,14 +212,14 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public EbirdRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     EbirdRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

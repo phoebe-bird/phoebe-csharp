@@ -12,7 +12,7 @@ public sealed record class Top100RetrieveResponse : JsonModel
 {
     public int? NumCompleteChecklists
     {
-        get { return JsonModel.GetNullableStruct<int>(this.RawData, "numCompleteChecklists"); }
+        get { return this._rawData.GetNullableStruct<int>("numCompleteChecklists"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class Top100RetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "numCompleteChecklists", value);
+            this._rawData.Set("numCompleteChecklists", value);
         }
     }
 
     public int? NumSpecies
     {
-        get { return JsonModel.GetNullableStruct<int>(this.RawData, "numSpecies"); }
+        get { return this._rawData.GetNullableStruct<int>("numSpecies"); }
         init
         {
             if (value == null)
@@ -34,13 +34,13 @@ public sealed record class Top100RetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "numSpecies", value);
+            this._rawData.Set("numSpecies", value);
         }
     }
 
     public string? ProfileHandle
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "profileHandle"); }
+        get { return this._rawData.GetNullableClass<string>("profileHandle"); }
         init
         {
             if (value == null)
@@ -48,13 +48,13 @@ public sealed record class Top100RetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "profileHandle", value);
+            this._rawData.Set("profileHandle", value);
         }
     }
 
     public int? RowNum
     {
-        get { return JsonModel.GetNullableStruct<int>(this.RawData, "rowNum"); }
+        get { return this._rawData.GetNullableStruct<int>("rowNum"); }
         init
         {
             if (value == null)
@@ -62,13 +62,13 @@ public sealed record class Top100RetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "rowNum", value);
+            this._rawData.Set("rowNum", value);
         }
     }
 
     public string? UserDisplayName
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "userDisplayName"); }
+        get { return this._rawData.GetNullableClass<string>("userDisplayName"); }
         init
         {
             if (value == null)
@@ -76,13 +76,13 @@ public sealed record class Top100RetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "userDisplayName", value);
+            this._rawData.Set("userDisplayName", value);
         }
     }
 
     public string? UserID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "userId"); }
+        get { return this._rawData.GetNullableClass<string>("userId"); }
         init
         {
             if (value == null)
@@ -90,7 +90,7 @@ public sealed record class Top100RetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "userId", value);
+            this._rawData.Set("userId", value);
         }
     }
 
@@ -112,14 +112,14 @@ public sealed record class Top100RetrieveResponse : JsonModel
 
     public Top100RetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Top100RetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

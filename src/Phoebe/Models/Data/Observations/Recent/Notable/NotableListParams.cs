@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
@@ -25,7 +26,7 @@ public sealed record class NotableListParams : ParamsBase
     /// </summary>
     public long? Back
     {
-        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "back"); }
+        get { return this._rawQueryData.GetNullableStruct<long>("back"); }
         init
         {
             if (value == null)
@@ -33,7 +34,7 @@ public sealed record class NotableListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "back", value);
+            this._rawQueryData.Set("back", value);
         }
     }
 
@@ -42,10 +43,7 @@ public sealed record class NotableListParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Detail>? Detail
     {
-        get
-        {
-            return JsonModel.GetNullableClass<ApiEnum<string, Detail>>(this.RawQueryData, "detail");
-        }
+        get { return this._rawQueryData.GetNullableClass<ApiEnum<string, Detail>>("detail"); }
         init
         {
             if (value == null)
@@ -53,7 +51,7 @@ public sealed record class NotableListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "detail", value);
+            this._rawQueryData.Set("detail", value);
         }
     }
 
@@ -62,7 +60,7 @@ public sealed record class NotableListParams : ParamsBase
     /// </summary>
     public bool? Hotspot
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "hotspot"); }
+        get { return this._rawQueryData.GetNullableStruct<bool>("hotspot"); }
         init
         {
             if (value == null)
@@ -70,7 +68,7 @@ public sealed record class NotableListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "hotspot", value);
+            this._rawQueryData.Set("hotspot", value);
         }
     }
 
@@ -79,7 +77,7 @@ public sealed record class NotableListParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get { return JsonModel.GetNullableStruct<long>(this.RawQueryData, "maxResults"); }
+        get { return this._rawQueryData.GetNullableStruct<long>("maxResults"); }
         init
         {
             if (value == null)
@@ -87,7 +85,7 @@ public sealed record class NotableListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "maxResults", value);
+            this._rawQueryData.Set("maxResults", value);
         }
     }
 
@@ -96,7 +94,7 @@ public sealed record class NotableListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string>? R
     {
-        get { return JsonModel.GetNullableClass<List<string>>(this.RawQueryData, "r"); }
+        get { return this._rawQueryData.GetNullableStruct<ImmutableArray<string>>("r"); }
         init
         {
             if (value == null)
@@ -104,7 +102,10 @@ public sealed record class NotableListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "r", value);
+            this._rawQueryData.Set<ImmutableArray<string>?>(
+                "r",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
@@ -113,7 +114,7 @@ public sealed record class NotableListParams : ParamsBase
     /// </summary>
     public string? SppLocale
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "sppLocale"); }
+        get { return this._rawQueryData.GetNullableClass<string>("sppLocale"); }
         init
         {
             if (value == null)
@@ -121,7 +122,7 @@ public sealed record class NotableListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "sppLocale", value);
+            this._rawQueryData.Set("sppLocale", value);
         }
     }
 
@@ -138,8 +139,8 @@ public sealed record class NotableListParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -149,8 +150,8 @@ public sealed record class NotableListParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 

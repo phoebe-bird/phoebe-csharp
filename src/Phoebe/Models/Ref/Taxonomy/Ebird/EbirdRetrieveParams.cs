@@ -23,7 +23,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Cat
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "cat"); }
+        get { return this._rawQueryData.GetNullableClass<string>("cat"); }
         init
         {
             if (value == null)
@@ -31,7 +31,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "cat", value);
+            this._rawQueryData.Set("cat", value);
         }
     }
 
@@ -40,7 +40,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Fmt>? Fmt
     {
-        get { return JsonModel.GetNullableClass<ApiEnum<string, Fmt>>(this.RawQueryData, "fmt"); }
+        get { return this._rawQueryData.GetNullableClass<ApiEnum<string, Fmt>>("fmt"); }
         init
         {
             if (value == null)
@@ -48,7 +48,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "fmt", value);
+            this._rawQueryData.Set("fmt", value);
         }
     }
 
@@ -57,7 +57,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Locale
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "locale"); }
+        get { return this._rawQueryData.GetNullableClass<string>("locale"); }
         init
         {
             if (value == null)
@@ -65,7 +65,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "locale", value);
+            this._rawQueryData.Set("locale", value);
         }
     }
 
@@ -74,7 +74,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Species
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "species"); }
+        get { return this._rawQueryData.GetNullableClass<string>("species"); }
         init
         {
             if (value == null)
@@ -82,7 +82,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "species", value);
+            this._rawQueryData.Set("species", value);
         }
     }
 
@@ -91,7 +91,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     /// </summary>
     public string? Version
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "version"); }
+        get { return this._rawQueryData.GetNullableClass<string>("version"); }
         init
         {
             if (value == null)
@@ -99,7 +99,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "version", value);
+            this._rawQueryData.Set("version", value);
         }
     }
 
@@ -113,8 +113,8 @@ public sealed record class EbirdRetrieveParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -124,8 +124,8 @@ public sealed record class EbirdRetrieveParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 

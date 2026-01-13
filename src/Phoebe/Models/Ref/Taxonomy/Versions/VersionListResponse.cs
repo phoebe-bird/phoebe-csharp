@@ -12,7 +12,7 @@ public sealed record class VersionListResponse : JsonModel
 {
     public double? AuthorityVer
     {
-        get { return JsonModel.GetNullableStruct<double>(this.RawData, "authorityVer"); }
+        get { return this._rawData.GetNullableStruct<double>("authorityVer"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class VersionListResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "authorityVer", value);
+            this._rawData.Set("authorityVer", value);
         }
     }
 
     public bool? Latest
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "latest"); }
+        get { return this._rawData.GetNullableStruct<bool>("latest"); }
         init
         {
             if (value == null)
@@ -34,7 +34,7 @@ public sealed record class VersionListResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "latest", value);
+            this._rawData.Set("latest", value);
         }
     }
 
@@ -52,14 +52,14 @@ public sealed record class VersionListResponse : JsonModel
 
     public VersionListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     VersionListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

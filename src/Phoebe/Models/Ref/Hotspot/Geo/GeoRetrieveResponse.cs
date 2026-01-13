@@ -12,7 +12,7 @@ public sealed record class GeoRetrieveResponse : JsonModel
 {
     public string? CountryCode
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "countryCode"); }
+        get { return this._rawData.GetNullableClass<string>("countryCode"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class GeoRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "countryCode", value);
+            this._rawData.Set("countryCode", value);
         }
     }
 
     public double? Lat
     {
-        get { return JsonModel.GetNullableStruct<double>(this.RawData, "lat"); }
+        get { return this._rawData.GetNullableStruct<double>("lat"); }
         init
         {
             if (value == null)
@@ -34,13 +34,13 @@ public sealed record class GeoRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "lat", value);
+            this._rawData.Set("lat", value);
         }
     }
 
     public string? LatestObsDt
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "latestObsDt"); }
+        get { return this._rawData.GetNullableClass<string>("latestObsDt"); }
         init
         {
             if (value == null)
@@ -48,13 +48,13 @@ public sealed record class GeoRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "latestObsDt", value);
+            this._rawData.Set("latestObsDt", value);
         }
     }
 
     public double? Lng
     {
-        get { return JsonModel.GetNullableStruct<double>(this.RawData, "lng"); }
+        get { return this._rawData.GetNullableStruct<double>("lng"); }
         init
         {
             if (value == null)
@@ -62,13 +62,13 @@ public sealed record class GeoRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "lng", value);
+            this._rawData.Set("lng", value);
         }
     }
 
     public string? LocID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "locId"); }
+        get { return this._rawData.GetNullableClass<string>("locId"); }
         init
         {
             if (value == null)
@@ -76,13 +76,13 @@ public sealed record class GeoRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "locId", value);
+            this._rawData.Set("locId", value);
         }
     }
 
     public string? LocName
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "locName"); }
+        get { return this._rawData.GetNullableClass<string>("locName"); }
         init
         {
             if (value == null)
@@ -90,13 +90,13 @@ public sealed record class GeoRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "locName", value);
+            this._rawData.Set("locName", value);
         }
     }
 
     public int? NumSpeciesAllTime
     {
-        get { return JsonModel.GetNullableStruct<int>(this.RawData, "numSpeciesAllTime"); }
+        get { return this._rawData.GetNullableStruct<int>("numSpeciesAllTime"); }
         init
         {
             if (value == null)
@@ -104,13 +104,13 @@ public sealed record class GeoRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "numSpeciesAllTime", value);
+            this._rawData.Set("numSpeciesAllTime", value);
         }
     }
 
     public string? Subnational1Code
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "subnational1Code"); }
+        get { return this._rawData.GetNullableClass<string>("subnational1Code"); }
         init
         {
             if (value == null)
@@ -118,13 +118,13 @@ public sealed record class GeoRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "subnational1Code", value);
+            this._rawData.Set("subnational1Code", value);
         }
     }
 
     public string? Subnational2Code
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "subnational2Code"); }
+        get { return this._rawData.GetNullableClass<string>("subnational2Code"); }
         init
         {
             if (value == null)
@@ -132,7 +132,7 @@ public sealed record class GeoRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "subnational2Code", value);
+            this._rawData.Set("subnational2Code", value);
         }
     }
 
@@ -157,14 +157,14 @@ public sealed record class GeoRetrieveResponse : JsonModel
 
     public GeoRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     GeoRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -12,7 +12,7 @@ public sealed record class InfoRetrieveResponse : JsonModel
 {
     public Bounds? Bounds
     {
-        get { return JsonModel.GetNullableClass<Bounds>(this.RawData, "bounds"); }
+        get { return this._rawData.GetNullableClass<Bounds>("bounds"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class InfoRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "bounds", value);
+            this._rawData.Set("bounds", value);
         }
     }
 
     public string? Result
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "result"); }
+        get { return this._rawData.GetNullableClass<string>("result"); }
         init
         {
             if (value == null)
@@ -34,7 +34,7 @@ public sealed record class InfoRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "result", value);
+            this._rawData.Set("result", value);
         }
     }
 
@@ -52,14 +52,14 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public InfoRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     InfoRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -85,7 +85,7 @@ public sealed record class Bounds : JsonModel
 {
     public float? MaxX
     {
-        get { return JsonModel.GetNullableStruct<float>(this.RawData, "maxX"); }
+        get { return this._rawData.GetNullableStruct<float>("maxX"); }
         init
         {
             if (value == null)
@@ -93,13 +93,13 @@ public sealed record class Bounds : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "maxX", value);
+            this._rawData.Set("maxX", value);
         }
     }
 
     public float? MaxY
     {
-        get { return JsonModel.GetNullableStruct<float>(this.RawData, "maxY"); }
+        get { return this._rawData.GetNullableStruct<float>("maxY"); }
         init
         {
             if (value == null)
@@ -107,13 +107,13 @@ public sealed record class Bounds : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "maxY", value);
+            this._rawData.Set("maxY", value);
         }
     }
 
     public float? MinX
     {
-        get { return JsonModel.GetNullableStruct<float>(this.RawData, "minX"); }
+        get { return this._rawData.GetNullableStruct<float>("minX"); }
         init
         {
             if (value == null)
@@ -121,13 +121,13 @@ public sealed record class Bounds : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "minX", value);
+            this._rawData.Set("minX", value);
         }
     }
 
     public float? MinY
     {
-        get { return JsonModel.GetNullableStruct<float>(this.RawData, "minY"); }
+        get { return this._rawData.GetNullableStruct<float>("minY"); }
         init
         {
             if (value == null)
@@ -135,7 +135,7 @@ public sealed record class Bounds : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "minY", value);
+            this._rawData.Set("minY", value);
         }
     }
 
@@ -155,14 +155,14 @@ public sealed record class Bounds : JsonModel
 
     public Bounds(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Bounds(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

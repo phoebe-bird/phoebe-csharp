@@ -1,6 +1,8 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Phoebe.Core;
@@ -14,7 +16,7 @@ public sealed record class SpeciesGroupListResponse : JsonModel
 {
     public string? GroupName
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "groupName"); }
+        get { return this._rawData.GetNullableClass<string>("groupName"); }
         init
         {
             if (value == null)
@@ -22,13 +24,13 @@ public sealed record class SpeciesGroupListResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "groupName", value);
+            this._rawData.Set("groupName", value);
         }
     }
 
     public long? GroupOrder
     {
-        get { return JsonModel.GetNullableStruct<long>(this.RawData, "groupOrder"); }
+        get { return this._rawData.GetNullableStruct<long>("groupOrder"); }
         init
         {
             if (value == null)
@@ -36,15 +38,17 @@ public sealed record class SpeciesGroupListResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "groupOrder", value);
+            this._rawData.Set("groupOrder", value);
         }
     }
 
-    public IReadOnlyList<List<float>>? TaxonOrderBounds
+    public IReadOnlyList<IReadOnlyList<float>>? TaxonOrderBounds
     {
         get
         {
-            return JsonModel.GetNullableClass<List<List<float>>>(this.RawData, "taxonOrderBounds");
+            return this._rawData.GetNullableStruct<ImmutableArray<ImmutableArray<float>>>(
+                "taxonOrderBounds"
+            );
         }
         init
         {
@@ -53,7 +57,14 @@ public sealed record class SpeciesGroupListResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "taxonOrderBounds", value);
+            this._rawData.Set<ImmutableArray<ImmutableArray<float>>?>(
+                "taxonOrderBounds",
+                value == null
+                    ? null
+                    : ImmutableArray.ToImmutableArray(
+                        Enumerable.Select(value, (item) => ImmutableArray.ToImmutableArray(value))
+                    )
+            );
         }
     }
 
@@ -72,14 +83,14 @@ public sealed record class SpeciesGroupListResponse : JsonModel
 
     public SpeciesGroupListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SpeciesGroupListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

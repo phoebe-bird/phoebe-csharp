@@ -33,7 +33,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
     /// </summary>
     public string? Delim
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "delim"); }
+        get { return this._rawQueryData.GetNullableClass<string>("delim"); }
         init
         {
             if (value == null)
@@ -41,7 +41,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "delim", value);
+            this._rawQueryData.Set("delim", value);
         }
     }
 
@@ -52,8 +52,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, RegionNameFormat>>(
-                this.RawQueryData,
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, RegionNameFormat>>(
                 "regionNameFormat"
             );
         }
@@ -64,7 +63,7 @@ public sealed record class InfoRetrieveParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "regionNameFormat", value);
+            this._rawQueryData.Set("regionNameFormat", value);
         }
     }
 
@@ -81,8 +80,8 @@ public sealed record class InfoRetrieveParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -92,8 +91,8 @@ public sealed record class InfoRetrieveParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 
