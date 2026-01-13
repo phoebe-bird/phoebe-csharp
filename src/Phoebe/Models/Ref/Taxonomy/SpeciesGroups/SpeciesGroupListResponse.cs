@@ -16,7 +16,11 @@ public sealed record class SpeciesGroupListResponse : JsonModel
 {
     public string? GroupName
     {
-        get { return this._rawData.GetNullableClass<string>("groupName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("groupName");
+        }
         init
         {
             if (value == null)
@@ -30,7 +34,11 @@ public sealed record class SpeciesGroupListResponse : JsonModel
 
     public long? GroupOrder
     {
-        get { return this._rawData.GetNullableStruct<long>("groupOrder"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("groupOrder");
+        }
         init
         {
             if (value == null)
@@ -46,6 +54,7 @@ public sealed record class SpeciesGroupListResponse : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return ImmutableArray.ToImmutableArray(
                 Enumerable.Select(
                     this._rawData.GetNullableStruct<ImmutableArray<ImmutableArray<float>>>(

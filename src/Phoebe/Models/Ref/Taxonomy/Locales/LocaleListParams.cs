@@ -20,7 +20,11 @@ public sealed record class LocaleListParams : ParamsBase
 {
     public string? AcceptLanguage
     {
-        get { return this._rawHeaderData.GetNullableClass<string>("Accept-Language"); }
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("Accept-Language");
+        }
         init
         {
             if (value == null)

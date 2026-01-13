@@ -43,7 +43,11 @@ public sealed record class Top100RetrieveParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get { return this._rawQueryData.GetNullableStruct<long>("maxResults"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("maxResults");
+        }
         init
         {
             if (value == null)
@@ -60,7 +64,11 @@ public sealed record class Top100RetrieveParams : ParamsBase
     /// </summary>
     public ApiEnum<string, RankedBy>? RankedBy
     {
-        get { return this._rawQueryData.GetNullableClass<ApiEnum<string, RankedBy>>("rankedBy"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, RankedBy>>("rankedBy");
+        }
         init
         {
             if (value == null)

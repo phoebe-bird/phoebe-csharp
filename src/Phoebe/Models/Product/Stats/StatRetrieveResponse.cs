@@ -12,7 +12,11 @@ public sealed record class StatRetrieveResponse : JsonModel
 {
     public int? NumChecklists
     {
-        get { return this._rawData.GetNullableStruct<int>("numChecklists"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("numChecklists");
+        }
         init
         {
             if (value == null)
@@ -26,7 +30,11 @@ public sealed record class StatRetrieveResponse : JsonModel
 
     public int? NumContributors
     {
-        get { return this._rawData.GetNullableStruct<int>("numContributors"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("numContributors");
+        }
         init
         {
             if (value == null)
@@ -40,7 +48,11 @@ public sealed record class StatRetrieveResponse : JsonModel
 
     public int? NumSpecies
     {
-        get { return this._rawData.GetNullableStruct<int>("numSpecies"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("numSpecies");
+        }
         init
         {
             if (value == null)

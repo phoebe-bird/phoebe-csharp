@@ -12,7 +12,11 @@ public sealed record class Top100RetrieveResponse : JsonModel
 {
     public int? NumCompleteChecklists
     {
-        get { return this._rawData.GetNullableStruct<int>("numCompleteChecklists"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("numCompleteChecklists");
+        }
         init
         {
             if (value == null)
@@ -26,7 +30,11 @@ public sealed record class Top100RetrieveResponse : JsonModel
 
     public int? NumSpecies
     {
-        get { return this._rawData.GetNullableStruct<int>("numSpecies"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("numSpecies");
+        }
         init
         {
             if (value == null)
@@ -40,7 +48,11 @@ public sealed record class Top100RetrieveResponse : JsonModel
 
     public string? ProfileHandle
     {
-        get { return this._rawData.GetNullableClass<string>("profileHandle"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("profileHandle");
+        }
         init
         {
             if (value == null)
@@ -54,7 +66,11 @@ public sealed record class Top100RetrieveResponse : JsonModel
 
     public int? RowNum
     {
-        get { return this._rawData.GetNullableStruct<int>("rowNum"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("rowNum");
+        }
         init
         {
             if (value == null)
@@ -68,7 +84,11 @@ public sealed record class Top100RetrieveResponse : JsonModel
 
     public string? UserDisplayName
     {
-        get { return this._rawData.GetNullableClass<string>("userDisplayName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("userDisplayName");
+        }
         init
         {
             if (value == null)
@@ -82,7 +102,11 @@ public sealed record class Top100RetrieveResponse : JsonModel
 
     public string? UserID
     {
-        get { return this._rawData.GetNullableClass<string>("userId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("userId");
+        }
         init
         {
             if (value == null)

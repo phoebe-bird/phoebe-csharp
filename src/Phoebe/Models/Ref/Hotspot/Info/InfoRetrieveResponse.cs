@@ -12,7 +12,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 {
     public string? CountryCode
     {
-        get { return this._rawData.GetNullableClass<string>("countryCode"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("countryCode");
+        }
         init
         {
             if (value == null)
@@ -26,7 +30,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public string? CountryName
     {
-        get { return this._rawData.GetNullableClass<string>("countryName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("countryName");
+        }
         init
         {
             if (value == null)
@@ -40,7 +48,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public string? HierarchicalName
     {
-        get { return this._rawData.GetNullableClass<string>("hierarchicalName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("hierarchicalName");
+        }
         init
         {
             if (value == null)
@@ -54,7 +66,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public bool? IsHotspot
     {
-        get { return this._rawData.GetNullableStruct<bool>("isHotspot"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("isHotspot");
+        }
         init
         {
             if (value == null)
@@ -68,7 +84,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public double? Lat
     {
-        get { return this._rawData.GetNullableStruct<double>("lat"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("lat");
+        }
         init
         {
             if (value == null)
@@ -82,7 +102,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public double? Latitude
     {
-        get { return this._rawData.GetNullableStruct<double>("latitude"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("latitude");
+        }
         init
         {
             if (value == null)
@@ -96,7 +120,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public double? Lng
     {
-        get { return this._rawData.GetNullableStruct<double>("lng"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("lng");
+        }
         init
         {
             if (value == null)
@@ -110,7 +138,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public string? LocID
     {
-        get { return this._rawData.GetNullableClass<string>("locId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locId");
+        }
         init
         {
             if (value == null)
@@ -124,7 +156,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public string? LocName
     {
-        get { return this._rawData.GetNullableClass<string>("locName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locName");
+        }
         init
         {
             if (value == null)
@@ -138,7 +174,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public double? Longitude
     {
-        get { return this._rawData.GetNullableStruct<double>("longitude"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("longitude");
+        }
         init
         {
             if (value == null)
@@ -152,7 +192,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public string? Name
     {
-        get { return this._rawData.GetNullableClass<string>("name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("name");
+        }
         init
         {
             if (value == null)
@@ -166,7 +210,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public string? Subnational1Code
     {
-        get { return this._rawData.GetNullableClass<string>("subnational1Code"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subnational1Code");
+        }
         init
         {
             if (value == null)
@@ -180,7 +228,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public string? Subnational1Name
     {
-        get { return this._rawData.GetNullableClass<string>("subnational1Name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subnational1Name");
+        }
         init
         {
             if (value == null)

@@ -28,7 +28,11 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get { return this._rawQueryData.GetNullableStruct<long>("maxResults"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("maxResults");
+        }
         init
         {
             if (value == null)
@@ -45,7 +49,11 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
     /// </summary>
     public ApiEnum<string, SortKey>? SortKey
     {
-        get { return this._rawQueryData.GetNullableClass<ApiEnum<string, SortKey>>("sortKey"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, SortKey>>("sortKey");
+        }
         init
         {
             if (value == null)

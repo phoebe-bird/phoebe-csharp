@@ -13,7 +13,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 {
     public IReadOnlyList<string>? BandingCodes
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("bandingCodes"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("bandingCodes");
+        }
         init
         {
             if (value == null)
@@ -30,7 +34,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public string? Category
     {
-        get { return this._rawData.GetNullableClass<string>("category"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("category");
+        }
         init
         {
             if (value == null)
@@ -44,7 +52,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public string? ComName
     {
-        get { return this._rawData.GetNullableClass<string>("comName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("comName");
+        }
         init
         {
             if (value == null)
@@ -58,7 +70,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public IReadOnlyList<string>? ComNameCodes
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("comNameCodes"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("comNameCodes");
+        }
         init
         {
             if (value == null)
@@ -75,7 +91,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public string? FamilyCode
     {
-        get { return this._rawData.GetNullableClass<string>("familyCode"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("familyCode");
+        }
         init
         {
             if (value == null)
@@ -89,7 +109,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public string? FamilyComName
     {
-        get { return this._rawData.GetNullableClass<string>("familyComName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("familyComName");
+        }
         init
         {
             if (value == null)
@@ -103,7 +127,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public string? FamilySciName
     {
-        get { return this._rawData.GetNullableClass<string>("familySciName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("familySciName");
+        }
         init
         {
             if (value == null)
@@ -117,7 +145,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public string? Order
     {
-        get { return this._rawData.GetNullableClass<string>("order"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("order");
+        }
         init
         {
             if (value == null)
@@ -131,7 +163,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public string? SciName
     {
-        get { return this._rawData.GetNullableClass<string>("sciName"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("sciName");
+        }
         init
         {
             if (value == null)
@@ -145,7 +181,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public IReadOnlyList<string>? SciNameCodes
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("sciNameCodes"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("sciNameCodes");
+        }
         init
         {
             if (value == null)
@@ -162,7 +202,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public string? SpeciesCode
     {
-        get { return this._rawData.GetNullableClass<string>("speciesCode"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("speciesCode");
+        }
         init
         {
             if (value == null)
@@ -176,7 +220,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public int? TaxonOrder
     {
-        get { return this._rawData.GetNullableStruct<int>("taxonOrder"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("taxonOrder");
+        }
         init
         {
             if (value == null)

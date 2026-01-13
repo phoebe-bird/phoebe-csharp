@@ -12,7 +12,11 @@ public sealed record class VersionListResponse : JsonModel
 {
     public double? AuthorityVer
     {
-        get { return this._rawData.GetNullableStruct<double>("authorityVer"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("authorityVer");
+        }
         init
         {
             if (value == null)
@@ -26,7 +30,11 @@ public sealed record class VersionListResponse : JsonModel
 
     public bool? Latest
     {
-        get { return this._rawData.GetNullableStruct<bool>("latest"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("latest");
+        }
         init
         {
             if (value == null)

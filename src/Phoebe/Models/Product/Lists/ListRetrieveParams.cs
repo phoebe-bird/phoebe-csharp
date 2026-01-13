@@ -20,7 +20,11 @@ public sealed record class ListRetrieveParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get { return this._rawQueryData.GetNullableStruct<long>("maxResults"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("maxResults");
+        }
         init
         {
             if (value == null)

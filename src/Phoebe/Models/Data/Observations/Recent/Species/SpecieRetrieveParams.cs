@@ -31,7 +31,11 @@ public sealed record class SpecieRetrieveParams : ParamsBase
     /// </summary>
     public long? Back
     {
-        get { return this._rawQueryData.GetNullableStruct<long>("back"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("back");
+        }
         init
         {
             if (value == null)
@@ -48,7 +52,11 @@ public sealed record class SpecieRetrieveParams : ParamsBase
     /// </summary>
     public bool? Hotspot
     {
-        get { return this._rawQueryData.GetNullableStruct<bool>("hotspot"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("hotspot");
+        }
         init
         {
             if (value == null)
@@ -65,7 +73,11 @@ public sealed record class SpecieRetrieveParams : ParamsBase
     /// </summary>
     public bool? IncludeProvisional
     {
-        get { return this._rawQueryData.GetNullableStruct<bool>("includeProvisional"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("includeProvisional");
+        }
         init
         {
             if (value == null)
@@ -82,7 +94,11 @@ public sealed record class SpecieRetrieveParams : ParamsBase
     /// </summary>
     public long? MaxResults
     {
-        get { return this._rawQueryData.GetNullableStruct<long>("maxResults"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("maxResults");
+        }
         init
         {
             if (value == null)
@@ -99,7 +115,11 @@ public sealed record class SpecieRetrieveParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string>? R
     {
-        get { return this._rawQueryData.GetNullableStruct<ImmutableArray<string>>("r"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<ImmutableArray<string>>("r");
+        }
         init
         {
             if (value == null)
@@ -119,7 +139,11 @@ public sealed record class SpecieRetrieveParams : ParamsBase
     /// </summary>
     public string? SppLocale
     {
-        get { return this._rawQueryData.GetNullableClass<string>("sppLocale"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("sppLocale");
+        }
         init
         {
             if (value == null)
