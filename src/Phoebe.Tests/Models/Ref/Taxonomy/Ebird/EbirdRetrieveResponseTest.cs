@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Phoebe.Core;
 using Phoebe.Models.Ref.Taxonomy.Ebird;
 
 namespace Phoebe.Tests.Models.Ref.Taxonomy.Ebird;
@@ -86,8 +87,11 @@ public class EbirdRetrieveResponseTest : TestBase
             TaxonOrder = 0,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<EbirdRetrieveResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<EbirdRetrieveResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -111,8 +115,11 @@ public class EbirdRetrieveResponseTest : TestBase
             TaxonOrder = 0,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<EbirdRetrieveResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<EbirdRetrieveResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<string> expectedBandingCodes = ["string"];

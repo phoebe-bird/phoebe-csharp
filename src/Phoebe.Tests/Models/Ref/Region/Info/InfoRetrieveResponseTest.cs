@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Phoebe.Core;
 using Phoebe.Models.Ref.Region.Info;
 
 namespace Phoebe.Tests.Models.Ref.Region.Info;
@@ -48,8 +49,11 @@ public class InfoRetrieveResponseTest : TestBase
             Result = "Madison, New York, United States",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InfoRetrieveResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<InfoRetrieveResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -69,8 +73,11 @@ public class InfoRetrieveResponseTest : TestBase
             Result = "Madison, New York, United States",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InfoRetrieveResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<InfoRetrieveResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         Bounds expectedBounds = new()
@@ -188,8 +195,8 @@ public class BoundsTest : TestBase
             MinY = 42.896f,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Bounds>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Bounds>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -205,8 +212,8 @@ public class BoundsTest : TestBase
             MinY = 42.896f,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Bounds>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Bounds>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         float expectedMaxX = -75.764f;

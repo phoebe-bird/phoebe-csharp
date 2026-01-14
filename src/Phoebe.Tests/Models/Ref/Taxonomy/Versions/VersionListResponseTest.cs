@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Phoebe.Core;
 using Phoebe.Models.Ref.Taxonomy.Versions;
 
 namespace Phoebe.Tests.Models.Ref.Taxonomy.Versions;
@@ -22,8 +23,11 @@ public class VersionListResponseTest : TestBase
     {
         var model = new VersionListResponse { AuthorityVer = 2017, Latest = true };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<VersionListResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<VersionListResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -33,8 +37,11 @@ public class VersionListResponseTest : TestBase
     {
         var model = new VersionListResponse { AuthorityVer = 2017, Latest = true };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<VersionListResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<VersionListResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         double expectedAuthorityVer = 2017;

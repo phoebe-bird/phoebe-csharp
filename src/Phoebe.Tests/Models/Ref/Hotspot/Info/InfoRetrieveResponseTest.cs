@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Phoebe.Core;
 using Phoebe.Models.Ref.Hotspot.Info;
 
 namespace Phoebe.Tests.Models.Ref.Hotspot.Info;
@@ -74,8 +75,11 @@ public class InfoRetrieveResponseTest : TestBase
             Subnational1Name = "subnational1Name",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InfoRetrieveResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<InfoRetrieveResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -100,8 +104,11 @@ public class InfoRetrieveResponseTest : TestBase
             Subnational1Name = "subnational1Name",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InfoRetrieveResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<InfoRetrieveResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedCountryCode = "countryCode";

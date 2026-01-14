@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Phoebe.Core;
 using Phoebe.Models.Ref.Region.List;
 
 namespace Phoebe.Tests.Models.Ref.Region.List;
@@ -22,8 +23,11 @@ public class ListListResponseTest : TestBase
     {
         var model = new ListListResponse { Code = "US-NY", Name = "New York" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ListListResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ListListResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -33,8 +37,11 @@ public class ListListResponseTest : TestBase
     {
         var model = new ListListResponse { Code = "US-NY", Name = "New York" };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ListListResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ListListResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedCode = "US-NY";

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Phoebe.Core;
 using Phoebe.Models.Ref.Taxonomy.SpeciesGroups;
 
 namespace Phoebe.Tests.Models.Ref.Taxonomy.SpeciesGroups;
@@ -59,8 +60,11 @@ public class SpeciesGroupListResponseTest : TestBase
             ],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SpeciesGroupListResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SpeciesGroupListResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -80,8 +84,11 @@ public class SpeciesGroupListResponseTest : TestBase
             ],
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SpeciesGroupListResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SpeciesGroupListResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedGroupName = "Waterfowl";
