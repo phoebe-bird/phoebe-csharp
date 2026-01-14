@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Phoebe.Core;
 using Phoebe.Models.Product.Lists;
 
 namespace Phoebe.Tests.Models.Product.Lists;
@@ -216,8 +217,11 @@ public class ListRetrieveResponseTest : TestBase
             UserDisplayName = "userDisplayName",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ListRetrieveResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ListRetrieveResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -285,8 +289,11 @@ public class ListRetrieveResponseTest : TestBase
             UserDisplayName = "userDisplayName",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ListRetrieveResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ListRetrieveResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         bool expectedAllObsReported = true;
@@ -667,8 +674,8 @@ public class LocTest : TestBase
             Subnational1Name = "subnational1Name",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Loc>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Loc>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -693,8 +700,8 @@ public class LocTest : TestBase
             Subnational1Name = "subnational1Name",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Loc>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Loc>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         string expectedCountryCode = "countryCode";
@@ -940,8 +947,8 @@ public class ObTest : TestBase
             SpeciesCode = "speciesCode",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Ob>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Ob>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -969,8 +976,8 @@ public class ObTest : TestBase
             SpeciesCode = "speciesCode",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Ob>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Ob>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         List<ObsAux> expectedObsAux =
@@ -1135,8 +1142,8 @@ public class ObsAuxTest : TestBase
             Value = "value",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ObsAux>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ObsAux>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -1155,8 +1162,8 @@ public class ObsAuxTest : TestBase
             Value = "value",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ObsAux>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ObsAux>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         string expectedAuxCode = "auxCode";
