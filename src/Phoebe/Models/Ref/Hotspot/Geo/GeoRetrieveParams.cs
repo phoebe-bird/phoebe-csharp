@@ -81,14 +81,12 @@ public sealed record class GeoRetrieveParams : ParamsBase
     /// <summary>
     /// Fetch the records in CSV or JSON format.
     /// </summary>
-    public ApiEnum<string, global::Phoebe.Models.Ref.Hotspot.Geo.Fmt>? Fmt
+    public ApiEnum<string, Fmt>? Fmt
     {
         get
         {
             this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<
-                ApiEnum<string, global::Phoebe.Models.Ref.Hotspot.Geo.Fmt>
-            >("fmt");
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Fmt>>("fmt");
         }
         init
         {
@@ -160,16 +158,16 @@ public sealed record class GeoRetrieveParams : ParamsBase
 /// <summary>
 /// Fetch the records in CSV or JSON format.
 /// </summary>
-[JsonConverter(typeof(global::Phoebe.Models.Ref.Hotspot.Geo.FmtConverter))]
+[JsonConverter(typeof(FmtConverter))]
 public enum Fmt
 {
     Csv,
     Json,
 }
 
-sealed class FmtConverter : JsonConverter<global::Phoebe.Models.Ref.Hotspot.Geo.Fmt>
+sealed class FmtConverter : JsonConverter<Fmt>
 {
-    public override global::Phoebe.Models.Ref.Hotspot.Geo.Fmt Read(
+    public override Fmt Read(
         ref Utf8JsonReader reader,
         Type typeToConvert,
         JsonSerializerOptions options
@@ -177,24 +175,20 @@ sealed class FmtConverter : JsonConverter<global::Phoebe.Models.Ref.Hotspot.Geo.
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "csv" => global::Phoebe.Models.Ref.Hotspot.Geo.Fmt.Csv,
-            "json" => global::Phoebe.Models.Ref.Hotspot.Geo.Fmt.Json,
-            _ => (global::Phoebe.Models.Ref.Hotspot.Geo.Fmt)(-1),
+            "csv" => Fmt.Csv,
+            "json" => Fmt.Json,
+            _ => (Fmt)(-1),
         };
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        global::Phoebe.Models.Ref.Hotspot.Geo.Fmt value,
-        JsonSerializerOptions options
-    )
+    public override void Write(Utf8JsonWriter writer, Fmt value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                global::Phoebe.Models.Ref.Hotspot.Geo.Fmt.Csv => "csv",
-                global::Phoebe.Models.Ref.Hotspot.Geo.Fmt.Json => "json",
+                Fmt.Csv => "csv",
+                Fmt.Json => "json",
                 _ => throw new PhoebeInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

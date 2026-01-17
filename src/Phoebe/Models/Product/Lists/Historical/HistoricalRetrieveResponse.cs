@@ -121,14 +121,12 @@ public sealed record class HistoricalRetrieveResponse : JsonModel
         }
     }
 
-    public global::Phoebe.Models.Product.Lists.Historical.Loc? Loc
+    public Loc? Loc
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<global::Phoebe.Models.Product.Lists.Historical.Loc>(
-                "loc"
-            );
+            return this._rawData.GetNullableClass<Loc>("loc");
         }
         init
         {
@@ -195,14 +193,12 @@ public sealed record class HistoricalRetrieveResponse : JsonModel
         }
     }
 
-    public IReadOnlyList<global::Phoebe.Models.Product.Lists.Historical.Ob>? Obs
+    public IReadOnlyList<Ob>? Obs
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableStruct<
-                ImmutableArray<global::Phoebe.Models.Product.Lists.Historical.Ob>
-            >("obs");
+            return this._rawData.GetNullableStruct<ImmutableArray<Ob>>("obs");
         }
         init
         {
@@ -211,7 +207,7 @@ public sealed record class HistoricalRetrieveResponse : JsonModel
                 return;
             }
 
-            this._rawData.Set<ImmutableArray<global::Phoebe.Models.Product.Lists.Historical.Ob>?>(
+            this._rawData.Set<ImmutableArray<Ob>?>(
                 "obs",
                 value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
@@ -443,12 +439,7 @@ class HistoricalRetrieveResponseFromRaw : IFromRawJson<HistoricalRetrieveRespons
     ) => HistoricalRetrieveResponse.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(
-    typeof(JsonModelConverter<
-        global::Phoebe.Models.Product.Lists.Historical.Loc,
-        global::Phoebe.Models.Product.Lists.Historical.LocFromRaw
-    >)
-)]
+[JsonConverter(typeof(JsonModelConverter<Loc, LocFromRaw>))]
 public sealed record class Loc : JsonModel
 {
     public string? CountryCode
@@ -705,7 +696,7 @@ public sealed record class Loc : JsonModel
 
     public Loc() { }
 
-    public Loc(global::Phoebe.Models.Product.Lists.Historical.Loc loc)
+    public Loc(Loc loc)
         : base(loc) { }
 
     public Loc(IReadOnlyDictionary<string, JsonElement> rawData)
@@ -721,39 +712,29 @@ public sealed record class Loc : JsonModel
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="global::Phoebe.Models.Product.Lists.Historical.LocFromRaw.FromRawUnchecked"/>
-    public static global::Phoebe.Models.Product.Lists.Historical.Loc FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    /// <inheritdoc cref="LocFromRaw.FromRawUnchecked"/>
+    public static Loc FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class LocFromRaw : IFromRawJson<global::Phoebe.Models.Product.Lists.Historical.Loc>
+class LocFromRaw : IFromRawJson<Loc>
 {
     /// <inheritdoc/>
-    public global::Phoebe.Models.Product.Lists.Historical.Loc FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => global::Phoebe.Models.Product.Lists.Historical.Loc.FromRawUnchecked(rawData);
+    public Loc FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Loc.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(
-    typeof(JsonModelConverter<
-        global::Phoebe.Models.Product.Lists.Historical.Ob,
-        global::Phoebe.Models.Product.Lists.Historical.ObFromRaw
-    >)
-)]
+[JsonConverter(typeof(JsonModelConverter<Ob, ObFromRaw>))]
 public sealed record class Ob : JsonModel
 {
-    public IReadOnlyList<global::Phoebe.Models.Product.Lists.Historical.ObsAux>? ObsAux
+    public IReadOnlyList<ObsAux>? ObsAux
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableStruct<
-                ImmutableArray<global::Phoebe.Models.Product.Lists.Historical.ObsAux>
-            >("obsAux");
+            return this._rawData.GetNullableStruct<ImmutableArray<ObsAux>>("obsAux");
         }
         init
         {
@@ -762,7 +743,7 @@ public sealed record class Ob : JsonModel
                 return;
             }
 
-            this._rawData.Set<ImmutableArray<global::Phoebe.Models.Product.Lists.Historical.ObsAux>?>(
+            this._rawData.Set<ImmutableArray<ObsAux>?>(
                 "obsAux",
                 value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
@@ -837,7 +818,7 @@ public sealed record class Ob : JsonModel
 
     public Ob() { }
 
-    public Ob(global::Phoebe.Models.Product.Lists.Historical.Ob ob)
+    public Ob(Ob ob)
         : base(ob) { }
 
     public Ob(IReadOnlyDictionary<string, JsonElement> rawData)
@@ -853,29 +834,21 @@ public sealed record class Ob : JsonModel
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="global::Phoebe.Models.Product.Lists.Historical.ObFromRaw.FromRawUnchecked"/>
-    public static global::Phoebe.Models.Product.Lists.Historical.Ob FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    /// <inheritdoc cref="ObFromRaw.FromRawUnchecked"/>
+    public static Ob FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class ObFromRaw : IFromRawJson<global::Phoebe.Models.Product.Lists.Historical.Ob>
+class ObFromRaw : IFromRawJson<Ob>
 {
     /// <inheritdoc/>
-    public global::Phoebe.Models.Product.Lists.Historical.Ob FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => global::Phoebe.Models.Product.Lists.Historical.Ob.FromRawUnchecked(rawData);
+    public Ob FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Ob.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(
-    typeof(JsonModelConverter<
-        global::Phoebe.Models.Product.Lists.Historical.ObsAux,
-        global::Phoebe.Models.Product.Lists.Historical.ObsAuxFromRaw
-    >)
-)]
+[JsonConverter(typeof(JsonModelConverter<ObsAux, ObsAuxFromRaw>))]
 public sealed record class ObsAux : JsonModel
 {
     public string? AuxCode
@@ -1018,7 +991,7 @@ public sealed record class ObsAux : JsonModel
 
     public ObsAux() { }
 
-    public ObsAux(global::Phoebe.Models.Product.Lists.Historical.ObsAux obsAux)
+    public ObsAux(ObsAux obsAux)
         : base(obsAux) { }
 
     public ObsAux(IReadOnlyDictionary<string, JsonElement> rawData)
@@ -1034,19 +1007,16 @@ public sealed record class ObsAux : JsonModel
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="global::Phoebe.Models.Product.Lists.Historical.ObsAuxFromRaw.FromRawUnchecked"/>
-    public static global::Phoebe.Models.Product.Lists.Historical.ObsAux FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    /// <inheritdoc cref="ObsAuxFromRaw.FromRawUnchecked"/>
+    public static ObsAux FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class ObsAuxFromRaw : IFromRawJson<global::Phoebe.Models.Product.Lists.Historical.ObsAux>
+class ObsAuxFromRaw : IFromRawJson<ObsAux>
 {
     /// <inheritdoc/>
-    public global::Phoebe.Models.Product.Lists.Historical.ObsAux FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => global::Phoebe.Models.Product.Lists.Historical.ObsAux.FromRawUnchecked(rawData);
+    public ObsAux FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ObsAux.FromRawUnchecked(rawData);
 }
