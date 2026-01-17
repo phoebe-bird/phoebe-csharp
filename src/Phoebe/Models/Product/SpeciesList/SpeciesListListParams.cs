@@ -12,18 +12,25 @@ namespace Phoebe.Models.Product.SpeciesList;
 /// Get a list of species codes ever seen in a region, in taxonomic order (species
 /// taxa only) #### Notes The results are usually updated every 10 seconds for locations,
 /// every day for larger regions.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class SpeciesListListParams : ParamsBase
+public record class SpeciesListListParams : ParamsBase
 {
     public string? RegionCode { get; init; }
 
     public SpeciesListListParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SpeciesListListParams(SpeciesListListParams speciesListListParams)
         : base(speciesListListParams)
     {
         this.RegionCode = speciesListListParams.RegionCode;
     }
+#pragma warning restore CS8618
 
     public SpeciesListListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -58,6 +65,28 @@ public sealed record class SpeciesListListParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["RegionCode"] = this.RegionCode,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(SpeciesListListParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.RegionCode?.Equals(other.RegionCode) ?? other.RegionCode == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -76,5 +105,10 @@ public sealed record class SpeciesListListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

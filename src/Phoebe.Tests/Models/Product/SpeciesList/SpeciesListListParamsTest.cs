@@ -24,4 +24,14 @@ public class SpeciesListListParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.ebird.org/v2/product/spplist/regionCode"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SpeciesListListParams { RegionCode = "regionCode" };
+
+        SpeciesListListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

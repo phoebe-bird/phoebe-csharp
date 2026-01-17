@@ -64,6 +64,20 @@ public class SpeciesGroupListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SpeciesGroupListParams
+        {
+            SpeciesGrouping = SpeciesGrouping.Merlin,
+            GroupNameLocale = "groupNameLocale",
+        };
+
+        SpeciesGroupListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class SpeciesGroupingTest : TestBase

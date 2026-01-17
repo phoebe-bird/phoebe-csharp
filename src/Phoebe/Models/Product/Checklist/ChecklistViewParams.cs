@@ -14,18 +14,25 @@ namespace Phoebe.Models.Product.Checklist;
 /// each observation, the following fields are duplicates or obsolete and will be
 /// removed at a future date: *howManyAtleast*, *howManyAtmost*, *hideFlags*, *projId*,
 /// *subId*, *subnational1Code* and *present*.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class ChecklistViewParams : ParamsBase
+public record class ChecklistViewParams : ParamsBase
 {
     public string? SubID { get; init; }
 
     public ChecklistViewParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ChecklistViewParams(ChecklistViewParams checklistViewParams)
         : base(checklistViewParams)
     {
         this.SubID = checklistViewParams.SubID;
     }
+#pragma warning restore CS8618
 
     public ChecklistViewParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -60,6 +67,28 @@ public sealed record class ChecklistViewParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["SubID"] = this.SubID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(ChecklistViewParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.SubID?.Equals(other.SubID) ?? other.SubID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -78,5 +107,10 @@ public sealed record class ChecklistViewParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

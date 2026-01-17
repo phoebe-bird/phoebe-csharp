@@ -11,18 +11,25 @@ namespace Phoebe.Models.Ref.Region.Adjacent;
 /// <summary>
 /// Get the list of countries or regions that share a border with this one. #### Notes
 /// Only subnational2 codes in the United States, New Zealand, or Mexico are currently supported
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class AdjacentListParams : ParamsBase
+public record class AdjacentListParams : ParamsBase
 {
     public string? RegionCode { get; init; }
 
     public AdjacentListParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AdjacentListParams(AdjacentListParams adjacentListParams)
         : base(adjacentListParams)
     {
         this.RegionCode = adjacentListParams.RegionCode;
     }
+#pragma warning restore CS8618
 
     public AdjacentListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -57,6 +64,28 @@ public sealed record class AdjacentListParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["RegionCode"] = this.RegionCode,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(AdjacentListParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.RegionCode?.Equals(other.RegionCode) ?? other.RegionCode == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -75,5 +104,10 @@ public sealed record class AdjacentListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

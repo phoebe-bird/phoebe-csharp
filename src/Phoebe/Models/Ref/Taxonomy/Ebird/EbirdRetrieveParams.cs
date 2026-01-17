@@ -15,8 +15,12 @@ namespace Phoebe.Models.Ref.Taxonomy.Ebird;
 /// a species code for example, barswa for Barn Swallow. You can download the taxonomy
 /// for selected species using the *species* query parameter with a comma separating
 /// each code. Otherwise the full taxonomy is downloaded.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class EbirdRetrieveParams : ParamsBase
+public record class EbirdRetrieveParams : ParamsBase
 {
     /// <summary>
     /// Only fetch records from these taxonomic categories.
@@ -125,8 +129,11 @@ public sealed record class EbirdRetrieveParams : ParamsBase
 
     public EbirdRetrieveParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public EbirdRetrieveParams(EbirdRetrieveParams ebirdRetrieveParams)
         : base(ebirdRetrieveParams) { }
+#pragma warning restore CS8618
 
     public EbirdRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -161,6 +168,26 @@ public sealed record class EbirdRetrieveParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(EbirdRetrieveParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/ref/taxonomy/ebird")
@@ -176,6 +203,11 @@ public sealed record class EbirdRetrieveParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

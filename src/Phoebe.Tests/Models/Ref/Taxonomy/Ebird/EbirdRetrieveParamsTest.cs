@@ -96,6 +96,23 @@ public class EbirdRetrieveParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new EbirdRetrieveParams
+        {
+            Cat = "cat",
+            Fmt = Fmt.Csv,
+            Locale = "locale",
+            Species = "species",
+            Version = "version",
+        };
+
+        EbirdRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class FmtTest : TestBase

@@ -24,4 +24,14 @@ public class ChecklistViewParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.ebird.org/v2/product/checklist/view/subId"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ChecklistViewParams { SubID = "subId" };
+
+        ChecklistViewParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

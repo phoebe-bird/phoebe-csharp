@@ -24,4 +24,14 @@ public class AdjacentListParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.ebird.org/v2/ref/adjacent/regionCode"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new AdjacentListParams { RegionCode = "regionCode" };
+
+        AdjacentListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

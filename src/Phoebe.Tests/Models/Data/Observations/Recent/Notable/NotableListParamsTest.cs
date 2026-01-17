@@ -117,6 +117,25 @@ public class NotableListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new NotableListParams
+        {
+            RegionCode = "regionCode",
+            Back = 1,
+            Detail = Detail.Simple,
+            Hotspot = true,
+            MaxResults = 1,
+            R = ["string"],
+            SppLocale = "sppLocale",
+        };
+
+        NotableListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class DetailTest : TestBase

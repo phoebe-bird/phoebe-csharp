@@ -126,6 +126,26 @@ public class RecentListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new RecentListParams
+        {
+            RegionCode = "regionCode",
+            Back = 1,
+            Cat = Cat.Species,
+            Hotspot = true,
+            IncludeProvisional = true,
+            MaxResults = 1,
+            R = ["string"],
+            SppLocale = "sppLocale",
+        };
+
+        RecentListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class CatTest : TestBase

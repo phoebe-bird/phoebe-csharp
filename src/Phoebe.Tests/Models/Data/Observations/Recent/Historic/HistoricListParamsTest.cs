@@ -156,6 +156,30 @@ public class HistoricListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new HistoricListParams
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+            Cat = Cat.Species,
+            Detail = Detail.Simple,
+            Hotspot = true,
+            IncludeProvisional = true,
+            MaxResults = 1,
+            R = ["string"],
+            Rank = Rank.Mrec,
+            SppLocale = "sppLocale",
+        };
+
+        HistoricListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class CatTest : TestBase

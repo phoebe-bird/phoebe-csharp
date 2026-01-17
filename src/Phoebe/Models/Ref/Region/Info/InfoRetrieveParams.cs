@@ -23,8 +23,12 @@ namespace Phoebe.Models.Ref.Region.Info;
 /// the qualified name | Madison County | | nameonly | return only the name of the
 /// region | Madison | | revdetailed | return the detailed description in reverse
 /// | US, New York, Madison County |</para>
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class InfoRetrieveParams : ParamsBase
+public record class InfoRetrieveParams : ParamsBase
 {
     public string? RegionCode { get; init; }
 
@@ -74,11 +78,14 @@ public sealed record class InfoRetrieveParams : ParamsBase
 
     public InfoRetrieveParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public InfoRetrieveParams(InfoRetrieveParams infoRetrieveParams)
         : base(infoRetrieveParams)
     {
         this.RegionCode = infoRetrieveParams.RegionCode;
     }
+#pragma warning restore CS8618
 
     public InfoRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -113,6 +120,28 @@ public sealed record class InfoRetrieveParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["RegionCode"] = this.RegionCode,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(InfoRetrieveParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.RegionCode?.Equals(other.RegionCode) ?? other.RegionCode == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -131,6 +160,11 @@ public sealed record class InfoRetrieveParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
