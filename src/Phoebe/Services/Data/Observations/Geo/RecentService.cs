@@ -11,12 +11,12 @@ using Phoebe.Services.Data.Observations.Geo.Recent;
 namespace Phoebe.Services.Data.Observations.Geo;
 
 /// <inheritdoc/>
-public sealed class RecentService : global::Phoebe.Services.Data.Observations.Geo.IRecentService
+public sealed class RecentService : IRecentService
 {
-    readonly Lazy<global::Phoebe.Services.Data.Observations.Geo.IRecentServiceWithRawResponse> _withRawResponse;
+    readonly Lazy<IRecentServiceWithRawResponse> _withRawResponse;
 
     /// <inheritdoc/>
-    public global::Phoebe.Services.Data.Observations.Geo.IRecentServiceWithRawResponse WithRawResponse
+    public IRecentServiceWithRawResponse WithRawResponse
     {
         get { return _withRawResponse.Value; }
     }
@@ -24,24 +24,16 @@ public sealed class RecentService : global::Phoebe.Services.Data.Observations.Ge
     readonly IPhoebeClient _client;
 
     /// <inheritdoc/>
-    public global::Phoebe.Services.Data.Observations.Geo.IRecentService WithOptions(
-        Func<ClientOptions, ClientOptions> modifier
-    )
+    public IRecentService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
-        return new global::Phoebe.Services.Data.Observations.Geo.RecentService(
-            this._client.WithOptions(modifier)
-        );
+        return new RecentService(this._client.WithOptions(modifier));
     }
 
     public RecentService(IPhoebeClient client)
     {
         _client = client;
 
-        _withRawResponse = new(() =>
-            new global::Phoebe.Services.Data.Observations.Geo.RecentServiceWithRawResponse(
-                client.WithRawResponse
-            )
-        );
+        _withRawResponse = new(() => new RecentServiceWithRawResponse(client.WithRawResponse));
         _species = new(() => new SpecieService(client));
         _notable = new(() => new NotableService(client));
     }
@@ -72,19 +64,14 @@ public sealed class RecentService : global::Phoebe.Services.Data.Observations.Ge
 }
 
 /// <inheritdoc/>
-public sealed class RecentServiceWithRawResponse
-    : global::Phoebe.Services.Data.Observations.Geo.IRecentServiceWithRawResponse
+public sealed class RecentServiceWithRawResponse : IRecentServiceWithRawResponse
 {
     readonly IPhoebeClientWithRawResponse _client;
 
     /// <inheritdoc/>
-    public global::Phoebe.Services.Data.Observations.Geo.IRecentServiceWithRawResponse WithOptions(
-        Func<ClientOptions, ClientOptions> modifier
-    )
+    public IRecentServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
-        return new global::Phoebe.Services.Data.Observations.Geo.RecentServiceWithRawResponse(
-            this._client.WithOptions(modifier)
-        );
+        return new RecentServiceWithRawResponse(this._client.WithOptions(modifier));
     }
 
     public RecentServiceWithRawResponse(IPhoebeClientWithRawResponse client)

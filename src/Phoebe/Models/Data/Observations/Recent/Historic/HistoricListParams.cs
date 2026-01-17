@@ -29,14 +29,12 @@ public sealed record class HistoricListParams : ParamsBase
     /// <summary>
     /// Only fetch observations from these taxonomic categories
     /// </summary>
-    public ApiEnum<string, global::Phoebe.Models.Data.Observations.Recent.Historic.Cat>? Cat
+    public ApiEnum<string, Cat>? Cat
     {
         get
         {
             this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<
-                ApiEnum<string, global::Phoebe.Models.Data.Observations.Recent.Historic.Cat>
-            >("cat");
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Cat>>("cat");
         }
         init
         {
@@ -273,7 +271,7 @@ public sealed record class HistoricListParams : ParamsBase
 /// <summary>
 /// Only fetch observations from these taxonomic categories
 /// </summary>
-[JsonConverter(typeof(global::Phoebe.Models.Data.Observations.Recent.Historic.CatConverter))]
+[JsonConverter(typeof(CatConverter))]
 public enum Cat
 {
     Species,
@@ -286,10 +284,9 @@ public enum Cat
     Intergrade,
 }
 
-sealed class CatConverter
-    : JsonConverter<global::Phoebe.Models.Data.Observations.Recent.Historic.Cat>
+sealed class CatConverter : JsonConverter<Cat>
 {
-    public override global::Phoebe.Models.Data.Observations.Recent.Historic.Cat Read(
+    public override Cat Read(
         ref Utf8JsonReader reader,
         Type typeToConvert,
         JsonSerializerOptions options
@@ -297,37 +294,32 @@ sealed class CatConverter
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "species" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Species,
-            "slash" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Slash,
-            "issf" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Issf,
-            "spuh" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Spuh,
-            "hybrid" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Hybrid,
-            "domestic" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Domestic,
-            "form" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Form,
-            "intergrade" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Intergrade,
-            _ => (global::Phoebe.Models.Data.Observations.Recent.Historic.Cat)(-1),
+            "species" => Cat.Species,
+            "slash" => Cat.Slash,
+            "issf" => Cat.Issf,
+            "spuh" => Cat.Spuh,
+            "hybrid" => Cat.Hybrid,
+            "domestic" => Cat.Domestic,
+            "form" => Cat.Form,
+            "intergrade" => Cat.Intergrade,
+            _ => (Cat)(-1),
         };
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        global::Phoebe.Models.Data.Observations.Recent.Historic.Cat value,
-        JsonSerializerOptions options
-    )
+    public override void Write(Utf8JsonWriter writer, Cat value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Species => "species",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Slash => "slash",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Issf => "issf",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Spuh => "spuh",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Hybrid => "hybrid",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Domestic => "domestic",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Form => "form",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Intergrade =>
-                    "intergrade",
+                Cat.Species => "species",
+                Cat.Slash => "slash",
+                Cat.Issf => "issf",
+                Cat.Spuh => "spuh",
+                Cat.Hybrid => "hybrid",
+                Cat.Domestic => "domestic",
+                Cat.Form => "form",
+                Cat.Intergrade => "intergrade",
                 _ => throw new PhoebeInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

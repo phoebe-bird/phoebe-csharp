@@ -20,16 +20,14 @@ public interface IRecentService
     /// Returns a view of this service that provides access to raw HTTP responses
     /// for each method.
     /// </summary>
-    global::Phoebe.Services.Data.Observations.Geo.IRecentServiceWithRawResponse WithRawResponse { get; }
+    IRecentServiceWithRawResponse WithRawResponse { get; }
 
     /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
     /// </summary>
-    global::Phoebe.Services.Data.Observations.Geo.IRecentService WithOptions(
-        Func<ClientOptions, ClientOptions> modifier
-    );
+    IRecentService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     ISpecieService Species { get; }
 
@@ -48,7 +46,7 @@ public interface IRecentService
 }
 
 /// <summary>
-/// A view of <see cref="global::Phoebe.Services.Data.Observations.Geo.IRecentService"/> that provides access to raw
+/// A view of <see cref="IRecentService"/> that provides access to raw
 /// HTTP responses for each method.
 /// </summary>
 public interface IRecentServiceWithRawResponse
@@ -58,9 +56,7 @@ public interface IRecentServiceWithRawResponse
     ///
     /// <para>The original service is not modified.</para>
     /// </summary>
-    global::Phoebe.Services.Data.Observations.Geo.IRecentServiceWithRawResponse WithOptions(
-        Func<ClientOptions, ClientOptions> modifier
-    );
+    IRecentServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     ISpecieServiceWithRawResponse Species { get; }
 
@@ -68,7 +64,7 @@ public interface IRecentServiceWithRawResponse
 
     /// <summary>
     /// Returns a raw HTTP response for `get /data/obs/geo/recent`, but is otherwise the
-    /// same as <see cref="global::Phoebe.Services.Data.Observations.Geo.IRecentService.List(RecentListParams, CancellationToken)"/>.
+    /// same as <see cref="IRecentService.List(RecentListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<Observation>>> List(
         RecentListParams parameters,
