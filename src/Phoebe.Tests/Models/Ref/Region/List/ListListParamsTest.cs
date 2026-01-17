@@ -73,6 +73,21 @@ public class ListListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ListListParams
+        {
+            RegionType = "regionType",
+            ParentRegionCode = "parentRegionCode",
+            Fmt = Fmt.Csv,
+        };
+
+        ListListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class FmtTest : TestBase

@@ -96,6 +96,24 @@ public class Top100RetrieveParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new Top100RetrieveParams
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+            MaxResults = 1,
+            RankedBy = RankedBy.Spp,
+        };
+
+        Top100RetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class RankedByTest : TestBase

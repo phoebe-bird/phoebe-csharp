@@ -123,4 +123,25 @@ public class SpecieListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SpecieListParams
+        {
+            SpeciesCode = "speciesCode",
+            Lat = -90,
+            Lng = -180,
+            Back = 1,
+            Dist = 0,
+            Hotspot = true,
+            IncludeProvisional = true,
+            MaxResults = 1,
+            SppLocale = "sppLocale",
+        };
+
+        SpecieListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

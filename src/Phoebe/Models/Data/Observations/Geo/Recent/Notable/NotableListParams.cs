@@ -15,8 +15,12 @@ namespace Phoebe.Models.Data.Observations.Geo.Recent.Notable;
 /// within a radius of up to 50 kilometers, from a given set of coordinates. Notable
 /// observations can be for locally or nationally rare species or are otherwise unusual,
 /// for example over-wintering birds in a species which is normally only a summer visitor.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class NotableListParams : ParamsBase
+public record class NotableListParams : ParamsBase
 {
     public required float Lat
     {
@@ -166,8 +170,11 @@ public sealed record class NotableListParams : ParamsBase
 
     public NotableListParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public NotableListParams(NotableListParams notableListParams)
         : base(notableListParams) { }
+#pragma warning restore CS8618
 
     public NotableListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -202,6 +209,26 @@ public sealed record class NotableListParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(NotableListParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -219,6 +246,11 @@ public sealed record class NotableListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

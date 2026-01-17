@@ -24,4 +24,14 @@ public class FormListParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.ebird.org/v2/ref/taxon/forms/speciesCode"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new FormListParams { SpeciesCode = "speciesCode" };
+
+        FormListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

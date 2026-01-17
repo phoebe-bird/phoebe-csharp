@@ -16,8 +16,12 @@ namespace Phoebe.Models.Data.Observations.Recent.Notable;
 /// in a country, region or location. Notable observations can be for locally or
 /// nationally rare species or are otherwise unusual, e.g. over-wintering birds in
 /// a species which is normally only a summer visitor.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class NotableListParams : ParamsBase
+public record class NotableListParams : ParamsBase
 {
     public string? RegionCode { get; init; }
 
@@ -152,11 +156,14 @@ public sealed record class NotableListParams : ParamsBase
 
     public NotableListParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public NotableListParams(NotableListParams notableListParams)
         : base(notableListParams)
     {
         this.RegionCode = notableListParams.RegionCode;
     }
+#pragma warning restore CS8618
 
     public NotableListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -191,6 +198,28 @@ public sealed record class NotableListParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["RegionCode"] = this.RegionCode,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(NotableListParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.RegionCode?.Equals(other.RegionCode) ?? other.RegionCode == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -209,6 +238,11 @@ public sealed record class NotableListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

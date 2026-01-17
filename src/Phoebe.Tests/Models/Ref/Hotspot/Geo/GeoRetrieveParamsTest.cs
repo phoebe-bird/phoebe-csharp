@@ -89,6 +89,23 @@ public class GeoRetrieveParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new GeoRetrieveParams
+        {
+            Lat = -90,
+            Lng = -180,
+            Back = 1,
+            Dist = 0,
+            Fmt = Fmt.Csv,
+        };
+
+        GeoRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class FmtTest : TestBase

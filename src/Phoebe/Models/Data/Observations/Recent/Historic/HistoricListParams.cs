@@ -15,8 +15,12 @@ namespace Phoebe.Models.Data.Observations.Recent.Historic;
 /// Get a list of all taxa seen in a country, region or location on a specific date,
 /// with the specific observations determined by the "rank" parameter (defaults to
 /// latest observation on the date). #### Notes Responses may be cached for 30 minutes
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class HistoricListParams : ParamsBase
+public record class HistoricListParams : ParamsBase
 {
     public required string RegionCode { get; init; }
 
@@ -199,6 +203,8 @@ public sealed record class HistoricListParams : ParamsBase
 
     public HistoricListParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public HistoricListParams(HistoricListParams historicListParams)
         : base(historicListParams)
     {
@@ -207,6 +213,7 @@ public sealed record class HistoricListParams : ParamsBase
         this.M = historicListParams.M;
         this.D = historicListParams.D;
     }
+#pragma warning restore CS8618
 
     public HistoricListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -241,6 +248,34 @@ public sealed record class HistoricListParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["RegionCode"] = this.RegionCode,
+                ["Y"] = this.Y,
+                ["M"] = this.M,
+                ["D"] = this.D,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(HistoricListParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this.RegionCode.Equals(other.RegionCode)
+            && this.Y.Equals(other.Y)
+            && this.M.Equals(other.M)
+            && (this.D?.Equals(other.D) ?? other.D == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -265,6 +300,11 @@ public sealed record class HistoricListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

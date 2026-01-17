@@ -19,8 +19,12 @@ namespace Phoebe.Models.Data.Observations.Recent.Species;
 ///
 /// <para>When using the *r* query parameter set the *regionCode* URL parameter to
 /// an empty string.</para>
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class SpecieRetrieveParams : ParamsBase
+public record class SpecieRetrieveParams : ParamsBase
 {
     public required string RegionCode { get; init; }
 
@@ -157,12 +161,15 @@ public sealed record class SpecieRetrieveParams : ParamsBase
 
     public SpecieRetrieveParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SpecieRetrieveParams(SpecieRetrieveParams specieRetrieveParams)
         : base(specieRetrieveParams)
     {
         this.RegionCode = specieRetrieveParams.RegionCode;
         this.SpeciesCode = specieRetrieveParams.SpeciesCode;
     }
+#pragma warning restore CS8618
 
     public SpecieRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -197,6 +204,30 @@ public sealed record class SpecieRetrieveParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["RegionCode"] = this.RegionCode,
+                ["SpeciesCode"] = this.SpeciesCode,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(SpecieRetrieveParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this.RegionCode.Equals(other.RegionCode)
+            && (this.SpeciesCode?.Equals(other.SpeciesCode) ?? other.SpeciesCode == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -215,5 +246,10 @@ public sealed record class SpecieRetrieveParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

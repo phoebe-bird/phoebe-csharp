@@ -42,4 +42,20 @@ public class StatRetrieveParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.ebird.org/v2/product/stats/regionCode/0/1/1"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new StatRetrieveParams
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+        };
+
+        StatRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

@@ -13,8 +13,12 @@ namespace Phoebe.Models.Ref.Taxonomy.SpeciesGroups;
 /// <summary>
 /// Get the list of species groups, e.g. terns, finches, etc. #### Notes Merlin puts
 /// like birds together, with Falcons next to Hawks, whereas eBird follows taxonomic order.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class SpeciesGroupListParams : ParamsBase
+public record class SpeciesGroupListParams : ParamsBase
 {
     public ApiEnum<string, SpeciesGrouping>? SpeciesGrouping { get; init; }
 
@@ -42,11 +46,14 @@ public sealed record class SpeciesGroupListParams : ParamsBase
 
     public SpeciesGroupListParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SpeciesGroupListParams(SpeciesGroupListParams speciesGroupListParams)
         : base(speciesGroupListParams)
     {
         this.SpeciesGrouping = speciesGroupListParams.SpeciesGrouping;
     }
+#pragma warning restore CS8618
 
     public SpeciesGroupListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -81,6 +88,30 @@ public sealed record class SpeciesGroupListParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["SpeciesGrouping"] = this.SpeciesGrouping,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(SpeciesGroupListParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (
+                this.SpeciesGrouping?.Equals(other.SpeciesGrouping) ?? other.SpeciesGrouping == null
+            )
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -99,6 +130,11 @@ public sealed record class SpeciesGroupListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

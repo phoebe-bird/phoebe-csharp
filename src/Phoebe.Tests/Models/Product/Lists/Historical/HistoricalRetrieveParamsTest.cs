@@ -96,6 +96,24 @@ public class HistoricalRetrieveParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new HistoricalRetrieveParams
+        {
+            RegionCode = "regionCode",
+            Y = 0,
+            M = 1,
+            D = 1,
+            MaxResults = 1,
+            SortKey = SortKey.ObsDt,
+        };
+
+        HistoricalRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class SortKeyTest : TestBase

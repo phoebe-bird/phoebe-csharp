@@ -123,4 +123,24 @@ public class SpecieRetrieveParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SpecieRetrieveParams
+        {
+            RegionCode = "regionCode",
+            SpeciesCode = "speciesCode",
+            Back = 1,
+            Hotspot = true,
+            IncludeProvisional = true,
+            MaxResults = 1,
+            R = ["string"],
+            SppLocale = "sppLocale",
+        };
+
+        SpecieRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

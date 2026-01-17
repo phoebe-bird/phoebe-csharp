@@ -58,4 +58,14 @@ public class LocaleListParamsTest : TestBase
 
         Assert.Equal(["en"], requestMessage.Headers.GetValues("Accept-Language"));
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new LocaleListParams { AcceptLanguage = "en" };
+
+        LocaleListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

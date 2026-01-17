@@ -73,6 +73,21 @@ public class HotspotListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new HotspotListParams
+        {
+            RegionCode = "regionCode",
+            Back = 1,
+            Fmt = Fmt.Csv,
+        };
+
+        HotspotListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class FmtTest : TestBase

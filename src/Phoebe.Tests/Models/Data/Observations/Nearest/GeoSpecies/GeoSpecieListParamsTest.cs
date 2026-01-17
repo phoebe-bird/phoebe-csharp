@@ -123,4 +123,25 @@ public class GeoSpecieListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new GeoSpecieListParams
+        {
+            SpeciesCode = "speciesCode",
+            Lat = -90,
+            Lng = -180,
+            Back = 1,
+            Dist = 0,
+            Hotspot = true,
+            IncludeProvisional = true,
+            MaxResults = 1,
+            SppLocale = "sppLocale",
+        };
+
+        GeoSpecieListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
