@@ -601,6 +601,74 @@ public class ChecklistViewResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ChecklistViewResponse
+        {
+            AllObsReported = true,
+            ChecklistID = "checklistId",
+            CreationDt = "creationDt",
+            DurationHrs = 0,
+            IsoObsDate = "isoObsDate",
+            LastEditedDt = "lastEditedDt",
+            Loc = new()
+            {
+                CountryCode = "countryCode",
+                CountryName = "countryName",
+                HierarchicalName = "hierarchicalName",
+                IsHotspot = true,
+                Lat = 0,
+                Latitude = 0,
+                Lng = 0,
+                LocID = "locId",
+                LocName = "locName",
+                Longitude = 0,
+                Name = "name",
+                Subnational1Code = "subnational1Code",
+                Subnational1Name = "subnational1Name",
+            },
+            LocID = "locId",
+            NumObservers = 0,
+            NumSpecies = 0,
+            Obs =
+            [
+                new()
+                {
+                    ObsAux =
+                    [
+                        new()
+                        {
+                            AuxCode = "auxCode",
+                            EntryMethodCode = "entryMethodCode",
+                            FieldName = "fieldName",
+                            ObsID = "obsId",
+                            SpeciesCode = "speciesCode",
+                            SubID = "subId",
+                            Value = "value",
+                        },
+                    ],
+                    ObsDt = "obsDt",
+                    ObsID = "obsId",
+                    SpeciesCode = "speciesCode",
+                },
+            ],
+            ObsDt = "obsDt",
+            ObsTime = "obsTime",
+            ObsTimeValid = true,
+            ProjID = "projId",
+            ProtocolID = "protocolId",
+            SubID = "subId",
+            SubmissionMethodCode = "submissionMethodCode",
+            Subnational1Code = "subnational1Code",
+            UserDisplayName = "userDisplayName",
+        };
+
+        ChecklistViewResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class LocTest : TestBase
@@ -869,6 +937,31 @@ public class LocTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Loc
+        {
+            CountryCode = "countryCode",
+            CountryName = "countryName",
+            HierarchicalName = "hierarchicalName",
+            IsHotspot = true,
+            Lat = 0,
+            Latitude = 0,
+            Lng = 0,
+            LocID = "locId",
+            LocName = "locName",
+            Longitude = 0,
+            Name = "name",
+            Subnational1Code = "subnational1Code",
+            Subnational1Name = "subnational1Name",
+        };
+
+        Loc copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ObTest : TestBase
@@ -1093,6 +1186,34 @@ public class ObTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Ob
+        {
+            ObsAux =
+            [
+                new()
+                {
+                    AuxCode = "auxCode",
+                    EntryMethodCode = "entryMethodCode",
+                    FieldName = "fieldName",
+                    ObsID = "obsId",
+                    SpeciesCode = "speciesCode",
+                    SubID = "subId",
+                    Value = "value",
+                },
+            ],
+            ObsDt = "obsDt",
+            ObsID = "obsId",
+            SpeciesCode = "speciesCode",
+        };
+
+        Ob copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ObsAuxTest : TestBase
@@ -1276,5 +1397,24 @@ public class ObsAuxTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ObsAux
+        {
+            AuxCode = "auxCode",
+            EntryMethodCode = "entryMethodCode",
+            FieldName = "fieldName",
+            ObsID = "obsId",
+            SpeciesCode = "speciesCode",
+            SubID = "subId",
+            Value = "value",
+        };
+
+        ObsAux copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

@@ -136,4 +136,19 @@ public class StatRetrieveResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new StatRetrieveResponse
+        {
+            NumChecklists = 0,
+            NumContributors = 0,
+            NumSpecies = 0,
+        };
+
+        StatRetrieveResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

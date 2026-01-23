@@ -188,8 +188,11 @@ public sealed record class GeoRetrieveResponse : JsonModel
 
     public GeoRetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public GeoRetrieveResponse(GeoRetrieveResponse geoRetrieveResponse)
         : base(geoRetrieveResponse) { }
+#pragma warning restore CS8618
 
     public GeoRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

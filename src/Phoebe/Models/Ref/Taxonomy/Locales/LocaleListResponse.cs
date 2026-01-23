@@ -74,8 +74,11 @@ public sealed record class LocaleListResponse : JsonModel
 
     public LocaleListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public LocaleListResponse(LocaleListResponse localeListResponse)
         : base(localeListResponse) { }
+#pragma warning restore CS8618
 
     public LocaleListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

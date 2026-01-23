@@ -318,4 +318,32 @@ public class ObservationTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Observation
+        {
+            ID = 0,
+            ComName = "comName",
+            Firstname = "firstname",
+            HowMany = 0,
+            Lastname = "lastname",
+            Lat = 0,
+            Lng = 0,
+            LocationPrivate = true,
+            LocID = "locId",
+            LocName = "locName",
+            ObsDt = "obsDt",
+            ObsReviewed = true,
+            ObsValid = true,
+            SciName = "sciName",
+            SpeciesCode = "speciesCode",
+            SubID = "subId",
+        };
+
+        Observation copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

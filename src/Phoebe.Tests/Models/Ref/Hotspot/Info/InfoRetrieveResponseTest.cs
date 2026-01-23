@@ -276,4 +276,29 @@ public class InfoRetrieveResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new InfoRetrieveResponse
+        {
+            CountryCode = "countryCode",
+            CountryName = "countryName",
+            HierarchicalName = "hierarchicalName",
+            IsHotspot = true,
+            Lat = 0,
+            Latitude = 0,
+            Lng = 0,
+            LocID = "locId",
+            LocName = "locName",
+            Longitude = 0,
+            Name = "name",
+            Subnational1Code = "subnational1Code",
+            Subnational1Name = "subnational1Name",
+        };
+
+        InfoRetrieveResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

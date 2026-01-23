@@ -321,8 +321,11 @@ public sealed record class Observation : JsonModel
 
     public Observation() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Observation(Observation observation)
         : base(observation) { }
+#pragma warning restore CS8618
 
     public Observation(IReadOnlyDictionary<string, JsonElement> rawData)
     {

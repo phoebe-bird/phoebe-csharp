@@ -220,4 +220,25 @@ public class GeoRetrieveResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new GeoRetrieveResponse
+        {
+            CountryCode = "countryCode",
+            Lat = 0,
+            LatestObsDt = "latestObsDt",
+            Lng = 0,
+            LocID = "locId",
+            LocName = "locName",
+            NumSpeciesAllTime = 0,
+            Subnational1Code = "subnational1Code",
+            Subnational2Code = "subnational2Code",
+        };
+
+        GeoRetrieveResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

@@ -185,4 +185,24 @@ public class SpeciesGroupListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SpeciesGroupListResponse
+        {
+            GroupName = "Waterfowl",
+            GroupOrder = 1,
+            TaxonOrderBounds =
+            [
+                [211, 579],
+                [1968, 2063],
+                [16549, 16613],
+            ],
+        };
+
+        SpeciesGroupListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

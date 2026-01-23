@@ -158,6 +158,26 @@ public class InfoRetrieveResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new InfoRetrieveResponse
+        {
+            Bounds = new()
+            {
+                MaxX = -75.764f,
+                MaxY = 42.896f,
+                MinX = -75.764f,
+                MinY = 42.896f,
+            },
+            Result = "Madison, New York, United States",
+        };
+
+        InfoRetrieveResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class BoundsTest : TestBase
@@ -299,5 +319,21 @@ public class BoundsTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Bounds
+        {
+            MaxX = -75.764f,
+            MaxY = 42.896f,
+            MinX = -75.764f,
+            MinY = 42.896f,
+        };
+
+        Bounds copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

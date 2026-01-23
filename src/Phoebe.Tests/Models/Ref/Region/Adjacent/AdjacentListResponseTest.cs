@@ -106,4 +106,14 @@ public class AdjacentListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AdjacentListResponse { Code = "US-CT", Name = "Connecticut" };
+
+        AdjacentListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

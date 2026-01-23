@@ -106,4 +106,14 @@ public class ListListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ListListResponse { Code = "US-NY", Name = "New York" };
+
+        ListListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
