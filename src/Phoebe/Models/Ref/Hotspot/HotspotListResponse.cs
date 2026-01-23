@@ -188,8 +188,11 @@ public sealed record class HotspotListResponse : JsonModel
 
     public HotspotListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public HotspotListResponse(HotspotListResponse hotspotListResponse)
         : base(hotspotListResponse) { }
+#pragma warning restore CS8618
 
     public HotspotListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

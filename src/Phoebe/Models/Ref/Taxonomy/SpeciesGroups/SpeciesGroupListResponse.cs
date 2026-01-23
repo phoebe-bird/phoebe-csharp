@@ -95,8 +95,11 @@ public sealed record class SpeciesGroupListResponse : JsonModel
 
     public SpeciesGroupListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SpeciesGroupListResponse(SpeciesGroupListResponse speciesGroupListResponse)
         : base(speciesGroupListResponse) { }
+#pragma warning restore CS8618
 
     public SpeciesGroupListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

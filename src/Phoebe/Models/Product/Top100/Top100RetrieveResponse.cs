@@ -131,8 +131,11 @@ public sealed record class Top100RetrieveResponse : JsonModel
 
     public Top100RetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Top100RetrieveResponse(Top100RetrieveResponse top100RetrieveResponse)
         : base(top100RetrieveResponse) { }
+#pragma warning restore CS8618
 
     public Top100RetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

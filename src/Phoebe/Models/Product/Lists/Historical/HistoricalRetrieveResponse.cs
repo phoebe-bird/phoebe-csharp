@@ -406,8 +406,11 @@ public sealed record class HistoricalRetrieveResponse : JsonModel
 
     public HistoricalRetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public HistoricalRetrieveResponse(HistoricalRetrieveResponse historicalRetrieveResponse)
         : base(historicalRetrieveResponse) { }
+#pragma warning restore CS8618
 
     public HistoricalRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -696,8 +699,11 @@ public sealed record class Loc : JsonModel
 
     public Loc() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Loc(Loc loc)
         : base(loc) { }
+#pragma warning restore CS8618
 
     public Loc(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -818,8 +824,11 @@ public sealed record class Ob : JsonModel
 
     public Ob() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Ob(Ob ob)
         : base(ob) { }
+#pragma warning restore CS8618
 
     public Ob(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -991,8 +1000,11 @@ public sealed record class ObsAux : JsonModel
 
     public ObsAux() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ObsAux(ObsAux obsAux)
         : base(obsAux) { }
+#pragma warning restore CS8618
 
     public ObsAux(IReadOnlyDictionary<string, JsonElement> rawData)
     {

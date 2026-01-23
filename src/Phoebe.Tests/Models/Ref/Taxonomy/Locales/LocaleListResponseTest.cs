@@ -136,4 +136,19 @@ public class LocaleListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new LocaleListResponse
+        {
+            Code = "en",
+            LastUpdated = "2023-10-29 12:50",
+            Name = "English",
+        };
+
+        LocaleListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

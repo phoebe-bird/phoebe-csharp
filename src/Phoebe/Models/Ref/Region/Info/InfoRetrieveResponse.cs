@@ -55,8 +55,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public InfoRetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public InfoRetrieveResponse(InfoRetrieveResponse infoRetrieveResponse)
         : base(infoRetrieveResponse) { }
+#pragma warning restore CS8618
 
     public InfoRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -174,8 +177,11 @@ public sealed record class Bounds : JsonModel
 
     public Bounds() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Bounds(Bounds bounds)
         : base(bounds) { }
+#pragma warning restore CS8618
 
     public Bounds(IReadOnlyDictionary<string, JsonElement> rawData)
     {

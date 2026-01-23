@@ -264,8 +264,11 @@ public sealed record class InfoRetrieveResponse : JsonModel
 
     public InfoRetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public InfoRetrieveResponse(InfoRetrieveResponse infoRetrieveResponse)
         : base(infoRetrieveResponse) { }
+#pragma warning restore CS8618
 
     public InfoRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

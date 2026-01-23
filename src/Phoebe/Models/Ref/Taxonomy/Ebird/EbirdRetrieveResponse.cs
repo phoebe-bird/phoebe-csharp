@@ -255,8 +255,11 @@ public sealed record class EbirdRetrieveResponse : JsonModel
 
     public EbirdRetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public EbirdRetrieveResponse(EbirdRetrieveResponse ebirdRetrieveResponse)
         : base(ebirdRetrieveResponse) { }
+#pragma warning restore CS8618
 
     public EbirdRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

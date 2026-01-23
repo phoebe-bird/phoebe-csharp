@@ -106,4 +106,14 @@ public class VersionListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new VersionListResponse { AuthorityVer = 2017, Latest = true };
+
+        VersionListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

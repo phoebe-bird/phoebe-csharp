@@ -178,4 +178,22 @@ public class Top100RetrieveResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Top100RetrieveResponse
+        {
+            NumCompleteChecklists = 0,
+            NumSpecies = 0,
+            ProfileHandle = "profileHandle",
+            RowNum = 0,
+            UserDisplayName = "userDisplayName",
+            UserID = "userId",
+        };
+
+        Top100RetrieveResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

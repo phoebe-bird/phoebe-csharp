@@ -74,8 +74,11 @@ public sealed record class StatRetrieveResponse : JsonModel
 
     public StatRetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public StatRetrieveResponse(StatRetrieveResponse statRetrieveResponse)
         : base(statRetrieveResponse) { }
+#pragma warning restore CS8618
 
     public StatRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

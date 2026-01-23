@@ -293,4 +293,28 @@ public class EbirdRetrieveResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new EbirdRetrieveResponse
+        {
+            BandingCodes = ["string"],
+            Category = "category",
+            ComName = "comName",
+            ComNameCodes = ["string"],
+            FamilyCode = "familyCode",
+            FamilyComName = "familyComName",
+            FamilySciName = "familySciName",
+            Order = "order",
+            SciName = "sciName",
+            SciNameCodes = ["string"],
+            SpeciesCode = "speciesCode",
+            TaxonOrder = 0,
+        };
+
+        EbirdRetrieveResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

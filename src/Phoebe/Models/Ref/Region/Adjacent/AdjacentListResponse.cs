@@ -55,8 +55,11 @@ public sealed record class AdjacentListResponse : JsonModel
 
     public AdjacentListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AdjacentListResponse(AdjacentListResponse adjacentListResponse)
         : base(adjacentListResponse) { }
+#pragma warning restore CS8618
 
     public AdjacentListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
