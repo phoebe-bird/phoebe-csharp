@@ -76,15 +76,21 @@ public record class StatRetrieveParams : ParamsBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(
-            new Dictionary<string, object?>()
-            {
-                ["RegionCode"] = this.RegionCode,
-                ["Y"] = this.Y,
-                ["M"] = this.M,
-                ["D"] = this.D,
-                ["HeaderData"] = this._rawHeaderData.Freeze(),
-                ["QueryData"] = this._rawQueryData.Freeze(),
-            },
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["RegionCode"] = JsonSerializer.SerializeToElement(this.RegionCode),
+                    ["Y"] = JsonSerializer.SerializeToElement(this.Y),
+                    ["M"] = JsonSerializer.SerializeToElement(this.M),
+                    ["D"] = JsonSerializer.SerializeToElement(this.D),
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
             ModelBase.ToStringSerializerOptions
         );
 
