@@ -210,6 +210,26 @@ var info = await client
 Console.WriteLine(info);
 ```
 
+### Proxies
+
+To route requests through a proxy, configure your client with a custom [`HttpClient`](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-10.0):
+
+```csharp
+using System.Net;
+using System.Net.Http;
+using Phoebe;
+
+var httpClient = new HttpClient
+(
+    new HttpClientHandler
+    {
+        Proxy = new WebProxy("https://example.com:8080")
+    }
+);
+
+PhoebeClient client = new() { HttpClient = httpClient };
+```
+
 ## Undocumented API functionality
 
 The SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.
