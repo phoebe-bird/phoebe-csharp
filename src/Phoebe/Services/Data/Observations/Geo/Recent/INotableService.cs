@@ -9,9 +9,15 @@ using Phoebe.Models.Data.Observations.Geo.Recent.Notable;
 namespace Phoebe.Services.Data.Observations.Geo.Recent;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// The data/obs end-points are used to fetch observations submitted to eBird in
+/// checklists. There are two categories of end-point: 1. Fetch observations for a
+/// specific country, region or location. 2. Fetch observations for nearby locations
+/// - up to a distance of 50km. Each end-point supports optional query parameters
+/// which allow you to filter the list of observations returned.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface INotableService
 {

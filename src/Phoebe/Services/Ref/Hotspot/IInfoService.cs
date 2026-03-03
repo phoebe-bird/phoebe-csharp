@@ -7,9 +7,12 @@ using Phoebe.Models.Ref.Hotspot.Info;
 namespace Phoebe.Services.Ref.Hotspot;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// With the ref/hotspot end-points you can find the hotspots for a given country
+/// or region or nearby hotspots
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IInfoService
 {
