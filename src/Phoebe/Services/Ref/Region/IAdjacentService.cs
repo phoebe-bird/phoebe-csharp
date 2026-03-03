@@ -8,9 +8,11 @@ using Phoebe.Models.Ref.Region.Adjacent;
 namespace Phoebe.Services.Ref.Region;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// With the ref/geo end-point you can find a country's or region's neighbours.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IAdjacentService
 {

@@ -8,9 +8,15 @@ using Phoebe.Models.Product.SpeciesList;
 namespace Phoebe.Services.Product;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// The product end-points make it easy to get the information shown in various pages
+/// on the eBird web site: 1. The Top 100 contributors on a given date. 2. The checklists
+/// submitted on a given date. 3. The most recent checklists submitted. 4. A summary
+/// of the checklists submitted on a given date. 5. The details and all the observations
+/// of a checklist.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ISpeciesListService
 {
