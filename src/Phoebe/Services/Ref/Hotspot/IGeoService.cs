@@ -54,7 +54,7 @@ public interface IGeoServiceWithRawResponse
     IGeoServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /ref/hotspot/geo`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /ref/hotspot/geo</c>, but is otherwise the
     /// same as <see cref="IGeoService.Retrieve(GeoRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<GeoRetrieveResponse>>> Retrieve(

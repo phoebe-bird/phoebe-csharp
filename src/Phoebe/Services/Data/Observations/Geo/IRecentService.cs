@@ -40,10 +40,10 @@ public interface IRecentService
     INotableService Notable { get; }
 
     /// <summary>
-    /// Get the list of recent observations (up to 30 days ago) of birds seen at locations
-    /// within a radius of up to 50 kilometers, from a given set of coordinates.
-    /// Results include only the most recent observation for each species in the
-    /// region specified.
+    /// Get the list of recent observations (up to 30 days ago) of birds seen at
+    /// locations within a radius of up to 50 kilometers, from a given set of
+    /// coordinates. Results include only the most recent observation for each species
+    /// in the region specified.
     /// </summary>
     Task<List<Observation>> List(
         RecentListParams parameters,
@@ -69,7 +69,7 @@ public interface IRecentServiceWithRawResponse
     INotableServiceWithRawResponse Notable { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /data/obs/geo/recent`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /data/obs/geo/recent</c>, but is otherwise the
     /// same as <see cref="IRecentService.List(RecentListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<Observation>>> List(

@@ -69,7 +69,7 @@ public interface IHotspotServiceWithRawResponse
     IInfoServiceWithRawResponse Info { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /ref/hotspot/{regionCode}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /ref/hotspot/{regionCode}</c>, but is otherwise the
     /// same as <see cref="IHotspotService.List(HotspotListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<HotspotListResponse>>> List(

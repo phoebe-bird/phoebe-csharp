@@ -35,10 +35,10 @@ public interface IHistoricService
     IHistoricService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get a list of all taxa seen in a country, region or location on a specific
-    /// date, with the specific observations determined by the "rank" parameter (defaults
-    /// to latest observation on the date). #### Notes Responses may be cached for
-    /// 30 minutes
+    /// Get a list of all taxa seen in a country, region or location on a specific date,
+    /// with the specific observations determined by the "rank" parameter (defaults to
+    /// latest observation on the date). #### Notes Responses may be cached for 30
+    /// minutes
     /// </summary>
     Task<List<Observation>> List(
         HistoricListParams parameters,
@@ -67,7 +67,7 @@ public interface IHistoricServiceWithRawResponse
     IHistoricServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /data/obs/{regionCode}/historic/{y}/{m}/{d}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /data/obs/{regionCode}/historic/{y}/{m}/{d}</c>, but is otherwise the
     /// same as <see cref="IHistoricService.List(HistoricListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<Observation>>> List(

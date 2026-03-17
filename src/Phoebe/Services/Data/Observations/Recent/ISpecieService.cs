@@ -35,15 +35,16 @@ public interface ISpecieService
     ISpecieService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get the recent observations, up to 30 days ago, of a particular species in
-    /// a country, region or location. Results include only the most recent observation
+    /// Get the recent observations, up to 30 days ago, of a particular species in a
+    /// country, region or location. Results include only the most recent observation
     /// from each location in the region specified. #### Notes
     ///
     /// <para>The species code is typically a 6-letter code, e.g. cangoo for Canada
-    /// Goose. You can get complete set of species code from the GET eBird Taxonomy end-point.</para>
+    /// Goose. You can get complete set of species code from the GET eBird Taxonomy
+    /// end-point.</para>
     ///
-    /// <para>When using the *r* query parameter set the *regionCode* URL parameter
-    /// to an empty string.</para>
+    /// <para>When using the *r* query parameter set the *regionCode* URL parameter to
+    /// an empty string.</para>
     /// </summary>
     Task<List<Observation>> Retrieve(
         SpecieRetrieveParams parameters,
@@ -72,7 +73,7 @@ public interface ISpecieServiceWithRawResponse
     ISpecieServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /data/obs/{regionCode}/recent/{speciesCode}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /data/obs/{regionCode}/recent/{speciesCode}</c>, but is otherwise the
     /// same as <see cref="ISpecieService.Retrieve(SpecieRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<Observation>>> Retrieve(

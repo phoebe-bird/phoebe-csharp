@@ -34,8 +34,8 @@ public interface IHistoricalService
     IHistoricalService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get information on the checklists submitted on a given date for a country
-    /// or region.
+    /// Get information on the checklists submitted on a given date for a country or
+    /// region.
     /// </summary>
     Task<List<HistoricalRetrieveResponse>> Retrieve(
         HistoricalRetrieveParams parameters,
@@ -64,7 +64,7 @@ public interface IHistoricalServiceWithRawResponse
     IHistoricalServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /product/lists/{regionCode}/{y}/{m}/{d}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /product/lists/{regionCode}/{y}/{m}/{d}</c>, but is otherwise the
     /// same as <see cref="IHistoricalService.Retrieve(HistoricalRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<HistoricalRetrieveResponse>>> Retrieve(

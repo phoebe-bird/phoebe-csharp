@@ -32,8 +32,8 @@ public interface ILocaleService
     /// with the last time they were updated. Use the accept-language header to get
     /// translated language names when available.
     ///
-    /// <para>NOTE: The locale codes and names are stable but the other fields in
-    /// this result are not yet finalized and should be used with caution.</para>
+    /// <para>NOTE: The locale codes and names are stable but the other fields in this
+    /// result are not yet finalized and should be used with caution.</para>
     /// </summary>
     Task<List<LocaleListResponse>> List(
         LocaleListParams? parameters = null,
@@ -55,7 +55,7 @@ public interface ILocaleServiceWithRawResponse
     ILocaleServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /ref/taxa-locales/ebird`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /ref/taxa-locales/ebird</c>, but is otherwise the
     /// same as <see cref="ILocaleService.List(LocaleListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<LocaleListResponse>>> List(

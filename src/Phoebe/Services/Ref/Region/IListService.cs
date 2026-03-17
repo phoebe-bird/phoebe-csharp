@@ -30,10 +30,10 @@ public interface IListService
     IListService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get the list of sub-regions for a given country or region. #### Notes Not
-    /// all combinations of region type and region code are valid. You can fetch all
-    /// the subnational1 or subnational2 regions for a country however you can only
-    /// specify a region type of 'country' when using 'world' as a region code.
+    /// Get the list of sub-regions for a given country or region. #### Notes Not all
+    /// combinations of region type and region code are valid. You can fetch all the
+    /// subnational1 or subnational2 regions for a country however you can only specify
+    /// a region type of 'country' when using 'world' as a region code.
     /// </summary>
     Task<List<ListListResponse>> List(
         ListListParams parameters,
@@ -62,7 +62,7 @@ public interface IListServiceWithRawResponse
     IListServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /ref/region/list/{regionType}/{parentRegionCode}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /ref/region/list/{regionType}/{parentRegionCode}</c>, but is otherwise the
     /// same as <see cref="IListService.List(ListListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<ListListResponse>>> List(

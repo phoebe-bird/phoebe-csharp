@@ -58,7 +58,7 @@ public interface IFormServiceWithRawResponse
     IFormServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /ref/taxon/forms/{speciesCode}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /ref/taxon/forms/{speciesCode}</c>, but is otherwise the
     /// same as <see cref="IFormService.List(FormListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<string>>> List(

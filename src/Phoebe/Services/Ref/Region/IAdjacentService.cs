@@ -31,8 +31,8 @@ public interface IAdjacentService
 
     /// <summary>
     /// Get the list of countries or regions that share a border with this one. ####
-    /// Notes Only subnational2 codes in the United States, New Zealand, or Mexico
-    /// are currently supported
+    /// Notes Only subnational2 codes in the United States, New Zealand, or Mexico are
+    /// currently supported
     /// </summary>
     Task<List<AdjacentListResponse>> List(
         AdjacentListParams parameters,
@@ -61,7 +61,7 @@ public interface IAdjacentServiceWithRawResponse
     IAdjacentServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /ref/adjacent/{regionCode}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /ref/adjacent/{regionCode}</c>, but is otherwise the
     /// same as <see cref="IAdjacentService.List(AdjacentListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<AdjacentListResponse>>> List(

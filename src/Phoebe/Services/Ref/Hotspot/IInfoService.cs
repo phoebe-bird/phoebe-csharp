@@ -31,8 +31,8 @@ public interface IInfoService
 
     /// <summary>
     /// Get information on the location of a hotspot. #### Notes This API call only
-    /// works for hotspots. If you pass the location code for a private location or
-    /// an invalid location code then an HTTP 410 (Gone) error is returned.
+    /// works for hotspots. If you pass the location code for a private location or an
+    /// invalid location code then an HTTP 410 (Gone) error is returned.
     /// </summary>
     Task<InfoRetrieveResponse> Retrieve(
         InfoRetrieveParams parameters,
@@ -61,7 +61,7 @@ public interface IInfoServiceWithRawResponse
     IInfoServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /ref/hotspot/info/{locId}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /ref/hotspot/info/{locId}</c>, but is otherwise the
     /// same as <see cref="IInfoService.Retrieve(InfoRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<InfoRetrieveResponse>> Retrieve(

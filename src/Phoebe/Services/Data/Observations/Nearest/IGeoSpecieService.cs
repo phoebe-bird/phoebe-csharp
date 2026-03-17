@@ -36,8 +36,8 @@ public interface IGeoSpecieService
 
     /// <summary>
     /// Find the nearest locations where a species has been seen recently. #### Notes
-    /// The species code is typically a 6-letter code, e.g. barswa for Barn Swallow.
-    /// You can get complete set of species code from the GET eBird Taxonomy end-point.
+    /// The species code is typically a 6-letter code, e.g. barswa for Barn Swallow. You
+    /// can get complete set of species code from the GET eBird Taxonomy end-point.
     /// </summary>
     Task<List<Observation>> List(
         GeoSpecieListParams parameters,
@@ -66,7 +66,7 @@ public interface IGeoSpecieServiceWithRawResponse
     IGeoSpecieServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /data/nearest/geo/recent/{speciesCode}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /data/nearest/geo/recent/{speciesCode}</c>, but is otherwise the
     /// same as <see cref="IGeoSpecieService.List(GeoSpecieListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<Observation>>> List(

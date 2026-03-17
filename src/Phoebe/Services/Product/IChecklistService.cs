@@ -33,10 +33,10 @@ public interface IChecklistService
     IChecklistService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get the details and observations of a checklist. #### Notes Do NOT use this
-    /// to download large amounts of data. You will be banned if you do. In the fields
-    /// for each observation, the following fields are duplicates or obsolete and
-    /// will be removed at a future date: *howManyAtleast*, *howManyAtmost*, *hideFlags*,
+    /// Get the details and observations of a checklist. #### Notes Do NOT use this to
+    /// download large amounts of data. You will be banned if you do. In the fields for
+    /// each observation, the following fields are duplicates or obsolete and will be
+    /// removed at a future date: *howManyAtleast*, *howManyAtmost*, *hideFlags*,
     /// *projId*, *subId*, *subnational1Code* and *present*.
     /// </summary>
     Task<ChecklistViewResponse> View(
@@ -66,7 +66,7 @@ public interface IChecklistServiceWithRawResponse
     IChecklistServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /product/checklist/view/{subId}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /product/checklist/view/{subId}</c>, but is otherwise the
     /// same as <see cref="IChecklistService.View(ChecklistViewParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ChecklistViewResponse>> View(

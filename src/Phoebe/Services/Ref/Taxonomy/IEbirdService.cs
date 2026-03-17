@@ -28,10 +28,10 @@ public interface IEbirdService
     IEbirdService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get the taxonomy used by eBird. #### Notes Each entry in the taxonomy contains
-    /// a species code for example, barswa for Barn Swallow. You can download the
-    /// taxonomy for selected species using the *species* query parameter with a
-    /// comma separating each code. Otherwise the full taxonomy is downloaded.
+    /// Get the taxonomy used by eBird. #### Notes Each entry in the taxonomy contains a
+    /// species code for example, barswa for Barn Swallow. You can download the taxonomy
+    /// for selected species using the *species* query parameter with a comma separating
+    /// each code. Otherwise the full taxonomy is downloaded.
     /// </summary>
     Task<List<EbirdRetrieveResponse>> Retrieve(
         EbirdRetrieveParams? parameters = null,
@@ -53,7 +53,7 @@ public interface IEbirdServiceWithRawResponse
     IEbirdServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /ref/taxonomy/ebird`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /ref/taxonomy/ebird</c>, but is otherwise the
     /// same as <see cref="IEbirdService.Retrieve(EbirdRetrieveParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<EbirdRetrieveResponse>>> Retrieve(
