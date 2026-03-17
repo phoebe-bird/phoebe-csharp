@@ -36,9 +36,9 @@ public interface INotableService
 
     /// <summary>
     /// Get the list of notable observations (up to 30 days ago) of birds seen at
-    /// locations within a radius of up to 50 kilometers, from a given set of coordinates.
-    /// Notable observations can be for locally or nationally rare species or are
-    /// otherwise unusual, for example over-wintering birds in a species which is
+    /// locations within a radius of up to 50 kilometers, from a given set of
+    /// coordinates. Notable observations can be for locally or nationally rare species
+    /// or are otherwise unusual, for example over-wintering birds in a species which is
     /// normally only a summer visitor.
     /// </summary>
     Task<List<Observation>> List(
@@ -61,7 +61,7 @@ public interface INotableServiceWithRawResponse
     INotableServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /data/obs/geo/recent/notable`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /data/obs/geo/recent/notable</c>, but is otherwise the
     /// same as <see cref="INotableService.List(NotableListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<Observation>>> List(

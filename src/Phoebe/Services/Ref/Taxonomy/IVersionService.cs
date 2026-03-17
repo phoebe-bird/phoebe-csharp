@@ -28,8 +28,8 @@ public interface IVersionService
     IVersionService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a list of all versions of the taxonomy, with a flag indicating which
-    /// is the latest.
+    /// Returns a list of all versions of the taxonomy, with a flag indicating which is
+    /// the latest.
     /// </summary>
     Task<List<VersionListResponse>> List(
         VersionListParams? parameters = null,
@@ -51,7 +51,7 @@ public interface IVersionServiceWithRawResponse
     IVersionServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /ref/taxonomy/versions`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /ref/taxonomy/versions</c>, but is otherwise the
     /// same as <see cref="IVersionService.List(VersionListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<VersionListResponse>>> List(

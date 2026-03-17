@@ -65,7 +65,7 @@ public interface ISpeciesListServiceWithRawResponse
     ISpeciesListServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /product/spplist/{regionCode}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /product/spplist/{regionCode}</c>, but is otherwise the
     /// same as <see cref="ISpeciesListService.List(SpeciesListListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<string>>> List(

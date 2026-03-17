@@ -37,14 +37,15 @@ public interface ISpecieService
     /// <summary>
     /// Get all observations of a species, seen up to 30 days ago, at any location
     /// within a radius of up to 50 kilometers, from a given set of coordinates. Results
-    /// include only the most recent observation from each location in the region specified.
+    /// include only the most recent observation from each location in the region
+    /// specified.
     ///
     /// <para>#### URL parameters</para>
     ///
-    /// <para>| Name | Description | | ---------- | ----------- | | speciesCode |
-    /// The eBird species code. | #### Notes The species code is typically a 6-letter
-    /// code, e.g. horlar for Horned Lark. You can get complete set of species code
-    /// from the GET eBird Taxonomy end-point.</para>
+    /// <para>| Name | Description | | ---------- | ----------- | | speciesCode | The
+    /// eBird species code. | #### Notes The species code is typically a 6-letter code,
+    /// e.g. horlar for Horned Lark. You can get complete set of species code from the
+    /// GET eBird Taxonomy end-point.</para>
     /// </summary>
     Task<List<Observation>> List(
         SpecieListParams parameters,
@@ -73,7 +74,7 @@ public interface ISpecieServiceWithRawResponse
     ISpecieServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /data/obs/geo/recent/{speciesCode}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /data/obs/geo/recent/{speciesCode}</c>, but is otherwise the
     /// same as <see cref="ISpecieService.List(SpecieListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<Observation>>> List(

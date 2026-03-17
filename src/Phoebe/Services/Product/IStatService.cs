@@ -33,9 +33,9 @@ public interface IStatService
     IStatService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get a summary of the number of checklist submitted, species seen and contributors
-    /// on a given date for a country or region. #### Notes The results are updated
-    /// every 15 minutes.
+    /// Get a summary of the number of checklist submitted, species seen and
+    /// contributors on a given date for a country or region. #### Notes The results are
+    /// updated every 15 minutes.
     /// </summary>
     Task<StatRetrieveResponse> Retrieve(
         StatRetrieveParams parameters,
@@ -64,7 +64,7 @@ public interface IStatServiceWithRawResponse
     IStatServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /product/stats/{regionCode}/{y}/{m}/{d}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /product/stats/{regionCode}/{y}/{m}/{d}</c>, but is otherwise the
     /// same as <see cref="IStatService.Retrieve(StatRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<StatRetrieveResponse>> Retrieve(

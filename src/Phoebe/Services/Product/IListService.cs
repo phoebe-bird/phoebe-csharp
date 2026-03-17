@@ -68,7 +68,7 @@ public interface IListServiceWithRawResponse
     IHistoricalServiceWithRawResponse Historical { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /product/lists/{regionCode}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /product/lists/{regionCode}</c>, but is otherwise the
     /// same as <see cref="IListService.Retrieve(ListRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<ListRetrieveResponse>>> Retrieve(

@@ -41,16 +41,16 @@ public interface ITop100Service
     /// <para>The results are updated every 15 minutes.</para>
     ///
     /// <para>When ordering by the number of completed checklists, the number of species
-    /// seen will always be zero. Similarly when ordering by the number of species
-    /// seen the number of completed checklists will always be zero. <b>Selected
-    /// Response Field Notes</b></para>
+    /// seen will always be zero. Similarly when ordering by the number of species seen
+    /// the number of completed checklists will always be zero. <b>Selected Response
+    /// Field Notes</b></para>
     ///
-    /// <para>profileHandle - if a user has enabled their profile, this is the handle
-    /// to reach it via ebird.org/ebird/profile/{profileHandle}</para>
+    /// <para>profileHandle - if a user has enabled their profile, this is the handle to
+    /// reach it via ebird.org/ebird/profile/{profileHandle}</para>
     ///
     /// <para>numSpecies - always zero when checklistSort parameter is true. Invalid
-    /// observations ARE included in this total numCompleteChecklists - always zero
-    /// when checklistSort parameter is false</para>
+    /// observations ARE included in this total numCompleteChecklists - always zero when
+    /// checklistSort parameter is false</para>
     /// </summary>
     Task<List<Top100RetrieveResponse>> Retrieve(
         Top100RetrieveParams parameters,
@@ -79,7 +79,7 @@ public interface ITop100ServiceWithRawResponse
     ITop100ServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /product/top100/{regionCode}/{y}/{m}/{d}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /product/top100/{regionCode}/{y}/{m}/{d}</c>, but is otherwise the
     /// same as <see cref="ITop100Service.Retrieve(Top100RetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<Top100RetrieveResponse>>> Retrieve(

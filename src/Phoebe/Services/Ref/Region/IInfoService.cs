@@ -29,18 +29,20 @@ public interface IInfoService
     IInfoService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get information on the name and geographical area covered by a region. #### Notes
+    /// Get information on the name and geographical area covered by a region. ####
+    /// Notes
     ///
     /// <para>Taking Madison County, New York, USA (location code US-NY-053) as an
-    /// example the various values for the regionNameFormat query parameter work as follows:</para>
+    /// example the various values for the regionNameFormat query parameter work as
+    /// follows:</para>
     ///
     /// <para>| Value | Description | Result | | ------| ----------- | ------ | |
-    /// detailed | return a detailed description | Madison County, New York, US |
-    /// | detailednoqual | return the name to the subnational1 level | Madison, New
-    /// York | | full | return the full description | Madison, New York, United States
-    /// | | namequal | return the qualified name | Madison County | | nameonly |
-    /// return only the name of the region | Madison | | revdetailed | return the
-    /// detailed description in reverse | US, New York, Madison County |</para>
+    /// detailed | return a detailed description | Madison County, New York, US | |
+    /// detailednoqual | return the name to the subnational1 level | Madison, New York |
+    /// | full | return the full description | Madison, New York, United States | |
+    /// namequal | return the qualified name | Madison County | | nameonly | return only
+    /// the name of the region | Madison | | revdetailed | return the detailed
+    /// description in reverse | US, New York, Madison County |</para>
     /// </summary>
     Task<InfoRetrieveResponse> Retrieve(
         InfoRetrieveParams parameters,
@@ -69,7 +71,7 @@ public interface IInfoServiceWithRawResponse
     IInfoServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /ref/region/info/{regionCode}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /ref/region/info/{regionCode}</c>, but is otherwise the
     /// same as <see cref="IInfoService.Retrieve(InfoRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<InfoRetrieveResponse>> Retrieve(

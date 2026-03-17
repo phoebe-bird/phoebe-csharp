@@ -19,7 +19,8 @@ namespace Phoebe.Models.Product.Top100;
 ///
 /// <para>When ordering by the number of completed checklists, the number of species
 /// seen will always be zero. Similarly when ordering by the number of species seen
-/// the number of completed checklists will always be zero. <b>Selected Response Field Notes</b></para>
+/// the number of completed checklists will always be zero. &lt;b&gt;Selected Response
+/// Field Notes&lt;/b&gt;</para>
 ///
 /// <para>profileHandle - if a user has enabled their profile, this is the handle
 /// to reach it via ebird.org/ebird/profile/{profileHandle}</para>
@@ -119,7 +120,7 @@ public record class Top100RetrieveParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static Top100RetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

@@ -79,7 +79,7 @@ public interface IRecentServiceWithRawResponse
     IHistoricServiceWithRawResponse Historic { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /data/obs/{regionCode}/recent`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /data/obs/{regionCode}/recent</c>, but is otherwise the
     /// same as <see cref="IRecentService.List(RecentListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<Observation>>> List(

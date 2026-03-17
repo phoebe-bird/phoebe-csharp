@@ -28,9 +28,9 @@ public interface ISpeciesGroupService
     ISpeciesGroupService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get the list of species groups, e.g. terns, finches, etc. #### Notes Merlin
-    /// puts like birds together, with Falcons next to Hawks, whereas eBird follows
-    /// taxonomic order.
+    /// Get the list of species groups, e.g. terns, finches, etc. #### Notes Merlin puts
+    /// like birds together, with Falcons next to Hawks, whereas eBird follows taxonomic
+    /// order.
     /// </summary>
     Task<List<SpeciesGroupListResponse>> List(
         SpeciesGroupListParams parameters,
@@ -59,7 +59,7 @@ public interface ISpeciesGroupServiceWithRawResponse
     ISpeciesGroupServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /ref/sppgroup/{speciesGrouping}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /ref/sppgroup/{speciesGrouping}</c>, but is otherwise the
     /// same as <see cref="ISpeciesGroupService.List(SpeciesGroupListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<List<SpeciesGroupListResponse>>> List(
