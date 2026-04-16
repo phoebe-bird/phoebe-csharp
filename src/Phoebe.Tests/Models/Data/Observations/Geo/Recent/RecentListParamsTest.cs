@@ -127,11 +127,13 @@ public class RecentListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.ebird.org/v2/data/obs/geo/recent?lat=-90&lng=-180&back=1&cat=species&dist=0&hotspot=true&includeProvisional=true&maxResults=1&sort=date&sppLocale=sppLocale"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.ebird.org/v2/data/obs/geo/recent?lat=-90&lng=-180&back=1&cat=species&dist=0&hotspot=true&includeProvisional=true&maxResults=1&sort=date&sppLocale=sppLocale"
+                ),
+                url
+            )
         );
     }
 

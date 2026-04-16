@@ -68,11 +68,13 @@ public class InfoRetrieveParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.ebird.org/v2/ref/region/info/regionCode?delim=delim&regionNameFormat=detailed"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.ebird.org/v2/ref/region/info/regionCode?delim=delim&regionNameFormat=detailed"
+                ),
+                url
+            )
         );
     }
 

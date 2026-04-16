@@ -22,7 +22,12 @@ public class ChecklistViewParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.ebird.org/v2/product/checklist/view/subId"), url);
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri("https://api.ebird.org/v2/product/checklist/view/subId"),
+                url
+            )
+        );
     }
 
     [Fact]

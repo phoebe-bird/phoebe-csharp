@@ -110,11 +110,13 @@ public class NotableListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.ebird.org/v2/data/obs/regionCode/recent/notable?back=1&detail=simple&hotspot=true&maxResults=1&r=string&sppLocale=sppLocale"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.ebird.org/v2/data/obs/regionCode/recent/notable?back=1&detail=simple&hotspot=true&maxResults=1&r=string&sppLocale=sppLocale"
+                ),
+                url
+            )
         );
     }
 

@@ -116,11 +116,13 @@ public class GeoSpecieListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.ebird.org/v2/data/nearest/geo/recent/speciesCode?lat=-90&lng=-180&back=1&dist=0&hotspot=true&includeProvisional=true&maxResults=1&sppLocale=sppLocale"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.ebird.org/v2/data/nearest/geo/recent/speciesCode?lat=-90&lng=-180&back=1&dist=0&hotspot=true&includeProvisional=true&maxResults=1&sppLocale=sppLocale"
+                ),
+                url
+            )
         );
     }
 

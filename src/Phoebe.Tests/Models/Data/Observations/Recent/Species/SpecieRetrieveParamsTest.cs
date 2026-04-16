@@ -116,11 +116,13 @@ public class SpecieRetrieveParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.ebird.org/v2/data/obs/regionCode/recent/speciesCode?back=1&hotspot=true&includeProvisional=true&maxResults=1&r=string&sppLocale=sppLocale"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.ebird.org/v2/data/obs/regionCode/recent/speciesCode?back=1&hotspot=true&includeProvisional=true&maxResults=1&r=string&sppLocale=sppLocale"
+                ),
+                url
+            )
         );
     }
 
