@@ -82,11 +82,13 @@ public class GeoRetrieveParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.ebird.org/v2/ref/hotspot/geo?lat=-90&lng=-180&back=1&dist=0&fmt=csv"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.ebird.org/v2/ref/hotspot/geo?lat=-90&lng=-180&back=1&dist=0&fmt=csv"
+                ),
+                url
+            )
         );
     }
 
