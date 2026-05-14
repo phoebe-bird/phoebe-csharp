@@ -7,17 +7,15 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Product.Stats;
 
-[JsonConverter(typeof(ModelConverter<StatRetrieveResponse, StatRetrieveResponseFromRaw>))]
-public sealed record class StatRetrieveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<StatRetrieveResponse, StatRetrieveResponseFromRaw>))]
+public sealed record class StatRetrieveResponse : JsonModel
 {
     public int? NumChecklists
     {
         get
         {
-            if (!this._rawData.TryGetValue("numChecklists", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("numChecklists");
         }
         init
         {
@@ -26,10 +24,7 @@ public sealed record class StatRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numChecklists"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("numChecklists", value);
         }
     }
 
@@ -37,10 +32,8 @@ public sealed record class StatRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("numContributors", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("numContributors");
         }
         init
         {
@@ -49,10 +42,7 @@ public sealed record class StatRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numContributors"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("numContributors", value);
         }
     }
 
@@ -60,10 +50,8 @@ public sealed record class StatRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("numSpecies", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("numSpecies");
         }
         init
         {
@@ -72,13 +60,11 @@ public sealed record class StatRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numSpecies"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("numSpecies", value);
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.NumChecklists;
@@ -88,19 +74,26 @@ public sealed record class StatRetrieveResponse : ModelBase
 
     public StatRetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public StatRetrieveResponse(StatRetrieveResponse statRetrieveResponse)
+        : base(statRetrieveResponse) { }
+#pragma warning restore CS8618
+
     public StatRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     StatRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="StatRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static StatRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -109,8 +102,9 @@ public sealed record class StatRetrieveResponse : ModelBase
     }
 }
 
-class StatRetrieveResponseFromRaw : IFromRaw<StatRetrieveResponse>
+class StatRetrieveResponseFromRaw : IFromRawJson<StatRetrieveResponse>
 {
+    /// <inheritdoc/>
     public StatRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => StatRetrieveResponse.FromRawUnchecked(rawData);

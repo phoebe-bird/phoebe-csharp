@@ -9,7 +9,9 @@ public class SpeciesGroupServiceTest : TestBase
     public async Task List_Works()
     {
         var speciesGroups = await this.client.Ref.Taxonomy.SpeciesGroups.List(
-            SpeciesGrouping.Merlin
+            SpeciesGrouping.Merlin,
+            new(),
+            TestContext.Current.CancellationToken
         );
         foreach (var item in speciesGroups)
         {

@@ -7,17 +7,15 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Taxonomy.Versions;
 
-[JsonConverter(typeof(ModelConverter<VersionListResponse, VersionListResponseFromRaw>))]
-public sealed record class VersionListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<VersionListResponse, VersionListResponseFromRaw>))]
+public sealed record class VersionListResponse : JsonModel
 {
     public double? AuthorityVer
     {
         get
         {
-            if (!this._rawData.TryGetValue("authorityVer", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("authorityVer");
         }
         init
         {
@@ -26,10 +24,7 @@ public sealed record class VersionListResponse : ModelBase
                 return;
             }
 
-            this._rawData["authorityVer"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("authorityVer", value);
         }
     }
 
@@ -37,10 +32,8 @@ public sealed record class VersionListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("latest", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("latest");
         }
         init
         {
@@ -49,13 +42,11 @@ public sealed record class VersionListResponse : ModelBase
                 return;
             }
 
-            this._rawData["latest"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("latest", value);
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.AuthorityVer;
@@ -64,19 +55,26 @@ public sealed record class VersionListResponse : ModelBase
 
     public VersionListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public VersionListResponse(VersionListResponse versionListResponse)
+        : base(versionListResponse) { }
+#pragma warning restore CS8618
+
     public VersionListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     VersionListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="VersionListResponseFromRaw.FromRawUnchecked"/>
     public static VersionListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -85,8 +83,9 @@ public sealed record class VersionListResponse : ModelBase
     }
 }
 
-class VersionListResponseFromRaw : IFromRaw<VersionListResponse>
+class VersionListResponseFromRaw : IFromRawJson<VersionListResponse>
 {
+    /// <inheritdoc/>
     public VersionListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         VersionListResponse.FromRawUnchecked(rawData);
 }

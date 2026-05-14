@@ -13,12 +13,12 @@ namespace Phoebe.Core;
 
 public abstract record class ParamsBase
 {
-    static readonly IReadOnlyDictionary<string, string> s_defaultHeaders;
+    static readonly IReadOnlyDictionary<string, string> defaultHeaders;
 
     static ParamsBase()
     {
         var runtime = GetRuntime();
-        s_defaultHeaders = new Dictionary<string, string>
+        var headers = new Dictionary<string, string>
         {
             ["User-Agent"] = GetUserAgent(),
             ["X-Stainless-Arch"] = GetOSArch(),
@@ -28,16 +28,37 @@ public abstract record class ParamsBase
             ["X-Stainless-Runtime"] = runtime.Name,
             ["X-Stainless-Runtime-Version"] = runtime.Version,
         };
+
+        var customHeadersEnv = Environment.GetEnvironmentVariable("PHOEBE_CUSTOM_HEADERS");
+        if (customHeadersEnv != null)
+        {
+            foreach (var line in customHeadersEnv.Split('\n'))
+            {
+                var colon = line.IndexOf(':');
+                if (colon >= 0)
+                {
+                    headers[line.Substring(0, colon).Trim()] = line.Substring(colon + 1).Trim();
+                }
+            }
+        }
+
+        defaultHeaders = headers;
     }
 
-    private protected FreezableDictionary<string, JsonElement> _rawQueryData = [];
+    private protected JsonDictionary _rawQueryData = new();
+
+    private protected JsonDictionary _rawHeaderData = new();
+
+    protected ParamsBase(ParamsBase paramsBase)
+    {
+        this._rawHeaderData = new(paramsBase._rawHeaderData);
+        this._rawQueryData = new(paramsBase._rawQueryData);
+    }
 
     public IReadOnlyDictionary<string, JsonElement> RawQueryData
     {
         get { return this._rawQueryData.Freeze(); }
     }
-
-    private protected FreezableDictionary<string, JsonElement> _rawHeaderData = [];
 
     public IReadOnlyDictionary<string, JsonElement> RawHeaderData
     {
@@ -150,9 +171,9 @@ public abstract record class ParamsBase
         }
     }
 
-    protected string QueryString(ClientOptions options)
+    internal string QueryString(ClientOptions options)
     {
-        NameValueCollection collection = [];
+        NameValueCollection collection = new();
         foreach (var item in this.RawQueryData)
         {
             ParamsBase.AddQueryElementToCollection(collection, item.Key, item.Value);
@@ -178,21 +199,21 @@ public abstract record class ParamsBase
 
     internal abstract void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options);
 
-    internal virtual StringContent? BodyContent()
+    internal virtual HttpContent? BodyContent()
     {
         return null;
     }
 
-    protected static void AddDefaultHeaders(HttpRequestMessage request, ClientOptions options)
+    internal static void AddDefaultHeaders(HttpRequestMessage request, ClientOptions options)
     {
-        foreach (var header in s_defaultHeaders)
+        foreach (var header in defaultHeaders)
         {
             request.Headers.Add(header.Key, header.Value);
         }
 
-        if (options.APIKey != null)
+        if (options.ApiKey != null)
         {
-            request.Headers.Add("X-eBirdApiToken", options.APIKey);
+            request.Headers.Add("X-eBirdApiToken", options.ApiKey);
         }
         request.Headers.Add(
             "X-Stainless-Timeout",
@@ -202,17 +223,27 @@ public abstract record class ParamsBase
 
     static string GetUserAgent() => $"{typeof(PhoebeClient).Name}/C# {GetPackageVersion()}";
 
+    static string GetPackageVersion() =>
+        Assembly
+            .GetExecutingAssembly()
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion
+        ?? "unknown";
+
     static string GetOSArch() =>
         RuntimeInformation.OSArchitecture switch
         {
             Architecture.X86 => "x32",
             Architecture.X64 => "x64",
             Architecture.Arm => "arm",
-            Architecture.Arm64 or Architecture.Armv6 => "arm64",
+            Architecture.Arm64 => "arm64",
+#if !NETSTANDARD2_0
+            Architecture.Armv6 => "arm64",
             Architecture.Wasm
             or Architecture.S390x
             or Architecture.LoongArch64
             or Architecture.Ppc64le => $"other:{RuntimeInformation.OSArchitecture}",
+#endif
             _ => "unknown",
         };
 
@@ -233,13 +264,6 @@ public abstract record class ParamsBase
         return $"Other:{RuntimeInformation.OSDescription}";
     }
 
-    static string GetPackageVersion() =>
-        Assembly
-            .GetExecutingAssembly()
-            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-            ?.InformationalVersion
-        ?? "unknown";
-
     static Runtime GetRuntime()
     {
         var runtimeDescription = RuntimeInformation.FrameworkDescription;
@@ -249,8 +273,8 @@ public abstract record class ParamsBase
             return new() { Name = runtimeDescription, Version = "unknown" };
         }
 
-        var name = runtimeDescription[..lastSpaceIndex].Trim();
-        var version = runtimeDescription[(lastSpaceIndex + 1)..].Trim();
+        var name = runtimeDescription.Substring(0, lastSpaceIndex).Trim();
+        var version = runtimeDescription.Substring(lastSpaceIndex + 1).Trim();
         return new()
         {
             Name = name.Length == 0 ? "unknown" : name,
@@ -258,5 +282,10 @@ public abstract record class ParamsBase
         };
     }
 
-    readonly record struct Runtime(string Name, string Version);
+    readonly record struct Runtime
+    {
+        public string Name { get; init; }
+
+        public string Version { get; init; }
+    }
 }

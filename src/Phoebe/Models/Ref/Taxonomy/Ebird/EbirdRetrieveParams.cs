@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -6,7 +7,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Phoebe.Core;
 using Phoebe.Exceptions;
-using System = System;
 
 namespace Phoebe.Models.Ref.Taxonomy.Ebird;
 
@@ -15,8 +15,12 @@ namespace Phoebe.Models.Ref.Taxonomy.Ebird;
 /// a species code for example, barswa for Barn Swallow. You can download the taxonomy
 /// for selected species using the *species* query parameter with a comma separating
 /// each code. Otherwise the full taxonomy is downloaded.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class EbirdRetrieveParams : ParamsBase
+public record class EbirdRetrieveParams : ParamsBase
 {
     /// <summary>
     /// Only fetch records from these taxonomic categories.
@@ -25,10 +29,8 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("cat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("cat");
         }
         init
         {
@@ -37,10 +39,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["cat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("cat", value);
         }
     }
 
@@ -51,13 +50,8 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("fmt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Fmt>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Fmt>>("fmt");
         }
         init
         {
@@ -66,10 +60,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["fmt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("fmt", value);
         }
     }
 
@@ -80,10 +71,8 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("locale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("locale");
         }
         init
         {
@@ -92,10 +81,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["locale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("locale", value);
         }
     }
 
@@ -106,10 +92,8 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("species", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("species");
         }
         init
         {
@@ -118,10 +102,7 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["species"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("species", value);
         }
     }
 
@@ -132,10 +113,8 @@ public sealed record class EbirdRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("version", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("version");
         }
         init
         {
@@ -144,22 +123,25 @@ public sealed record class EbirdRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["version"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("version", value);
         }
     }
 
     public EbirdRetrieveParams() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public EbirdRetrieveParams(EbirdRetrieveParams ebirdRetrieveParams)
+        : base(ebirdRetrieveParams) { }
+#pragma warning restore CS8618
 
     public EbirdRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -169,11 +151,12 @@ public sealed record class EbirdRetrieveParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static EbirdRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -185,11 +168,35 @@ public sealed record class EbirdRetrieveParams : ParamsBase
         );
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(EbirdRetrieveParams? other)
     {
-        return new System::UriBuilder(
-            options.BaseUrl.ToString().TrimEnd('/') + "/ref/taxonomy/ebird"
-        )
+        if (other == null)
+        {
+            return false;
+        }
+        return this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
+    public override Uri Url(ClientOptions options)
+    {
+        return new UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/ref/taxonomy/ebird")
         {
             Query = this.QueryString(options),
         }.Uri;
@@ -202,6 +209,11 @@ public sealed record class EbirdRetrieveParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
@@ -219,7 +231,7 @@ sealed class FmtConverter : JsonConverter<Fmt>
 {
     public override Fmt Read(
         ref Utf8JsonReader reader,
-        System::Type typeToConvert,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {

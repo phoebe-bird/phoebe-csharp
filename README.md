@@ -1,12 +1,5 @@
 # Phoebe C# API Library
 
-> [!NOTE]
-> The Phoebe C# API Library is currently in **beta** and we're excited for you to experiment with it!
->
-> This library has not yet been exhaustively tested in production environments and may be missing some features you'd expect in a stable release. As we continue development, there may be breaking changes that require updates to your code.
->
-> **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/stainless-sdks/phoebe-csharp/issues/new).
-
 The Phoebe C# SDK provides convenient access to the [Phoebe REST API](https://science.ebird.org/en/use-ebird-data/download-ebird-data-products) from applications written in C#.
 
 It is generated with [Stainless](https://www.stainless.com/).
@@ -16,16 +9,13 @@ The REST API documentation can be found on [science.ebird.org](https://science.e
 ## Installation
 
 ```bash
-git clone git@github.com:stainless-sdks/phoebe-csharp.git
+git clone git@github.com:phoebe-bird/phoebe-csharp.git
 dotnet add reference phoebe-csharp/src/Phoebe
 ```
 
 ## Requirements
 
-This library requires .NET 8 or later.
-
-> [!NOTE]
-> The library is currently in **beta**. The requirements will be lowered in the future.
+This library requires .NET Standard 2.0 or later.
 
 ## Usage
 
@@ -61,7 +51,7 @@ Or manually:
 ```csharp
 using Phoebe;
 
-PhoebeClient client = new() { APIKey = "My API Key" };
+PhoebeClient client = new() { ApiKey = "My API Key" };
 ```
 
 Or using a combination of the two approaches.
@@ -70,7 +60,7 @@ See this table for the available options:
 
 | Property  | Environment variable | Required | Default value                |
 | --------- | -------------------- | -------- | ---------------------------- |
-| `APIKey`  | `EBIRD_API_KEY`      | true     | -                            |
+| `ApiKey`  | `EBIRD_API_KEY`      | true     | -                            |
 | `BaseUrl` | `PHOEBE_BASE_URL`    | true     | `"https://api.ebird.org/v2"` |
 
 ### Modifying configuration
@@ -84,7 +74,7 @@ var info = await client
     .WithOptions(options =>
         options with
         {
-            BaseUrl = new("https://example.com"),
+            BaseUrl = "https://example.com",
             Timeout = TimeSpan.FromSeconds(42),
         }
     )
@@ -102,6 +92,31 @@ The `WithOptions` method does not affect the original client or service.
 To send a request to the Phoebe API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a C# class.
 
 For example, `client.Ref.Hotspot.Info.Retrieve` should be called with an instance of `InfoRetrieveParams`, and it will return an instance of `Task<InfoRetrieveResponse>`.
+
+## Raw responses
+
+The SDK defines methods that deserialize responses into instances of C# classes. However, these methods don't provide access to the response headers, status code, or the raw response body.
+
+To access this data, prefix any HTTP method call on a client or service with `WithRawResponse`:
+
+```csharp
+var response = await client.WithRawResponse.Ref.Hotspot.Info.Retrieve(parameters);
+var statusCode = response.StatusCode;
+var headers = response.Headers;
+```
+
+The raw `HttpResponseMessage` can also be accessed through the `RawMessage` property.
+
+For non-streaming responses, you can deserialize the response into an instance of a C# class if needed:
+
+```csharp
+using System;
+using Phoebe.Models.Ref.Hotspot.Info;
+
+var response = await client.WithRawResponse.Ref.Hotspot.Info.Retrieve(parameters);
+InfoRetrieveResponse deserialized = await response.Deserialize();
+Console.WriteLine(deserialized);
+```
 
 ## Error handling
 
@@ -121,8 +136,6 @@ The SDK throws custom unchecked exception types:
 | others | `PhoebeUnexpectedStatusCodeException` |
 
 Additionally, all 4xx errors inherit from `Phoebe4xxException`.
-
-false
 
 - `PhoebeIOException`: I/O networking errors.
 
@@ -195,9 +208,96 @@ var info = await client
 Console.WriteLine(info);
 ```
 
+### Proxies
+
+To route requests through a proxy, configure your client with a custom [`HttpClient`](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-10.0):
+
+```csharp
+using System.Net;
+using System.Net.Http;
+using Phoebe;
+
+var httpClient = new HttpClient
+(
+    new HttpClientHandler
+    {
+        Proxy = new WebProxy("https://example.com:8080")
+    }
+);
+
+PhoebeClient client = new() { HttpClient = httpClient };
+```
+
 ## Undocumented API functionality
 
 The SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.
+
+### Parameters
+
+To set undocumented parameters, a constructor exists that accepts dictionaries for additional header, query, and body values. If the method type doesn't support request bodies (e.g. `GET` requests), the constructor will only accept a header and query dictionary.
+
+```csharp
+using System.Collections.Generic;
+using System.Text.Json;
+using Phoebe.Models.Ref.Hotspot.Info;
+
+InfoRetrieveParams parameters = new
+(
+    rawHeaderData: new Dictionary<string, JsonElement>()
+    {
+        { "Custom-Header", JsonSerializer.SerializeToElement(42) }
+    },
+
+    rawQueryData: new Dictionary<string, JsonElement>()
+    {
+        { "custom_query_param", JsonSerializer.SerializeToElement(42) }
+    }
+)
+{
+    // Documented properties can still be added here.
+    // In case of conflict, these parameters take precedence over the custom parameters.
+    LocID = "locId"
+};
+```
+
+The raw parameters can also be accessed through the `RawHeaderData`, `RawQueryData`, and `RawBodyData` (if available) properties.
+
+This can also be used to set a documented parameter to an undocumented or not yet supported _value_, as long as the parameter is optional. If the parameter is required, omitting its `init` property will result in a compile-time error. To work around this, the `FromRawUnchecked` method can be used:
+
+```csharp
+using System.Collections.Generic;
+using System.Text.Json;
+using Phoebe.Models.Data.Observations.Geo.Recent;
+
+var parameters = RecentListParams.FromRawUnchecked
+(
+
+    rawHeaderData: new Dictionary<string, JsonElement>(),
+    rawQueryData: new Dictionary<string, JsonElement>
+    {
+        {
+            "lat",
+            JsonSerializer.SerializeToElement("custom value")
+        }
+    }
+);
+```
+
+### Response properties
+
+To access undocumented response properties, the `RawData` property can be used:
+
+```csharp
+using System.Text.Json;
+
+var response = client.Ref.Hotspot.Info.Retrieve(parameters)
+if (response.RawData.TryGetValue("my_custom_key", out JsonElement value))
+{
+    // Do something with `value`
+}
+```
+
+`RawData` is a `IReadonlyDictionary<string, JsonElement>`. It holds the full data received from the API server.
 
 ### Response validation
 
@@ -243,4 +343,4 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/phoebe-csharp/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/phoebe-bird/phoebe-csharp/issues) with questions, bugs, or suggestions.

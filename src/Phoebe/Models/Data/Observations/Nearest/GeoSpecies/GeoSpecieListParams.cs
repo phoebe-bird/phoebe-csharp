@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
 using Phoebe.Core;
-using Phoebe.Exceptions;
 
 namespace Phoebe.Models.Data.Observations.Nearest.GeoSpecies;
 
@@ -13,8 +12,12 @@ namespace Phoebe.Models.Data.Observations.Nearest.GeoSpecies;
 /// Find the nearest locations where a species has been seen recently. #### Notes
 /// The species code is typically a 6-letter code, e.g. barswa for Barn Swallow.
 /// You can get complete set of species code from the GET eBird Taxonomy end-point.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class GeoSpecieListParams : ParamsBase
+public record class GeoSpecieListParams : ParamsBase
 {
     public string? SpeciesCode { get; init; }
 
@@ -22,42 +25,20 @@ public sealed record class GeoSpecieListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("lat", out JsonElement element))
-                throw new PhoebeInvalidDataException(
-                    "'lat' cannot be null",
-                    new ArgumentOutOfRangeException("lat", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<float>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNotNullStruct<float>("lat");
         }
-        init
-        {
-            this._rawQueryData["lat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { this._rawQueryData.Set("lat", value); }
     }
 
     public required float Lng
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("lng", out JsonElement element))
-                throw new PhoebeInvalidDataException(
-                    "'lng' cannot be null",
-                    new ArgumentOutOfRangeException("lng", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<float>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNotNullStruct<float>("lng");
         }
-        init
-        {
-            this._rawQueryData["lng"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { this._rawQueryData.Set("lng", value); }
     }
 
     /// <summary>
@@ -67,10 +48,8 @@ public sealed record class GeoSpecieListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("back", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("back");
         }
         init
         {
@@ -79,10 +58,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["back"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("back", value);
         }
     }
 
@@ -93,10 +69,8 @@ public sealed record class GeoSpecieListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("dist", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("dist");
         }
         init
         {
@@ -105,10 +79,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["dist"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("dist", value);
         }
     }
 
@@ -119,10 +90,8 @@ public sealed record class GeoSpecieListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("hotspot", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("hotspot");
         }
         init
         {
@@ -131,10 +100,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["hotspot"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("hotspot", value);
         }
     }
 
@@ -145,10 +111,8 @@ public sealed record class GeoSpecieListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("includeProvisional", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("includeProvisional");
         }
         init
         {
@@ -157,10 +121,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["includeProvisional"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("includeProvisional", value);
         }
     }
 
@@ -171,10 +132,8 @@ public sealed record class GeoSpecieListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("maxResults", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("maxResults");
         }
         init
         {
@@ -183,10 +142,7 @@ public sealed record class GeoSpecieListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["maxResults"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("maxResults", value);
         }
     }
 
@@ -197,10 +153,8 @@ public sealed record class GeoSpecieListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("sppLocale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("sppLocale");
         }
         init
         {
@@ -209,45 +163,84 @@ public sealed record class GeoSpecieListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["sppLocale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("sppLocale", value);
         }
     }
 
     public GeoSpecieListParams() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public GeoSpecieListParams(GeoSpecieListParams geoSpecieListParams)
+        : base(geoSpecieListParams)
+    {
+        this.SpeciesCode = geoSpecieListParams.SpeciesCode;
+    }
+#pragma warning restore CS8618
 
     public GeoSpecieListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     GeoSpecieListParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
-        FrozenDictionary<string, JsonElement> rawQueryData
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        string speciesCode
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this.SpeciesCode = speciesCode;
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static GeoSpecieListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        string speciesCode
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
-            FrozenDictionary.ToFrozenDictionary(rawQueryData)
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            speciesCode
         );
+    }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["SpeciesCode"] = JsonSerializer.SerializeToElement(this.SpeciesCode),
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(GeoSpecieListParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.SpeciesCode?.Equals(other.SpeciesCode) ?? other.SpeciesCode == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
     }
 
     public override Uri Url(ClientOptions options)
@@ -268,5 +261,10 @@ public sealed record class GeoSpecieListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

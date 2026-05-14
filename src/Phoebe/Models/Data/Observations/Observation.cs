@@ -7,17 +7,15 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Data.Observations;
 
-[JsonConverter(typeof(ModelConverter<Observation, ObservationFromRaw>))]
-public sealed record class Observation : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Observation, ObservationFromRaw>))]
+public sealed record class Observation : JsonModel
 {
     public long? ID
     {
         get
         {
-            if (!this._rawData.TryGetValue("id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("id");
         }
         init
         {
@@ -26,10 +24,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("id", value);
         }
     }
 
@@ -37,10 +32,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("comName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("comName");
         }
         init
         {
@@ -49,10 +42,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["comName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("comName", value);
         }
     }
 
@@ -60,10 +50,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("firstname", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("firstname");
         }
         init
         {
@@ -72,10 +60,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["firstname"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("firstname", value);
         }
     }
 
@@ -83,10 +68,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("howMany", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("howMany");
         }
         init
         {
@@ -95,10 +78,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["howMany"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("howMany", value);
         }
     }
 
@@ -106,10 +86,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("lastname", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("lastname");
         }
         init
         {
@@ -118,10 +96,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["lastname"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("lastname", value);
         }
     }
 
@@ -129,10 +104,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("lat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<float?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<float>("lat");
         }
         init
         {
@@ -141,10 +114,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["lat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("lat", value);
         }
     }
 
@@ -152,10 +122,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("lng", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<float?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<float>("lng");
         }
         init
         {
@@ -164,10 +132,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["lng"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("lng", value);
         }
     }
 
@@ -175,10 +140,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("locationPrivate", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("locationPrivate");
         }
         init
         {
@@ -187,10 +150,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["locationPrivate"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("locationPrivate", value);
         }
     }
 
@@ -198,10 +158,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("locId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locId");
         }
         init
         {
@@ -210,10 +168,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["locId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("locId", value);
         }
     }
 
@@ -221,10 +176,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("locName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locName");
         }
         init
         {
@@ -233,10 +186,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["locName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("locName", value);
         }
     }
 
@@ -244,10 +194,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("obsDt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("obsDt");
         }
         init
         {
@@ -256,10 +204,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["obsDt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("obsDt", value);
         }
     }
 
@@ -267,10 +212,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("obsReviewed", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("obsReviewed");
         }
         init
         {
@@ -279,10 +222,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["obsReviewed"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("obsReviewed", value);
         }
     }
 
@@ -290,10 +230,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("obsValid", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("obsValid");
         }
         init
         {
@@ -302,10 +240,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["obsValid"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("obsValid", value);
         }
     }
 
@@ -313,10 +248,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("sciName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("sciName");
         }
         init
         {
@@ -325,10 +258,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["sciName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("sciName", value);
         }
     }
 
@@ -336,10 +266,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("speciesCode", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("speciesCode");
         }
         init
         {
@@ -348,10 +276,7 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["speciesCode"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("speciesCode", value);
         }
     }
 
@@ -359,10 +284,8 @@ public sealed record class Observation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("subId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subId");
         }
         init
         {
@@ -371,13 +294,11 @@ public sealed record class Observation : ModelBase
                 return;
             }
 
-            this._rawData["subId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("subId", value);
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -400,27 +321,35 @@ public sealed record class Observation : ModelBase
 
     public Observation() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Observation(Observation observation)
+        : base(observation) { }
+#pragma warning restore CS8618
+
     public Observation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Observation(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ObservationFromRaw.FromRawUnchecked"/>
     public static Observation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class ObservationFromRaw : IFromRaw<Observation>
+class ObservationFromRaw : IFromRawJson<Observation>
 {
+    /// <inheritdoc/>
     public Observation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Observation.FromRawUnchecked(rawData);
 }

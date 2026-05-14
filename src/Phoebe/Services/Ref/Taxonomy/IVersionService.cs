@@ -14,13 +14,47 @@ namespace Phoebe.Services.Ref.Taxonomy;
 /// </summary>
 public interface IVersionService
 {
+    /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IVersionServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IVersionService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a list of all versions of the taxonomy, with a flag indicating which
-    /// is the latest.
+    /// Returns a list of all versions of the taxonomy, with a flag indicating which is
+    /// the latest.
     /// </summary>
     Task<List<VersionListResponse>> List(
+        VersionListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IVersionService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IVersionServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IVersionServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>get /ref/taxonomy/versions</c>, but is otherwise the
+    /// same as <see cref="IVersionService.List(VersionListParams?, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<List<VersionListResponse>>> List(
         VersionListParams? parameters = null,
         CancellationToken cancellationToken = default
     );

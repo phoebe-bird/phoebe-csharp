@@ -10,8 +10,12 @@ namespace Phoebe.Models.Product.Lists;
 
 /// <summary>
 /// Get information on the most recently submitted checklists for a region.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class ListRetrieveParams : ParamsBase
+public record class ListRetrieveParams : ParamsBase
 {
     public string? RegionCode { get; init; }
 
@@ -22,10 +26,8 @@ public sealed record class ListRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("maxResults", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("maxResults");
         }
         init
         {
@@ -34,45 +36,84 @@ public sealed record class ListRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["maxResults"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("maxResults", value);
         }
     }
 
     public ListRetrieveParams() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ListRetrieveParams(ListRetrieveParams listRetrieveParams)
+        : base(listRetrieveParams)
+    {
+        this.RegionCode = listRetrieveParams.RegionCode;
+    }
+#pragma warning restore CS8618
 
     public ListRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ListRetrieveParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
-        FrozenDictionary<string, JsonElement> rawQueryData
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        string regionCode
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this.RegionCode = regionCode;
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static ListRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        string regionCode
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
-            FrozenDictionary.ToFrozenDictionary(rawQueryData)
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            regionCode
         );
+    }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["RegionCode"] = JsonSerializer.SerializeToElement(this.RegionCode),
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(ListRetrieveParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.RegionCode?.Equals(other.RegionCode) ?? other.RegionCode == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
     }
 
     public override Uri Url(ClientOptions options)
@@ -93,5 +134,10 @@ public sealed record class ListRetrieveParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

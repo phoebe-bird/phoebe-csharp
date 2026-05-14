@@ -7,17 +7,15 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Region.List;
 
-[JsonConverter(typeof(ModelConverter<ListListResponse, ListListResponseFromRaw>))]
-public sealed record class ListListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ListListResponse, ListListResponseFromRaw>))]
+public sealed record class ListListResponse : JsonModel
 {
     public string? Code
     {
         get
         {
-            if (!this._rawData.TryGetValue("code", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("code");
         }
         init
         {
@@ -26,10 +24,7 @@ public sealed record class ListListResponse : ModelBase
                 return;
             }
 
-            this._rawData["code"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("code", value);
         }
     }
 
@@ -37,10 +32,8 @@ public sealed record class ListListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("name", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("name");
         }
         init
         {
@@ -49,13 +42,11 @@ public sealed record class ListListResponse : ModelBase
                 return;
             }
 
-            this._rawData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("name", value);
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Code;
@@ -64,19 +55,26 @@ public sealed record class ListListResponse : ModelBase
 
     public ListListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ListListResponse(ListListResponse listListResponse)
+        : base(listListResponse) { }
+#pragma warning restore CS8618
+
     public ListListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ListListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ListListResponseFromRaw.FromRawUnchecked"/>
     public static ListListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -85,8 +83,9 @@ public sealed record class ListListResponse : ModelBase
     }
 }
 
-class ListListResponseFromRaw : IFromRaw<ListListResponse>
+class ListListResponseFromRaw : IFromRawJson<ListListResponse>
 {
+    /// <inheritdoc/>
     public ListListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ListListResponse.FromRawUnchecked(rawData);
 }

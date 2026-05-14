@@ -9,7 +9,8 @@ public class SpecieServiceTest : TestBase
     {
         var observations = await this.client.Data.Observations.Recent.Species.Retrieve(
             "speciesCode",
-            new() { RegionCode = "regionCode" }
+            new() { RegionCode = "regionCode" },
+            TestContext.Current.CancellationToken
         );
         foreach (var item in observations)
         {

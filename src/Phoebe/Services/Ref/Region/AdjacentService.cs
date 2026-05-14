@@ -9,21 +9,75 @@ using Phoebe.Models.Ref.Region.Adjacent;
 
 namespace Phoebe.Services.Ref.Region;
 
+/// <inheritdoc/>
 public sealed class AdjacentService : IAdjacentService
 {
+    readonly Lazy<IAdjacentServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IAdjacentServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
+    /// <inheritdoc/>
     public IAdjacentService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new AdjacentService(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public AdjacentService(IPhoebeClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new AdjacentServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<List<AdjacentListResponse>> List(
+        AdjacentListParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.List(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<List<AdjacentListResponse>> List(
+        string regionCode,
+        AdjacentListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.List(parameters with { RegionCode = regionCode }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class AdjacentServiceWithRawResponse : IAdjacentServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IAdjacentServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new AdjacentServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public AdjacentServiceWithRawResponse(IPhoebeClientWithRawResponse client)
     {
         _client = client;
     }
 
-    public async Task<List<AdjacentListResponse>> List(
+    /// <inheritdoc/>
+    public async Task<HttpResponse<List<AdjacentListResponse>>> List(
         AdjacentListParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -38,23 +92,28 @@ public sealed class AdjacentService : IAdjacentService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var adjacents = await response
-            .Deserialize<List<AdjacentListResponse>>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            foreach (var item in adjacents)
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
             {
-                item.Validate();
+                var adjacents = await response
+                    .Deserialize<List<AdjacentListResponse>>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    foreach (var item in adjacents)
+                    {
+                        item.Validate();
+                    }
+                }
+                return adjacents;
             }
-        }
-        return adjacents;
+        );
     }
 
-    public async Task<List<AdjacentListResponse>> List(
+    /// <inheritdoc/>
+    public Task<HttpResponse<List<AdjacentListResponse>>> List(
         string regionCode,
         AdjacentListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -62,6 +121,6 @@ public sealed class AdjacentService : IAdjacentService
     {
         parameters ??= new();
 
-        return await this.List(parameters with { RegionCode = regionCode }, cancellationToken);
+        return this.List(parameters with { RegionCode = regionCode }, cancellationToken);
     }
 }

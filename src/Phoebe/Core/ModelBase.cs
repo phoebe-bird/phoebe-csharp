@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System.Text.Json;
+using Phoebe.Exceptions;
 using Phoebe.Models.Data.Observations.Recent;
 using Phoebe.Models.Data.Observations.Recent.Notable;
 using Phoebe.Models.Product.Lists.Historical;
@@ -16,19 +16,23 @@ using Recent = Phoebe.Models.Data.Observations.Geo.Recent;
 
 namespace Phoebe.Core;
 
+/// <summary>
+/// The base class for all API objects with properties.
+///
+/// <para>API objects such as enums do not inherit from this class.</para>
+/// </summary>
 public abstract record class ModelBase
 {
-    private protected FreezableDictionary<string, JsonElement> _rawData = [];
-
-    public IReadOnlyDictionary<string, JsonElement> RawData
+    protected ModelBase(ModelBase modelBase)
     {
-        get { return this._rawData.Freeze(); }
+        // Nothing to copy. Just so that subclasses can define copy constructors.
     }
 
     internal static readonly JsonSerializerOptions SerializerOptions = new()
     {
         Converters =
         {
+            new FrozenDictionaryConverterFactory(),
             new ApiEnumConverter<string, Cat>(),
             new ApiEnumConverter<string, Detail>(),
             new ApiEnumConverter<string, Historic::Cat>(),
@@ -48,30 +52,21 @@ public abstract record class ModelBase
         },
     };
 
-    static readonly JsonSerializerOptions _toStringSerializerOptions = new(SerializerOptions)
+    internal static readonly JsonSerializerOptions ToStringSerializerOptions = new(
+        SerializerOptions
+    )
     {
         WriteIndented = true,
     };
 
-    public sealed override string? ToString()
-    {
-        return JsonSerializer.Serialize(this.RawData, _toStringSerializerOptions);
-    }
-
-    public abstract void Validate();
-}
-
-/// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
-/// </summary>
-interface IFromRaw<T>
-{
     /// <summary>
-    /// NOTE: This interface is in the style of a factory instance instead of using
-    /// abstract static methods because .NET Standard 2.0 doesn't support abstract
-    /// static methods.
+    /// Validates that all required fields are set and that each field's value is of the expected type.
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="PhoebeInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
     /// </summary>
-    abstract T FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData);
+    public abstract void Validate();
 }

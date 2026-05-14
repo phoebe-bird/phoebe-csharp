@@ -9,21 +9,77 @@ using Phoebe.Models.Product.SpeciesList;
 
 namespace Phoebe.Services.Product;
 
+/// <inheritdoc/>
 public sealed class SpeciesListService : ISpeciesListService
 {
+    readonly Lazy<ISpeciesListServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public ISpeciesListServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
+    /// <inheritdoc/>
     public ISpeciesListService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new SpeciesListService(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public SpeciesListService(IPhoebeClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new SpeciesListServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<List<string>> List(
+        SpeciesListListParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.List(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<List<string>> List(
+        string regionCode,
+        SpeciesListListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.List(parameters with { RegionCode = regionCode }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class SpeciesListServiceWithRawResponse : ISpeciesListServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public ISpeciesListServiceWithRawResponse WithOptions(
+        Func<ClientOptions, ClientOptions> modifier
+    )
+    {
+        return new SpeciesListServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public SpeciesListServiceWithRawResponse(IPhoebeClientWithRawResponse client)
     {
         _client = client;
     }
 
-    public async Task<List<string>> List(
+    /// <inheritdoc/>
+    public async Task<HttpResponse<List<string>>> List(
         SpeciesListListParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -38,13 +94,18 @@ public sealed class SpeciesListService : ISpeciesListService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize<List<string>>(cancellationToken).ConfigureAwait(false);
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                return await response.Deserialize<List<string>>(token).ConfigureAwait(false);
+            }
+        );
     }
 
-    public async Task<List<string>> List(
+    /// <inheritdoc/>
+    public Task<HttpResponse<List<string>>> List(
         string regionCode,
         SpeciesListListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -52,6 +113,6 @@ public sealed class SpeciesListService : ISpeciesListService
     {
         parameters ??= new();
 
-        return await this.List(parameters with { RegionCode = regionCode }, cancellationToken);
+        return this.List(parameters with { RegionCode = regionCode }, cancellationToken);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -6,7 +7,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Phoebe.Core;
 using Phoebe.Exceptions;
-using System = System;
 
 namespace Phoebe.Models.Data.Observations.Geo.Recent.Notable;
 
@@ -15,49 +15,31 @@ namespace Phoebe.Models.Data.Observations.Geo.Recent.Notable;
 /// within a radius of up to 50 kilometers, from a given set of coordinates. Notable
 /// observations can be for locally or nationally rare species or are otherwise unusual,
 /// for example over-wintering birds in a species which is normally only a summer visitor.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class NotableListParams : ParamsBase
+public record class NotableListParams : ParamsBase
 {
     public required float Lat
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("lat", out JsonElement element))
-                throw new PhoebeInvalidDataException(
-                    "'lat' cannot be null",
-                    new System::ArgumentOutOfRangeException("lat", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<float>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNotNullStruct<float>("lat");
         }
-        init
-        {
-            this._rawQueryData["lat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { this._rawQueryData.Set("lat", value); }
     }
 
     public required float Lng
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("lng", out JsonElement element))
-                throw new PhoebeInvalidDataException(
-                    "'lng' cannot be null",
-                    new System::ArgumentOutOfRangeException("lng", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<float>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNotNullStruct<float>("lng");
         }
-        init
-        {
-            this._rawQueryData["lng"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { this._rawQueryData.Set("lng", value); }
     }
 
     /// <summary>
@@ -67,10 +49,8 @@ public sealed record class NotableListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("back", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("back");
         }
         init
         {
@@ -79,10 +59,7 @@ public sealed record class NotableListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["back"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("back", value);
         }
     }
 
@@ -93,13 +70,8 @@ public sealed record class NotableListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("detail", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Detail>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Detail>>("detail");
         }
         init
         {
@@ -108,10 +80,7 @@ public sealed record class NotableListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["detail"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("detail", value);
         }
     }
 
@@ -122,10 +91,8 @@ public sealed record class NotableListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("dist", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("dist");
         }
         init
         {
@@ -134,10 +101,7 @@ public sealed record class NotableListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["dist"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("dist", value);
         }
     }
 
@@ -148,10 +112,8 @@ public sealed record class NotableListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("hotspot", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("hotspot");
         }
         init
         {
@@ -160,10 +122,7 @@ public sealed record class NotableListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["hotspot"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("hotspot", value);
         }
     }
 
@@ -174,10 +133,8 @@ public sealed record class NotableListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("maxResults", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("maxResults");
         }
         init
         {
@@ -186,10 +143,7 @@ public sealed record class NotableListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["maxResults"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("maxResults", value);
         }
     }
 
@@ -200,10 +154,8 @@ public sealed record class NotableListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("sppLocale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("sppLocale");
         }
         init
         {
@@ -212,22 +164,25 @@ public sealed record class NotableListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["sppLocale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("sppLocale", value);
         }
     }
 
     public NotableListParams() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public NotableListParams(NotableListParams notableListParams)
+        : base(notableListParams) { }
+#pragma warning restore CS8618
 
     public NotableListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -237,11 +192,12 @@ public sealed record class NotableListParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static NotableListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -253,9 +209,35 @@ public sealed record class NotableListParams : ParamsBase
         );
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(NotableListParams? other)
     {
-        return new System::UriBuilder(
+        if (other == null)
+        {
+            return false;
+        }
+        return this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
+    public override Uri Url(ClientOptions options)
+    {
+        return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/') + "/data/obs/geo/recent/notable"
         )
         {
@@ -270,6 +252,11 @@ public sealed record class NotableListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
@@ -287,7 +274,7 @@ sealed class DetailConverter : JsonConverter<Detail>
 {
     public override Detail Read(
         ref Utf8JsonReader reader,
-        System::Type typeToConvert,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {

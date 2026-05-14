@@ -7,17 +7,15 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Region.Adjacent;
 
-[JsonConverter(typeof(ModelConverter<AdjacentListResponse, AdjacentListResponseFromRaw>))]
-public sealed record class AdjacentListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AdjacentListResponse, AdjacentListResponseFromRaw>))]
+public sealed record class AdjacentListResponse : JsonModel
 {
     public string? Code
     {
         get
         {
-            if (!this._rawData.TryGetValue("code", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("code");
         }
         init
         {
@@ -26,10 +24,7 @@ public sealed record class AdjacentListResponse : ModelBase
                 return;
             }
 
-            this._rawData["code"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("code", value);
         }
     }
 
@@ -37,10 +32,8 @@ public sealed record class AdjacentListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("name", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("name");
         }
         init
         {
@@ -49,13 +42,11 @@ public sealed record class AdjacentListResponse : ModelBase
                 return;
             }
 
-            this._rawData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("name", value);
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Code;
@@ -64,19 +55,26 @@ public sealed record class AdjacentListResponse : ModelBase
 
     public AdjacentListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public AdjacentListResponse(AdjacentListResponse adjacentListResponse)
+        : base(adjacentListResponse) { }
+#pragma warning restore CS8618
+
     public AdjacentListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AdjacentListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AdjacentListResponseFromRaw.FromRawUnchecked"/>
     public static AdjacentListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -85,8 +83,9 @@ public sealed record class AdjacentListResponse : ModelBase
     }
 }
 
-class AdjacentListResponseFromRaw : IFromRaw<AdjacentListResponse>
+class AdjacentListResponseFromRaw : IFromRawJson<AdjacentListResponse>
 {
+    /// <inheritdoc/>
     public AdjacentListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AdjacentListResponse.FromRawUnchecked(rawData);

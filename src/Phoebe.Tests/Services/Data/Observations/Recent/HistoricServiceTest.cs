@@ -14,7 +14,8 @@ public class HistoricServiceTest : TestBase
                 RegionCode = "regionCode",
                 Y = 0,
                 M = 1,
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         foreach (var item in observations)
         {

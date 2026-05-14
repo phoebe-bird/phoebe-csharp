@@ -10,21 +10,73 @@ using Phoebe.Models.Data.Observations.Recent.Species;
 
 namespace Phoebe.Services.Data.Observations.Recent;
 
+/// <inheritdoc/>
 public sealed class SpecieService : ISpecieService
 {
+    readonly Lazy<ISpecieServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public ISpecieServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
+    /// <inheritdoc/>
     public ISpecieService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new SpecieService(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public SpecieService(IPhoebeClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new SpecieServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<List<Observation>> Retrieve(
+        SpecieRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Retrieve(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<List<Observation>> Retrieve(
+        string speciesCode,
+        SpecieRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Retrieve(parameters with { SpeciesCode = speciesCode }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class SpecieServiceWithRawResponse : ISpecieServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public ISpecieServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new SpecieServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public SpecieServiceWithRawResponse(IPhoebeClientWithRawResponse client)
     {
         _client = client;
     }
 
-    public async Task<List<Observation>> Retrieve(
+    /// <inheritdoc/>
+    public async Task<HttpResponse<List<Observation>>> Retrieve(
         SpecieRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -39,34 +91,33 @@ public sealed class SpecieService : ISpecieService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var observations = await response
-            .Deserialize<List<Observation>>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            foreach (var item in observations)
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
             {
-                item.Validate();
+                var observations = await response
+                    .Deserialize<List<Observation>>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    foreach (var item in observations)
+                    {
+                        item.Validate();
+                    }
+                }
+                return observations;
             }
-        }
-        return observations;
+        );
     }
 
-    public async Task<List<Observation>> Retrieve(
+    /// <inheritdoc/>
+    public Task<HttpResponse<List<Observation>>> Retrieve(
         string speciesCode,
         SpecieRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.Retrieve(
-            parameters with
-            {
-                SpeciesCode = speciesCode,
-            },
-            cancellationToken
-        );
+        return this.Retrieve(parameters with { SpeciesCode = speciesCode }, cancellationToken);
     }
 }

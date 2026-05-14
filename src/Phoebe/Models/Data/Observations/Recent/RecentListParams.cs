@@ -1,12 +1,13 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Phoebe.Core;
 using Phoebe.Exceptions;
-using System = System;
 
 namespace Phoebe.Models.Data.Observations.Recent;
 
@@ -14,8 +15,12 @@ namespace Phoebe.Models.Data.Observations.Recent;
 /// Get the list of recent observations (up to 30 days ago) of birds seen in a country,
 /// state, county, or location. Results include only the most recent observation
 /// for each species in the region specified.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class RecentListParams : ParamsBase
+public record class RecentListParams : ParamsBase
 {
     public string? RegionCode { get; init; }
 
@@ -26,10 +31,8 @@ public sealed record class RecentListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("back", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("back");
         }
         init
         {
@@ -38,10 +41,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["back"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("back", value);
         }
     }
 
@@ -52,13 +52,8 @@ public sealed record class RecentListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("cat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Cat>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Cat>>("cat");
         }
         init
         {
@@ -67,10 +62,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["cat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("cat", value);
         }
     }
 
@@ -81,10 +73,8 @@ public sealed record class RecentListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("hotspot", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("hotspot");
         }
         init
         {
@@ -93,10 +83,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["hotspot"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("hotspot", value);
         }
     }
 
@@ -107,10 +94,8 @@ public sealed record class RecentListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("includeProvisional", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("includeProvisional");
         }
         init
         {
@@ -119,10 +104,7 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["includeProvisional"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("includeProvisional", value);
         }
     }
 
@@ -133,10 +115,8 @@ public sealed record class RecentListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("maxResults", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("maxResults");
         }
         init
         {
@@ -145,24 +125,19 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["maxResults"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("maxResults", value);
         }
     }
 
     /// <summary>
     /// Fetch observations from up to 10 locations
     /// </summary>
-    public List<string>? R
+    public IReadOnlyList<string>? R
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("r", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<ImmutableArray<string>>("r");
         }
         init
         {
@@ -171,9 +146,9 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["r"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            this._rawQueryData.Set<ImmutableArray<string>?>(
+                "r",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
         }
     }
@@ -185,10 +160,8 @@ public sealed record class RecentListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("sppLocale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("sppLocale");
         }
         init
         {
@@ -197,50 +170,89 @@ public sealed record class RecentListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["sppLocale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("sppLocale", value);
         }
     }
 
     public RecentListParams() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public RecentListParams(RecentListParams recentListParams)
+        : base(recentListParams)
+    {
+        this.RegionCode = recentListParams.RegionCode;
+    }
+#pragma warning restore CS8618
 
     public RecentListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     RecentListParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
-        FrozenDictionary<string, JsonElement> rawQueryData
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        string regionCode
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this.RegionCode = regionCode;
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static RecentListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        string regionCode
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
-            FrozenDictionary.ToFrozenDictionary(rawQueryData)
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            regionCode
         );
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["RegionCode"] = JsonSerializer.SerializeToElement(this.RegionCode),
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(RecentListParams? other)
     {
-        return new System::UriBuilder(
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.RegionCode?.Equals(other.RegionCode) ?? other.RegionCode == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
+    public override Uri Url(ClientOptions options)
+    {
+        return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
                 + string.Format("/data/obs/{0}/recent", this.RegionCode)
         )
@@ -256,6 +268,11 @@ public sealed record class RecentListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
@@ -279,7 +296,7 @@ sealed class CatConverter : JsonConverter<Cat>
 {
     public override Cat Read(
         ref Utf8JsonReader reader,
-        System::Type typeToConvert,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {

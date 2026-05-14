@@ -9,21 +9,73 @@ using Phoebe.Models.Product.Top100;
 
 namespace Phoebe.Services.Product;
 
+/// <inheritdoc/>
 public sealed class Top100Service : ITop100Service
 {
+    readonly Lazy<ITop100ServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public ITop100ServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly IPhoebeClient _client;
+
+    /// <inheritdoc/>
     public ITop100Service WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new Top100Service(this._client.WithOptions(modifier));
     }
 
-    readonly IPhoebeClient _client;
-
     public Top100Service(IPhoebeClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new Top100ServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<List<Top100RetrieveResponse>> Retrieve(
+        Top100RetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Retrieve(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<List<Top100RetrieveResponse>> Retrieve(
+        long d,
+        Top100RetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Retrieve(parameters with { D = d }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class Top100ServiceWithRawResponse : ITop100ServiceWithRawResponse
+{
+    readonly IPhoebeClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public ITop100ServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new Top100ServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public Top100ServiceWithRawResponse(IPhoebeClientWithRawResponse client)
     {
         _client = client;
     }
 
-    public async Task<List<Top100RetrieveResponse>> Retrieve(
+    /// <inheritdoc/>
+    public async Task<HttpResponse<List<Top100RetrieveResponse>>> Retrieve(
         Top100RetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -38,28 +90,33 @@ public sealed class Top100Service : ITop100Service
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var top100s = await response
-            .Deserialize<List<Top100RetrieveResponse>>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            foreach (var item in top100s)
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
             {
-                item.Validate();
+                var top100s = await response
+                    .Deserialize<List<Top100RetrieveResponse>>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    foreach (var item in top100s)
+                    {
+                        item.Validate();
+                    }
+                }
+                return top100s;
             }
-        }
-        return top100s;
+        );
     }
 
-    public async Task<List<Top100RetrieveResponse>> Retrieve(
+    /// <inheritdoc/>
+    public Task<HttpResponse<List<Top100RetrieveResponse>>> Retrieve(
         long d,
         Top100RetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.Retrieve(parameters with { D = d }, cancellationToken);
+        return this.Retrieve(parameters with { D = d }, cancellationToken);
     }
 }

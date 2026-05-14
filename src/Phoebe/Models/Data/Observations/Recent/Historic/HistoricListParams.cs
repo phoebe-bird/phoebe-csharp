@@ -1,12 +1,13 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Phoebe.Core;
 using Phoebe.Exceptions;
-using System = System;
 
 namespace Phoebe.Models.Data.Observations.Recent.Historic;
 
@@ -14,8 +15,12 @@ namespace Phoebe.Models.Data.Observations.Recent.Historic;
 /// Get a list of all taxa seen in a country, region or location on a specific date,
 /// with the specific observations determined by the "rank" parameter (defaults to
 /// latest observation on the date). #### Notes Responses may be cached for 30 minutes
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class HistoricListParams : ParamsBase
+public record class HistoricListParams : ParamsBase
 {
     public required string RegionCode { get; init; }
 
@@ -28,17 +33,12 @@ public sealed record class HistoricListParams : ParamsBase
     /// <summary>
     /// Only fetch observations from these taxonomic categories
     /// </summary>
-    public ApiEnum<string, global::Phoebe.Models.Data.Observations.Recent.Historic.Cat>? Cat
+    public ApiEnum<string, Cat>? Cat
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("cat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat
-            >?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Cat>>("cat");
         }
         init
         {
@@ -47,10 +47,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["cat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("cat", value);
         }
     }
 
@@ -61,13 +58,8 @@ public sealed record class HistoricListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("detail", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Detail>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Detail>>("detail");
         }
         init
         {
@@ -76,10 +68,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["detail"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("detail", value);
         }
     }
 
@@ -90,10 +79,8 @@ public sealed record class HistoricListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("hotspot", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("hotspot");
         }
         init
         {
@@ -102,10 +89,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["hotspot"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("hotspot", value);
         }
     }
 
@@ -116,10 +100,8 @@ public sealed record class HistoricListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("includeProvisional", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("includeProvisional");
         }
         init
         {
@@ -128,10 +110,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["includeProvisional"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("includeProvisional", value);
         }
     }
 
@@ -142,10 +121,8 @@ public sealed record class HistoricListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("maxResults", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("maxResults");
         }
         init
         {
@@ -154,24 +131,19 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["maxResults"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("maxResults", value);
         }
     }
 
     /// <summary>
     /// Fetch observations from up to 50 locations
     /// </summary>
-    public List<string>? R
+    public IReadOnlyList<string>? R
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("r", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<ImmutableArray<string>>("r");
         }
         init
         {
@@ -180,9 +152,9 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["r"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            this._rawQueryData.Set<ImmutableArray<string>?>(
+                "r",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
         }
     }
@@ -194,13 +166,8 @@ public sealed record class HistoricListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("rank", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Rank>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Rank>>("rank");
         }
         init
         {
@@ -209,10 +176,7 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["rank"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("rank", value);
         }
     }
 
@@ -223,10 +187,8 @@ public sealed record class HistoricListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("sppLocale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("sppLocale");
         }
         init
         {
@@ -235,50 +197,110 @@ public sealed record class HistoricListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["sppLocale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("sppLocale", value);
         }
     }
 
     public HistoricListParams() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public HistoricListParams(HistoricListParams historicListParams)
+        : base(historicListParams)
+    {
+        this.RegionCode = historicListParams.RegionCode;
+        this.Y = historicListParams.Y;
+        this.M = historicListParams.M;
+        this.D = historicListParams.D;
+    }
+#pragma warning restore CS8618
 
     public HistoricListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     HistoricListParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
-        FrozenDictionary<string, JsonElement> rawQueryData
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        string regionCode,
+        long y,
+        long m,
+        long d
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this.RegionCode = regionCode;
+        this.Y = y;
+        this.M = m;
+        this.D = d;
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static HistoricListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        string regionCode,
+        long y,
+        long m,
+        long d
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
-            FrozenDictionary.ToFrozenDictionary(rawQueryData)
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            regionCode,
+            y,
+            m,
+            d
         );
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["RegionCode"] = JsonSerializer.SerializeToElement(this.RegionCode),
+                    ["Y"] = JsonSerializer.SerializeToElement(this.Y),
+                    ["M"] = JsonSerializer.SerializeToElement(this.M),
+                    ["D"] = JsonSerializer.SerializeToElement(this.D),
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(HistoricListParams? other)
     {
-        return new System::UriBuilder(
+        if (other == null)
+        {
+            return false;
+        }
+        return this.RegionCode.Equals(other.RegionCode)
+            && this.Y.Equals(other.Y)
+            && this.M.Equals(other.M)
+            && (this.D?.Equals(other.D) ?? other.D == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
+    public override Uri Url(ClientOptions options)
+    {
+        return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
                 + string.Format(
                     "/data/obs/{0}/historic/{1}/{2}/{3}",
@@ -301,12 +323,17 @@ public sealed record class HistoricListParams : ParamsBase
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
 /// <summary>
 /// Only fetch observations from these taxonomic categories
 /// </summary>
-[JsonConverter(typeof(global::Phoebe.Models.Data.Observations.Recent.Historic.CatConverter))]
+[JsonConverter(typeof(CatConverter))]
 public enum Cat
 {
     Species,
@@ -319,48 +346,42 @@ public enum Cat
     Intergrade,
 }
 
-sealed class CatConverter
-    : JsonConverter<global::Phoebe.Models.Data.Observations.Recent.Historic.Cat>
+sealed class CatConverter : JsonConverter<Cat>
 {
-    public override global::Phoebe.Models.Data.Observations.Recent.Historic.Cat Read(
+    public override Cat Read(
         ref Utf8JsonReader reader,
-        System::Type typeToConvert,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "species" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Species,
-            "slash" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Slash,
-            "issf" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Issf,
-            "spuh" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Spuh,
-            "hybrid" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Hybrid,
-            "domestic" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Domestic,
-            "form" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Form,
-            "intergrade" => global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Intergrade,
-            _ => (global::Phoebe.Models.Data.Observations.Recent.Historic.Cat)(-1),
+            "species" => Cat.Species,
+            "slash" => Cat.Slash,
+            "issf" => Cat.Issf,
+            "spuh" => Cat.Spuh,
+            "hybrid" => Cat.Hybrid,
+            "domestic" => Cat.Domestic,
+            "form" => Cat.Form,
+            "intergrade" => Cat.Intergrade,
+            _ => (Cat)(-1),
         };
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        global::Phoebe.Models.Data.Observations.Recent.Historic.Cat value,
-        JsonSerializerOptions options
-    )
+    public override void Write(Utf8JsonWriter writer, Cat value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Species => "species",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Slash => "slash",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Issf => "issf",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Spuh => "spuh",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Hybrid => "hybrid",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Domestic => "domestic",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Form => "form",
-                global::Phoebe.Models.Data.Observations.Recent.Historic.Cat.Intergrade =>
-                    "intergrade",
+                Cat.Species => "species",
+                Cat.Slash => "slash",
+                Cat.Issf => "issf",
+                Cat.Spuh => "spuh",
+                Cat.Hybrid => "hybrid",
+                Cat.Domestic => "domestic",
+                Cat.Form => "form",
+                Cat.Intergrade => "intergrade",
                 _ => throw new PhoebeInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -384,7 +405,7 @@ sealed class DetailConverter : JsonConverter<Detail>
 {
     public override Detail Read(
         ref Utf8JsonReader reader,
-        System::Type typeToConvert,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -427,7 +448,7 @@ sealed class RankConverter : JsonConverter<Rank>
 {
     public override Rank Read(
         ref Utf8JsonReader reader,
-        System::Type typeToConvert,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -6,56 +7,37 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Phoebe.Core;
 using Phoebe.Exceptions;
-using System = System;
 
 namespace Phoebe.Models.Ref.Hotspot.Geo;
 
 /// <summary>
 /// Get the list of hotspots, within a radius of up to 50 kilometers, from a given
 /// set of coordinates.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class GeoRetrieveParams : ParamsBase
+public record class GeoRetrieveParams : ParamsBase
 {
     public required float Lat
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("lat", out JsonElement element))
-                throw new PhoebeInvalidDataException(
-                    "'lat' cannot be null",
-                    new System::ArgumentOutOfRangeException("lat", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<float>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNotNullStruct<float>("lat");
         }
-        init
-        {
-            this._rawQueryData["lat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { this._rawQueryData.Set("lat", value); }
     }
 
     public required float Lng
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("lng", out JsonElement element))
-                throw new PhoebeInvalidDataException(
-                    "'lng' cannot be null",
-                    new System::ArgumentOutOfRangeException("lng", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<float>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNotNullStruct<float>("lng");
         }
-        init
-        {
-            this._rawQueryData["lng"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { this._rawQueryData.Set("lng", value); }
     }
 
     /// <summary>
@@ -65,10 +47,8 @@ public sealed record class GeoRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("back", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("back");
         }
         init
         {
@@ -77,10 +57,7 @@ public sealed record class GeoRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["back"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("back", value);
         }
     }
 
@@ -91,10 +68,8 @@ public sealed record class GeoRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("dist", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("dist");
         }
         init
         {
@@ -103,27 +78,19 @@ public sealed record class GeoRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["dist"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("dist", value);
         }
     }
 
     /// <summary>
     /// Fetch the records in CSV or JSON format.
     /// </summary>
-    public ApiEnum<string, global::Phoebe.Models.Ref.Hotspot.Geo.Fmt>? Fmt
+    public ApiEnum<string, Fmt>? Fmt
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("fmt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                global::Phoebe.Models.Ref.Hotspot.Geo.Fmt
-            >?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Fmt>>("fmt");
         }
         init
         {
@@ -132,22 +99,25 @@ public sealed record class GeoRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["fmt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("fmt", value);
         }
     }
 
     public GeoRetrieveParams() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public GeoRetrieveParams(GeoRetrieveParams geoRetrieveParams)
+        : base(geoRetrieveParams) { }
+#pragma warning restore CS8618
 
     public GeoRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -157,11 +127,12 @@ public sealed record class GeoRetrieveParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static GeoRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -173,9 +144,35 @@ public sealed record class GeoRetrieveParams : ParamsBase
         );
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(GeoRetrieveParams? other)
     {
-        return new System::UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/ref/hotspot/geo")
+        if (other == null)
+        {
+            return false;
+        }
+        return this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
+    public override Uri Url(ClientOptions options)
+    {
+        return new UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/ref/hotspot/geo")
         {
             Query = this.QueryString(options),
         }.Uri;
@@ -189,46 +186,47 @@ public sealed record class GeoRetrieveParams : ParamsBase
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
 /// <summary>
 /// Fetch the records in CSV or JSON format.
 /// </summary>
-[JsonConverter(typeof(global::Phoebe.Models.Ref.Hotspot.Geo.FmtConverter))]
+[JsonConverter(typeof(FmtConverter))]
 public enum Fmt
 {
     Csv,
     Json,
 }
 
-sealed class FmtConverter : JsonConverter<global::Phoebe.Models.Ref.Hotspot.Geo.Fmt>
+sealed class FmtConverter : JsonConverter<Fmt>
 {
-    public override global::Phoebe.Models.Ref.Hotspot.Geo.Fmt Read(
+    public override Fmt Read(
         ref Utf8JsonReader reader,
-        System::Type typeToConvert,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "csv" => global::Phoebe.Models.Ref.Hotspot.Geo.Fmt.Csv,
-            "json" => global::Phoebe.Models.Ref.Hotspot.Geo.Fmt.Json,
-            _ => (global::Phoebe.Models.Ref.Hotspot.Geo.Fmt)(-1),
+            "csv" => Fmt.Csv,
+            "json" => Fmt.Json,
+            _ => (Fmt)(-1),
         };
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        global::Phoebe.Models.Ref.Hotspot.Geo.Fmt value,
-        JsonSerializerOptions options
-    )
+    public override void Write(Utf8JsonWriter writer, Fmt value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                global::Phoebe.Models.Ref.Hotspot.Geo.Fmt.Csv => "csv",
-                global::Phoebe.Models.Ref.Hotspot.Geo.Fmt.Json => "json",
+                Fmt.Csv => "csv",
+                Fmt.Json => "json",
                 _ => throw new PhoebeInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

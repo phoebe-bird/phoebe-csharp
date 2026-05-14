@@ -7,7 +7,11 @@ public class InfoServiceTest : TestBase
     [Fact]
     public async Task Retrieve_Works()
     {
-        var info = await this.client.Ref.Hotspot.Info.Retrieve("locId");
+        var info = await this.client.Ref.Hotspot.Info.Retrieve(
+            "locId",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         info.Validate();
     }
 }

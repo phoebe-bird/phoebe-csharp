@@ -7,7 +7,11 @@ public class ChecklistServiceTest : TestBase
     [Fact]
     public async Task View_Works()
     {
-        var response = await this.client.Product.Checklist.View("subId");
+        var response = await this.client.Product.Checklist.View(
+            "subId",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         response.Validate();
     }
 }

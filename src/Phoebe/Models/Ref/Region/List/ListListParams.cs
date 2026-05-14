@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -6,7 +7,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Phoebe.Core;
 using Phoebe.Exceptions;
-using System = System;
 
 namespace Phoebe.Models.Ref.Region.List;
 
@@ -15,8 +15,12 @@ namespace Phoebe.Models.Ref.Region.List;
 /// combinations of region type and region code are valid. You can fetch all the subnational1
 /// or subnational2 regions for a country however you can only specify a region type
 /// of 'country' when using 'world' as a region code.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class ListListParams : ParamsBase
+public record class ListListParams : ParamsBase
 {
     public required string RegionType { get; init; }
 
@@ -29,13 +33,8 @@ public sealed record class ListListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("fmt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Fmt>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Fmt>>("fmt");
         }
         init
         {
@@ -44,50 +43,99 @@ public sealed record class ListListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["fmt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("fmt", value);
         }
     }
 
     public ListListParams() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public ListListParams(ListListParams listListParams)
+        : base(listListParams)
+    {
+        this.RegionType = listListParams.RegionType;
+        this.ParentRegionCode = listListParams.ParentRegionCode;
+    }
+#pragma warning restore CS8618
 
     public ListListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ListListParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
-        FrozenDictionary<string, JsonElement> rawQueryData
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        string regionType,
+        string parentRegionCode
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this.RegionType = regionType;
+        this.ParentRegionCode = parentRegionCode;
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static ListListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        string regionType,
+        string parentRegionCode
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
-            FrozenDictionary.ToFrozenDictionary(rawQueryData)
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            regionType,
+            parentRegionCode
         );
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["RegionType"] = JsonSerializer.SerializeToElement(this.RegionType),
+                    ["ParentRegionCode"] = JsonSerializer.SerializeToElement(this.ParentRegionCode),
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(ListListParams? other)
     {
-        return new System::UriBuilder(
+        if (other == null)
+        {
+            return false;
+        }
+        return this.RegionType.Equals(other.RegionType)
+            && (
+                this.ParentRegionCode?.Equals(other.ParentRegionCode)
+                ?? other.ParentRegionCode == null
+            )
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
+    public override Uri Url(ClientOptions options)
+    {
+        return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
                 + string.Format("/ref/region/list/{0}/{1}", this.RegionType, this.ParentRegionCode)
         )
@@ -103,6 +151,11 @@ public sealed record class ListListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
@@ -120,7 +173,7 @@ sealed class FmtConverter : JsonConverter<Fmt>
 {
     public override Fmt Read(
         ref Utf8JsonReader reader,
-        System::Type typeToConvert,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {

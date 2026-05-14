@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -6,14 +7,17 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Phoebe.Core;
 using Phoebe.Exceptions;
-using System = System;
 
 namespace Phoebe.Models.Product.Lists.Historical;
 
 /// <summary>
 /// Get information on the checklists submitted on a given date for a country or region.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class HistoricalRetrieveParams : ParamsBase
+public record class HistoricalRetrieveParams : ParamsBase
 {
     public required string RegionCode { get; init; }
 
@@ -30,10 +34,8 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("maxResults", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("maxResults");
         }
         init
         {
@@ -42,10 +44,7 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["maxResults"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("maxResults", value);
         }
     }
 
@@ -56,13 +55,8 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("sortKey", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, SortKey>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, SortKey>>("sortKey");
         }
         init
         {
@@ -71,50 +65,110 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["sortKey"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("sortKey", value);
         }
     }
 
     public HistoricalRetrieveParams() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public HistoricalRetrieveParams(HistoricalRetrieveParams historicalRetrieveParams)
+        : base(historicalRetrieveParams)
+    {
+        this.RegionCode = historicalRetrieveParams.RegionCode;
+        this.Y = historicalRetrieveParams.Y;
+        this.M = historicalRetrieveParams.M;
+        this.D = historicalRetrieveParams.D;
+    }
+#pragma warning restore CS8618
 
     public HistoricalRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     HistoricalRetrieveParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
-        FrozenDictionary<string, JsonElement> rawQueryData
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        string regionCode,
+        long y,
+        long m,
+        long d
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this.RegionCode = regionCode;
+        this.Y = y;
+        this.M = m;
+        this.D = d;
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static HistoricalRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        string regionCode,
+        long y,
+        long m,
+        long d
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
-            FrozenDictionary.ToFrozenDictionary(rawQueryData)
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            regionCode,
+            y,
+            m,
+            d
         );
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["RegionCode"] = JsonSerializer.SerializeToElement(this.RegionCode),
+                    ["Y"] = JsonSerializer.SerializeToElement(this.Y),
+                    ["M"] = JsonSerializer.SerializeToElement(this.M),
+                    ["D"] = JsonSerializer.SerializeToElement(this.D),
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(HistoricalRetrieveParams? other)
     {
-        return new System::UriBuilder(
+        if (other == null)
+        {
+            return false;
+        }
+        return this.RegionCode.Equals(other.RegionCode)
+            && this.Y.Equals(other.Y)
+            && this.M.Equals(other.M)
+            && (this.D?.Equals(other.D) ?? other.D == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
+    public override Uri Url(ClientOptions options)
+    {
+        return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
                 + string.Format(
                     "/product/lists/{0}/{1}/{2}/{3}",
@@ -137,6 +191,11 @@ public sealed record class HistoricalRetrieveParams : ParamsBase
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
 /// <summary>
@@ -153,7 +212,7 @@ sealed class SortKeyConverter : JsonConverter<SortKey>
 {
     public override SortKey Read(
         ref Utf8JsonReader reader,
-        System::Type typeToConvert,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {

@@ -9,7 +9,8 @@ public class ListServiceTest : TestBase
     {
         var lists = await this.client.Ref.Region.List.List(
             "parentRegionCode",
-            new() { RegionType = "regionType" }
+            new() { RegionType = "regionType" },
+            TestContext.Current.CancellationToken
         );
         foreach (var item in lists)
         {

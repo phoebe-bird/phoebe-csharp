@@ -7,17 +7,15 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Taxonomy.Locales;
 
-[JsonConverter(typeof(ModelConverter<LocaleListResponse, LocaleListResponseFromRaw>))]
-public sealed record class LocaleListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<LocaleListResponse, LocaleListResponseFromRaw>))]
+public sealed record class LocaleListResponse : JsonModel
 {
     public string? Code
     {
         get
         {
-            if (!this._rawData.TryGetValue("code", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("code");
         }
         init
         {
@@ -26,10 +24,7 @@ public sealed record class LocaleListResponse : ModelBase
                 return;
             }
 
-            this._rawData["code"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("code", value);
         }
     }
 
@@ -37,10 +32,8 @@ public sealed record class LocaleListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("lastUpdated", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("lastUpdated");
         }
         init
         {
@@ -49,10 +42,7 @@ public sealed record class LocaleListResponse : ModelBase
                 return;
             }
 
-            this._rawData["lastUpdated"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("lastUpdated", value);
         }
     }
 
@@ -60,10 +50,8 @@ public sealed record class LocaleListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("name", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("name");
         }
         init
         {
@@ -72,13 +60,11 @@ public sealed record class LocaleListResponse : ModelBase
                 return;
             }
 
-            this._rawData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("name", value);
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Code;
@@ -88,19 +74,26 @@ public sealed record class LocaleListResponse : ModelBase
 
     public LocaleListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public LocaleListResponse(LocaleListResponse localeListResponse)
+        : base(localeListResponse) { }
+#pragma warning restore CS8618
+
     public LocaleListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     LocaleListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="LocaleListResponseFromRaw.FromRawUnchecked"/>
     public static LocaleListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -109,8 +102,9 @@ public sealed record class LocaleListResponse : ModelBase
     }
 }
 
-class LocaleListResponseFromRaw : IFromRaw<LocaleListResponse>
+class LocaleListResponseFromRaw : IFromRawJson<LocaleListResponse>
 {
+    /// <inheritdoc/>
     public LocaleListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         LocaleListResponse.FromRawUnchecked(rawData);
 }

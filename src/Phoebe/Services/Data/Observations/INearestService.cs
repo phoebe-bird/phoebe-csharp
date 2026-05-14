@@ -11,7 +11,34 @@ namespace Phoebe.Services.Data.Observations;
 /// </summary>
 public interface INearestService
 {
+    /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    INearestServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     INearestService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     IGeoSpecieService GeoSpecies { get; }
+}
+
+/// <summary>
+/// A view of <see cref="INearestService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface INearestServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    INearestServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    IGeoSpecieServiceWithRawResponse GeoSpecies { get; }
 }

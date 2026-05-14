@@ -14,7 +14,8 @@ public class StatServiceTest : TestBase
                 RegionCode = "regionCode",
                 Y = 0,
                 M = 1,
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         stat.Validate();
     }

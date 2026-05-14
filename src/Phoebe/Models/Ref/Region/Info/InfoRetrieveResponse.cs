@@ -7,17 +7,15 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Region.Info;
 
-[JsonConverter(typeof(ModelConverter<InfoRetrieveResponse, InfoRetrieveResponseFromRaw>))]
-public sealed record class InfoRetrieveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<InfoRetrieveResponse, InfoRetrieveResponseFromRaw>))]
+public sealed record class InfoRetrieveResponse : JsonModel
 {
     public Bounds? Bounds
     {
         get
         {
-            if (!this._rawData.TryGetValue("bounds", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Bounds?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Bounds>("bounds");
         }
         init
         {
@@ -26,10 +24,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["bounds"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("bounds", value);
         }
     }
 
@@ -37,10 +32,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("result", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("result");
         }
         init
         {
@@ -49,13 +42,11 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["result"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("result", value);
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Bounds?.Validate();
@@ -64,19 +55,26 @@ public sealed record class InfoRetrieveResponse : ModelBase
 
     public InfoRetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public InfoRetrieveResponse(InfoRetrieveResponse infoRetrieveResponse)
+        : base(infoRetrieveResponse) { }
+#pragma warning restore CS8618
+
     public InfoRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     InfoRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="InfoRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static InfoRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -85,24 +83,23 @@ public sealed record class InfoRetrieveResponse : ModelBase
     }
 }
 
-class InfoRetrieveResponseFromRaw : IFromRaw<InfoRetrieveResponse>
+class InfoRetrieveResponseFromRaw : IFromRawJson<InfoRetrieveResponse>
 {
+    /// <inheritdoc/>
     public InfoRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => InfoRetrieveResponse.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Bounds, BoundsFromRaw>))]
-public sealed record class Bounds : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Bounds, BoundsFromRaw>))]
+public sealed record class Bounds : JsonModel
 {
     public float? MaxX
     {
         get
         {
-            if (!this._rawData.TryGetValue("maxX", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<float?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<float>("maxX");
         }
         init
         {
@@ -111,10 +108,7 @@ public sealed record class Bounds : ModelBase
                 return;
             }
 
-            this._rawData["maxX"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("maxX", value);
         }
     }
 
@@ -122,10 +116,8 @@ public sealed record class Bounds : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("maxY", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<float?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<float>("maxY");
         }
         init
         {
@@ -134,10 +126,7 @@ public sealed record class Bounds : ModelBase
                 return;
             }
 
-            this._rawData["maxY"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("maxY", value);
         }
     }
 
@@ -145,10 +134,8 @@ public sealed record class Bounds : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("minX", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<float?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<float>("minX");
         }
         init
         {
@@ -157,10 +144,7 @@ public sealed record class Bounds : ModelBase
                 return;
             }
 
-            this._rawData["minX"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("minX", value);
         }
     }
 
@@ -168,10 +152,8 @@ public sealed record class Bounds : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("minY", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<float?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<float>("minY");
         }
         init
         {
@@ -180,13 +162,11 @@ public sealed record class Bounds : ModelBase
                 return;
             }
 
-            this._rawData["minY"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("minY", value);
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.MaxX;
@@ -197,27 +177,35 @@ public sealed record class Bounds : ModelBase
 
     public Bounds() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Bounds(Bounds bounds)
+        : base(bounds) { }
+#pragma warning restore CS8618
+
     public Bounds(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Bounds(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="BoundsFromRaw.FromRawUnchecked"/>
     public static Bounds FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class BoundsFromRaw : IFromRaw<Bounds>
+class BoundsFromRaw : IFromRawJson<Bounds>
 {
+    /// <inheritdoc/>
     public Bounds FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Bounds.FromRawUnchecked(rawData);
 }

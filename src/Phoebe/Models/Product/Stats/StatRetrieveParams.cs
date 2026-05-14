@@ -12,8 +12,12 @@ namespace Phoebe.Models.Product.Stats;
 /// Get a summary of the number of checklist submitted, species seen and contributors
 /// on a given date for a country or region. #### Notes The results are updated every
 /// 15 minutes.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class StatRetrieveParams : ParamsBase
+public record class StatRetrieveParams : ParamsBase
 {
     public required string RegionCode { get; init; }
 
@@ -25,36 +29,99 @@ public sealed record class StatRetrieveParams : ParamsBase
 
     public StatRetrieveParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public StatRetrieveParams(StatRetrieveParams statRetrieveParams)
+        : base(statRetrieveParams)
+    {
+        this.RegionCode = statRetrieveParams.RegionCode;
+        this.Y = statRetrieveParams.Y;
+        this.M = statRetrieveParams.M;
+        this.D = statRetrieveParams.D;
+    }
+#pragma warning restore CS8618
+
     public StatRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     StatRetrieveParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
-        FrozenDictionary<string, JsonElement> rawQueryData
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        string regionCode,
+        long y,
+        long m,
+        long d
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this.RegionCode = regionCode;
+        this.Y = y;
+        this.M = m;
+        this.D = d;
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static StatRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        string regionCode,
+        long y,
+        long m,
+        long d
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
-            FrozenDictionary.ToFrozenDictionary(rawQueryData)
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            regionCode,
+            y,
+            m,
+            d
         );
+    }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["RegionCode"] = JsonSerializer.SerializeToElement(this.RegionCode),
+                    ["Y"] = JsonSerializer.SerializeToElement(this.Y),
+                    ["M"] = JsonSerializer.SerializeToElement(this.M),
+                    ["D"] = JsonSerializer.SerializeToElement(this.D),
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(StatRetrieveParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this.RegionCode.Equals(other.RegionCode)
+            && this.Y.Equals(other.Y)
+            && this.M.Equals(other.M)
+            && (this.D?.Equals(other.D) ?? other.D == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
     }
 
     public override Uri Url(ClientOptions options)
@@ -81,5 +148,10 @@ public sealed record class StatRetrieveParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

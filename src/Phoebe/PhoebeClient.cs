@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,53 +11,62 @@ using Phoebe.Services;
 
 namespace Phoebe;
 
+/// <inheritdoc/>
 public sealed class PhoebeClient : IPhoebeClient
 {
-    static readonly ThreadLocal<Random> _threadLocalRandom = new(() => new Random());
-
-    static Random Random
-    {
-        get { return _threadLocalRandom.Value!; }
-    }
-
     readonly ClientOptions _options;
 
+    /// <inheritdoc/>
     public HttpClient HttpClient
     {
         get { return this._options.HttpClient; }
         init { this._options.HttpClient = value; }
     }
 
-    public Uri BaseUrl
+    /// <inheritdoc/>
+    public string BaseUrl
     {
         get { return this._options.BaseUrl; }
         init { this._options.BaseUrl = value; }
     }
 
+    /// <inheritdoc/>
     public bool ResponseValidation
     {
         get { return this._options.ResponseValidation; }
         init { this._options.ResponseValidation = value; }
     }
 
+    /// <inheritdoc/>
     public int? MaxRetries
     {
         get { return this._options.MaxRetries; }
         init { this._options.MaxRetries = value; }
     }
 
+    /// <inheritdoc/>
     public TimeSpan? Timeout
     {
         get { return this._options.Timeout; }
         init { this._options.Timeout = value; }
     }
 
-    public string APIKey
+    /// <inheritdoc/>
+    public string ApiKey
     {
-        get { return this._options.APIKey; }
-        init { this._options.APIKey = value; }
+        get { return this._options.ApiKey; }
+        init { this._options.ApiKey = value; }
     }
 
+    readonly Lazy<IPhoebeClientWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IPhoebeClientWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    /// <inheritdoc/>
     public IPhoebeClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new PhoebeClient(modifier(this._options));
@@ -82,6 +90,108 @@ public sealed class PhoebeClient : IPhoebeClient
         get { return _ref.Value; }
     }
 
+    public void Dispose() => this.HttpClient.Dispose();
+
+    public PhoebeClient()
+    {
+        _options = new();
+
+        _withRawResponse = new(() => new PhoebeClientWithRawResponse(this._options));
+        _data = new(() => new DataService(this));
+        _product = new(() => new ProductService(this));
+        _ref = new(() => new RefService(this));
+    }
+
+    public PhoebeClient(ClientOptions options)
+        : this()
+    {
+        _options = options;
+    }
+}
+
+/// <inheritdoc/>
+public sealed class PhoebeClientWithRawResponse : IPhoebeClientWithRawResponse
+{
+#if NET
+    static readonly Random Random = Random.Shared;
+#else
+    static readonly ThreadLocal<Random> _threadLocalRandom = new(() => new Random());
+
+    static Random Random
+    {
+        get { return _threadLocalRandom.Value!; }
+    }
+#endif
+
+    readonly ClientOptions _options;
+
+    /// <inheritdoc/>
+    public HttpClient HttpClient
+    {
+        get { return this._options.HttpClient; }
+        init { this._options.HttpClient = value; }
+    }
+
+    /// <inheritdoc/>
+    public string BaseUrl
+    {
+        get { return this._options.BaseUrl; }
+        init { this._options.BaseUrl = value; }
+    }
+
+    /// <inheritdoc/>
+    public bool ResponseValidation
+    {
+        get { return this._options.ResponseValidation; }
+        init { this._options.ResponseValidation = value; }
+    }
+
+    /// <inheritdoc/>
+    public int? MaxRetries
+    {
+        get { return this._options.MaxRetries; }
+        init { this._options.MaxRetries = value; }
+    }
+
+    /// <inheritdoc/>
+    public TimeSpan? Timeout
+    {
+        get { return this._options.Timeout; }
+        init { this._options.Timeout = value; }
+    }
+
+    /// <inheritdoc/>
+    public string ApiKey
+    {
+        get { return this._options.ApiKey; }
+        init { this._options.ApiKey = value; }
+    }
+
+    /// <inheritdoc/>
+    public IPhoebeClientWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new PhoebeClientWithRawResponse(modifier(this._options));
+    }
+
+    readonly Lazy<IDataServiceWithRawResponse> _data;
+    public IDataServiceWithRawResponse Data
+    {
+        get { return _data.Value; }
+    }
+
+    readonly Lazy<IProductServiceWithRawResponse> _product;
+    public IProductServiceWithRawResponse Product
+    {
+        get { return _product.Value; }
+    }
+
+    readonly Lazy<IRefServiceWithRawResponse> _ref;
+    public IRefServiceWithRawResponse Ref
+    {
+        get { return _ref.Value; }
+    }
+
+    /// <inheritdoc/>
     public async Task<HttpResponse> Execute<T>(
         HttpRequest<T> request,
         CancellationToken cancellationToken = default
@@ -89,18 +199,14 @@ public sealed class PhoebeClient : IPhoebeClient
         where T : ParamsBase
     {
         var maxRetries = this.MaxRetries ?? ClientOptions.DefaultMaxRetries;
-        if (maxRetries <= 0)
-        {
-            return await ExecuteOnce(request, cancellationToken).ConfigureAwait(false);
-        }
-
         var retries = 0;
         while (true)
         {
             HttpResponse? response = null;
             try
             {
-                response = await ExecuteOnce(request, cancellationToken).ConfigureAwait(false);
+                response = await ExecuteOnce(request, retries, cancellationToken)
+                    .ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -112,7 +218,7 @@ public sealed class PhoebeClient : IPhoebeClient
 
             if (response != null && (++retries > maxRetries || !ShouldRetry(response)))
             {
-                if (response.Message.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     return response;
                 }
@@ -120,7 +226,7 @@ public sealed class PhoebeClient : IPhoebeClient
                 try
                 {
                     throw PhoebeExceptionFactory.CreateApiException(
-                        response.Message.StatusCode,
+                        response.StatusCode,
                         await response.ReadAsString(cancellationToken).ConfigureAwait(false)
                     );
                 }
@@ -142,6 +248,7 @@ public sealed class PhoebeClient : IPhoebeClient
 
     async Task<HttpResponse> ExecuteOnce<T>(
         HttpRequest<T> request,
+        int retryCount,
         CancellationToken cancellationToken = default
     )
         where T : ParamsBase
@@ -154,6 +261,10 @@ public sealed class PhoebeClient : IPhoebeClient
             Content = request.Params.BodyContent(),
         };
         request.Params.AddHeadersToRequest(requestMessage, this._options);
+        if (!requestMessage.Headers.Contains("x-stainless-retry-count"))
+        {
+            requestMessage.Headers.Add("x-stainless-retry-count", retryCount.ToString());
+        }
         using CancellationTokenSource timeoutCts = new(
             this.Timeout ?? ClientOptions.DefaultTimeout
         );
@@ -176,13 +287,17 @@ public sealed class PhoebeClient : IPhoebeClient
         {
             throw new PhoebeIOException("I/O exception", e);
         }
-        return new() { Message = responseMessage, CancellationToken = cts.Token };
+        return new() { RawMessage = responseMessage, CancellationToken = cts.Token };
     }
 
     static TimeSpan ComputeRetryBackoff(int retries, HttpResponse? response)
     {
         TimeSpan? apiBackoff = ParseRetryAfterMsHeader(response) ?? ParseRetryAfterHeader(response);
-        if (apiBackoff != null && apiBackoff < TimeSpan.FromMinutes(1))
+        if (
+            apiBackoff != null
+            && apiBackoff > TimeSpan.Zero
+            && apiBackoff < TimeSpan.FromMinutes(1)
+        )
         {
             // If the API asks us to wait a certain amount of time (and it's a reasonable amount), then just
             // do what it says.
@@ -198,14 +313,14 @@ public sealed class PhoebeClient : IPhoebeClient
     static TimeSpan? ParseRetryAfterMsHeader(HttpResponse? response)
     {
         IEnumerable<string>? headerValues = null;
-        response?.Message.Headers.TryGetValues("Retry-After-Ms", out headerValues);
+        response?.TryGetHeaderValues("Retry-After-Ms", out headerValues);
         var headerValue = headerValues == null ? null : Enumerable.FirstOrDefault(headerValues);
         if (headerValue == null)
         {
             return null;
         }
 
-        if (float.TryParse(headerValue.AsSpan(), out var retryAfterMs))
+        if (float.TryParse(headerValue, out var retryAfterMs))
         {
             return TimeSpan.FromMilliseconds(retryAfterMs);
         }
@@ -216,18 +331,18 @@ public sealed class PhoebeClient : IPhoebeClient
     static TimeSpan? ParseRetryAfterHeader(HttpResponse? response)
     {
         IEnumerable<string>? headerValues = null;
-        response?.Message.Headers.TryGetValues("Retry-After", out headerValues);
+        response?.TryGetHeaderValues("Retry-After", out headerValues);
         var headerValue = headerValues == null ? null : Enumerable.FirstOrDefault(headerValues);
         if (headerValue == null)
         {
             return null;
         }
 
-        if (float.TryParse(headerValue.AsSpan(), out var retryAfterSeconds))
+        if (float.TryParse(headerValue, out var retryAfterSeconds))
         {
             return TimeSpan.FromSeconds(retryAfterSeconds);
         }
-        else if (DateTimeOffset.TryParse(headerValue.AsSpan(), out var retryAfterDate))
+        else if (DateTimeOffset.TryParse(headerValue, out var retryAfterDate))
         {
             return retryAfterDate - DateTimeOffset.Now;
         }
@@ -238,7 +353,7 @@ public sealed class PhoebeClient : IPhoebeClient
     static bool ShouldRetry(HttpResponse response)
     {
         if (
-            response.Message.Headers.TryGetValues("X-Should-Retry", out var headerValues)
+            response.TryGetHeaderValues("X-Should-Retry", out var headerValues)
             && bool.TryParse(Enumerable.FirstOrDefault(headerValues), out var shouldRetry)
         )
         {
@@ -246,19 +361,19 @@ public sealed class PhoebeClient : IPhoebeClient
             return shouldRetry;
         }
 
-        return response.Message.StatusCode switch
+        return (int)response.StatusCode switch
         {
             // Retry on request timeouts
-            HttpStatusCode.RequestTimeout
+            408
             or
             // Retry on lock timeouts
-            HttpStatusCode.Conflict
+            409
             or
             // Retry on rate limits
-            HttpStatusCode.TooManyRequests
+            429
             or
             // Retry internal errors
-            >= HttpStatusCode.InternalServerError => true,
+            >= 500 => true,
             _ => false,
         };
     }
@@ -268,16 +383,18 @@ public sealed class PhoebeClient : IPhoebeClient
         return e is IOException || e is PhoebeIOException;
     }
 
-    public PhoebeClient()
+    public void Dispose() => this.HttpClient.Dispose();
+
+    public PhoebeClientWithRawResponse()
     {
         _options = new();
 
-        _data = new(() => new DataService(this));
-        _product = new(() => new ProductService(this));
-        _ref = new(() => new RefService(this));
+        _data = new(() => new DataServiceWithRawResponse(this));
+        _product = new(() => new ProductServiceWithRawResponse(this));
+        _ref = new(() => new RefServiceWithRawResponse(this));
     }
 
-    public PhoebeClient(ClientOptions options)
+    public PhoebeClientWithRawResponse(ClientOptions options)
         : this()
     {
         _options = options;

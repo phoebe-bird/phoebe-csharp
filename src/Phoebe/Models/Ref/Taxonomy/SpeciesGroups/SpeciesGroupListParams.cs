@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -6,15 +7,18 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Phoebe.Core;
 using Phoebe.Exceptions;
-using System = System;
 
 namespace Phoebe.Models.Ref.Taxonomy.SpeciesGroups;
 
 /// <summary>
 /// Get the list of species groups, e.g. terns, finches, etc. #### Notes Merlin puts
 /// like birds together, with Falcons next to Hawks, whereas eBird follows taxonomic order.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class SpeciesGroupListParams : ParamsBase
+public record class SpeciesGroupListParams : ParamsBase
 {
     public ApiEnum<string, SpeciesGrouping>? SpeciesGrouping { get; init; }
 
@@ -26,10 +30,8 @@ public sealed record class SpeciesGroupListParams : ParamsBase
     {
         get
         {
-            if (!this._rawQueryData.TryGetValue("groupNameLocale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("groupNameLocale");
         }
         init
         {
@@ -38,52 +40,93 @@ public sealed record class SpeciesGroupListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData["groupNameLocale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawQueryData.Set("groupNameLocale", value);
         }
     }
 
     public SpeciesGroupListParams() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public SpeciesGroupListParams(SpeciesGroupListParams speciesGroupListParams)
+        : base(speciesGroupListParams)
+    {
+        this.SpeciesGrouping = speciesGroupListParams.SpeciesGrouping;
+    }
+#pragma warning restore CS8618
 
     public SpeciesGroupListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SpeciesGroupListParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
-        FrozenDictionary<string, JsonElement> rawQueryData
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        ApiEnum<string, SpeciesGrouping> speciesGrouping
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this.SpeciesGrouping = speciesGrouping;
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static SpeciesGroupListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        ApiEnum<string, SpeciesGrouping> speciesGrouping
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
-            FrozenDictionary.ToFrozenDictionary(rawQueryData)
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            speciesGrouping
         );
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["SpeciesGrouping"] = JsonSerializer.SerializeToElement(this.SpeciesGrouping),
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(SpeciesGroupListParams? other)
     {
-        return new System::UriBuilder(
+        if (other == null)
+        {
+            return false;
+        }
+        return (
+                this.SpeciesGrouping?.Equals(other.SpeciesGrouping) ?? other.SpeciesGrouping == null
+            )
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
+    public override Uri Url(ClientOptions options)
+    {
+        return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
-                + string.Format("/ref/sppgroup/{0}", this.SpeciesGrouping.Raw())
+                + string.Format("/ref/sppgroup/{0}", this.SpeciesGrouping?.Raw())
         )
         {
             Query = this.QueryString(options),
@@ -97,6 +140,11 @@ public sealed record class SpeciesGroupListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
@@ -114,7 +162,7 @@ sealed class SpeciesGroupingConverter : JsonConverter<SpeciesGrouping>
 {
     public override SpeciesGrouping Read(
         ref Utf8JsonReader reader,
-        System::Type typeToConvert,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {

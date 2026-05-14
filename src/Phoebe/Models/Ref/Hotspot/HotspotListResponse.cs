@@ -7,17 +7,15 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Hotspot;
 
-[JsonConverter(typeof(ModelConverter<HotspotListResponse, HotspotListResponseFromRaw>))]
-public sealed record class HotspotListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<HotspotListResponse, HotspotListResponseFromRaw>))]
+public sealed record class HotspotListResponse : JsonModel
 {
     public string? CountryCode
     {
         get
         {
-            if (!this._rawData.TryGetValue("countryCode", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("countryCode");
         }
         init
         {
@@ -26,10 +24,7 @@ public sealed record class HotspotListResponse : ModelBase
                 return;
             }
 
-            this._rawData["countryCode"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("countryCode", value);
         }
     }
 
@@ -37,10 +32,8 @@ public sealed record class HotspotListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("lat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("lat");
         }
         init
         {
@@ -49,10 +42,7 @@ public sealed record class HotspotListResponse : ModelBase
                 return;
             }
 
-            this._rawData["lat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("lat", value);
         }
     }
 
@@ -60,10 +50,8 @@ public sealed record class HotspotListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("latestObsDt", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("latestObsDt");
         }
         init
         {
@@ -72,10 +60,7 @@ public sealed record class HotspotListResponse : ModelBase
                 return;
             }
 
-            this._rawData["latestObsDt"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("latestObsDt", value);
         }
     }
 
@@ -83,10 +68,8 @@ public sealed record class HotspotListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("lng", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("lng");
         }
         init
         {
@@ -95,10 +78,7 @@ public sealed record class HotspotListResponse : ModelBase
                 return;
             }
 
-            this._rawData["lng"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("lng", value);
         }
     }
 
@@ -106,10 +86,8 @@ public sealed record class HotspotListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("locId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locId");
         }
         init
         {
@@ -118,10 +96,7 @@ public sealed record class HotspotListResponse : ModelBase
                 return;
             }
 
-            this._rawData["locId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("locId", value);
         }
     }
 
@@ -129,10 +104,8 @@ public sealed record class HotspotListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("locName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locName");
         }
         init
         {
@@ -141,10 +114,7 @@ public sealed record class HotspotListResponse : ModelBase
                 return;
             }
 
-            this._rawData["locName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("locName", value);
         }
     }
 
@@ -152,10 +122,8 @@ public sealed record class HotspotListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("numSpeciesAllTime", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("numSpeciesAllTime");
         }
         init
         {
@@ -164,10 +132,7 @@ public sealed record class HotspotListResponse : ModelBase
                 return;
             }
 
-            this._rawData["numSpeciesAllTime"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("numSpeciesAllTime", value);
         }
     }
 
@@ -175,10 +140,8 @@ public sealed record class HotspotListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("subnational1Code", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subnational1Code");
         }
         init
         {
@@ -187,10 +150,7 @@ public sealed record class HotspotListResponse : ModelBase
                 return;
             }
 
-            this._rawData["subnational1Code"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("subnational1Code", value);
         }
     }
 
@@ -198,10 +158,8 @@ public sealed record class HotspotListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("subnational2Code", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subnational2Code");
         }
         init
         {
@@ -210,13 +168,11 @@ public sealed record class HotspotListResponse : ModelBase
                 return;
             }
 
-            this._rawData["subnational2Code"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("subnational2Code", value);
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.CountryCode;
@@ -232,19 +188,26 @@ public sealed record class HotspotListResponse : ModelBase
 
     public HotspotListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public HotspotListResponse(HotspotListResponse hotspotListResponse)
+        : base(hotspotListResponse) { }
+#pragma warning restore CS8618
+
     public HotspotListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     HotspotListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="HotspotListResponseFromRaw.FromRawUnchecked"/>
     public static HotspotListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -253,8 +216,9 @@ public sealed record class HotspotListResponse : ModelBase
     }
 }
 
-class HotspotListResponseFromRaw : IFromRaw<HotspotListResponse>
+class HotspotListResponseFromRaw : IFromRawJson<HotspotListResponse>
 {
+    /// <inheritdoc/>
     public HotspotListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         HotspotListResponse.FromRawUnchecked(rawData);
 }

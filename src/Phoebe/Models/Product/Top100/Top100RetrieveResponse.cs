@@ -7,17 +7,15 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Product.Top100;
 
-[JsonConverter(typeof(ModelConverter<Top100RetrieveResponse, Top100RetrieveResponseFromRaw>))]
-public sealed record class Top100RetrieveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Top100RetrieveResponse, Top100RetrieveResponseFromRaw>))]
+public sealed record class Top100RetrieveResponse : JsonModel
 {
     public int? NumCompleteChecklists
     {
         get
         {
-            if (!this._rawData.TryGetValue("numCompleteChecklists", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("numCompleteChecklists");
         }
         init
         {
@@ -26,10 +24,7 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numCompleteChecklists"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("numCompleteChecklists", value);
         }
     }
 
@@ -37,10 +32,8 @@ public sealed record class Top100RetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("numSpecies", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("numSpecies");
         }
         init
         {
@@ -49,10 +42,7 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["numSpecies"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("numSpecies", value);
         }
     }
 
@@ -60,10 +50,8 @@ public sealed record class Top100RetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("profileHandle", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("profileHandle");
         }
         init
         {
@@ -72,10 +60,7 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["profileHandle"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("profileHandle", value);
         }
     }
 
@@ -83,10 +68,8 @@ public sealed record class Top100RetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("rowNum", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<int?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<int>("rowNum");
         }
         init
         {
@@ -95,10 +78,7 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["rowNum"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("rowNum", value);
         }
     }
 
@@ -106,10 +86,8 @@ public sealed record class Top100RetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("userDisplayName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("userDisplayName");
         }
         init
         {
@@ -118,10 +96,7 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["userDisplayName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("userDisplayName", value);
         }
     }
 
@@ -129,10 +104,8 @@ public sealed record class Top100RetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("userId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("userId");
         }
         init
         {
@@ -141,13 +114,11 @@ public sealed record class Top100RetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["userId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("userId", value);
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.NumCompleteChecklists;
@@ -160,19 +131,26 @@ public sealed record class Top100RetrieveResponse : ModelBase
 
     public Top100RetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Top100RetrieveResponse(Top100RetrieveResponse top100RetrieveResponse)
+        : base(top100RetrieveResponse) { }
+#pragma warning restore CS8618
+
     public Top100RetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Top100RetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="Top100RetrieveResponseFromRaw.FromRawUnchecked"/>
     public static Top100RetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -181,8 +159,9 @@ public sealed record class Top100RetrieveResponse : ModelBase
     }
 }
 
-class Top100RetrieveResponseFromRaw : IFromRaw<Top100RetrieveResponse>
+class Top100RetrieveResponseFromRaw : IFromRawJson<Top100RetrieveResponse>
 {
+    /// <inheritdoc/>
     public Top100RetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => Top100RetrieveResponse.FromRawUnchecked(rawData);

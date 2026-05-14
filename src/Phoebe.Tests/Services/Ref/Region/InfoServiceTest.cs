@@ -7,7 +7,11 @@ public class InfoServiceTest : TestBase
     [Fact]
     public async Task Retrieve_Works()
     {
-        var info = await this.client.Ref.Region.Info.Retrieve("regionCode");
+        var info = await this.client.Ref.Region.Info.Retrieve(
+            "regionCode",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         info.Validate();
     }
 }

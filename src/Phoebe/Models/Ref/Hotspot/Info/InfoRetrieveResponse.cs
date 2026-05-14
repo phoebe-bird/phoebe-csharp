@@ -7,17 +7,15 @@ using Phoebe.Core;
 
 namespace Phoebe.Models.Ref.Hotspot.Info;
 
-[JsonConverter(typeof(ModelConverter<InfoRetrieveResponse, InfoRetrieveResponseFromRaw>))]
-public sealed record class InfoRetrieveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<InfoRetrieveResponse, InfoRetrieveResponseFromRaw>))]
+public sealed record class InfoRetrieveResponse : JsonModel
 {
     public string? CountryCode
     {
         get
         {
-            if (!this._rawData.TryGetValue("countryCode", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("countryCode");
         }
         init
         {
@@ -26,10 +24,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["countryCode"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("countryCode", value);
         }
     }
 
@@ -37,10 +32,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("countryName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("countryName");
         }
         init
         {
@@ -49,10 +42,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["countryName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("countryName", value);
         }
     }
 
@@ -60,10 +50,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("hierarchicalName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("hierarchicalName");
         }
         init
         {
@@ -72,10 +60,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["hierarchicalName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("hierarchicalName", value);
         }
     }
 
@@ -83,10 +68,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("isHotspot", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("isHotspot");
         }
         init
         {
@@ -95,10 +78,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["isHotspot"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("isHotspot", value);
         }
     }
 
@@ -106,10 +86,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("lat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("lat");
         }
         init
         {
@@ -118,10 +96,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["lat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("lat", value);
         }
     }
 
@@ -129,10 +104,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("latitude", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("latitude");
         }
         init
         {
@@ -141,10 +114,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["latitude"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("latitude", value);
         }
     }
 
@@ -152,10 +122,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("lng", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("lng");
         }
         init
         {
@@ -164,10 +132,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["lng"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("lng", value);
         }
     }
 
@@ -175,10 +140,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("locId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locId");
         }
         init
         {
@@ -187,10 +150,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["locId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("locId", value);
         }
     }
 
@@ -198,10 +158,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("locName", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locName");
         }
         init
         {
@@ -210,10 +168,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["locName"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("locName", value);
         }
     }
 
@@ -221,10 +176,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("longitude", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<double>("longitude");
         }
         init
         {
@@ -233,10 +186,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["longitude"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("longitude", value);
         }
     }
 
@@ -244,10 +194,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("name", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("name");
         }
         init
         {
@@ -256,10 +204,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("name", value);
         }
     }
 
@@ -267,10 +212,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("subnational1Code", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subnational1Code");
         }
         init
         {
@@ -279,10 +222,7 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["subnational1Code"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("subnational1Code", value);
         }
     }
 
@@ -290,10 +230,8 @@ public sealed record class InfoRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("subnational1Name", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subnational1Name");
         }
         init
         {
@@ -302,13 +240,11 @@ public sealed record class InfoRetrieveResponse : ModelBase
                 return;
             }
 
-            this._rawData["subnational1Name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            this._rawData.Set("subnational1Name", value);
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.CountryCode;
@@ -328,19 +264,26 @@ public sealed record class InfoRetrieveResponse : ModelBase
 
     public InfoRetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public InfoRetrieveResponse(InfoRetrieveResponse infoRetrieveResponse)
+        : base(infoRetrieveResponse) { }
+#pragma warning restore CS8618
+
     public InfoRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     InfoRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="InfoRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static InfoRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -349,8 +292,9 @@ public sealed record class InfoRetrieveResponse : ModelBase
     }
 }
 
-class InfoRetrieveResponseFromRaw : IFromRaw<InfoRetrieveResponse>
+class InfoRetrieveResponseFromRaw : IFromRawJson<InfoRetrieveResponse>
 {
+    /// <inheritdoc/>
     public InfoRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => InfoRetrieveResponse.FromRawUnchecked(rawData);
