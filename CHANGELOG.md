@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1](https://github.com/phoebe-bird/phoebe-csharp/compare/v0.1.0...v0.1.1) (2026-05-14)
+
+
+### Chores
+
+* regenerate from phoebe-config[#2](https://github.com/phoebe-bird/phoebe-csharp/issues/2) ([ce6c0d0](https://github.com/phoebe-bird/phoebe-csharp/commit/ce6c0d0edded3acc21fc14e5d053f1c43ef8a41a))
+* regenerate SDKs from phoebe-config[#2](https://github.com/phoebe-bird/phoebe-csharp/issues/2) (feat: bump openapi info.version to 1.0.2 (Phase 9 dry run [#2](https://github.com/phoebe-bird/phoebe-csharp/issues/2))) ([fa5019f](https://github.com/phoebe-bird/phoebe-csharp/commit/fa5019fed17059adaff2f6c9b8441c2002d983a6))
+
 ## 0.1.0 (2026-05-09)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/phoebe-bird/phoebe-csharp/compare/v0.0.1...v0.1.0)
