@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.1 (2026-05-14)
+
+Full Changelog: [v0.1.0...v0.1.1](https://github.com/phoebe-bird/phoebe-csharp/compare/v0.1.0...v0.1.1)
+
+### Chores
+
+* **internal:** codegen related update ([b9e45a7](https://github.com/phoebe-bird/phoebe-csharp/commit/b9e45a7a056eb3e8b8dc3995803df4e9fe8f5efb))
+
 ## 0.1.0 (2026-05-09)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/phoebe-bird/phoebe-csharp/compare/v0.0.1...v0.1.0)
